@@ -1,11 +1,12 @@
 import React, {Component} from 'react';
 import {Router, Route, IndexRoute, browserHistory} from 'react-router';
-import Login from './Login';
-import './App.css';
 import injectTapEventPlugin from 'react-tap-event-plugin';
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import {yellow800, yellow900, yellow300} from 'material-ui/styles/colors';
+
+import Login from './Login';
+import './App.css';
 
 const muiTheme = getMuiTheme({
 	palette: {
