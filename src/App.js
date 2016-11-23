@@ -4,7 +4,7 @@ import './App.css';
 import injectTapEventPlugin from 'react-tap-event-plugin';
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
-import {yellow300 as primary1Color, yellow200 as primary2Color, yellow100 as primary3Color} from 'material-ui/styles/colors';
+import {amber100 as primary1Color, orange100 as primary2Color, brown200 as primary3Color} from 'material-ui/styles/colors';
 
 import Login from './visitor/Login';
 
