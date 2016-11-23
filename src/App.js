@@ -1,17 +1,25 @@
 import React, {Component} from 'react';
-import logo from './logo.svg';
+import {Router, Route, IndexRoute, browserHistory} from 'react-router';
 import './App.css';
+
+const Tmp = () => null;
 
 class App extends Component {
 	render() {
 		return (
-			<div className="App">
-				<div className="App-header">
-					<img src={logo} className="App-logo" alt="logo"/>
-					<h2>Welcome to React</h2>
-				</div>
-				<p className="App-intro">To get started, edit <code>src/App.js</code> and save to reload.</p>
-			</div>
+			<Router history={browserHistory}>
+				<Route path="/" component={Tmp}>
+					<IndexRoute component={Tmp}/>
+					<Route path="user/:id" component={Tmp}/>
+					<Route path="profile" component={Tmp}/>
+					<Route path="movie/:id" component={Tmp}/>
+				</Route>
+				<Route path="login" component={Tmp}/>
+				<Route path="register" component={Tmp}/>
+				<Route path="forget" component={Tmp}/>
+				<Route path="reset/:token" component={Tmp}/>
+				<Route path="*" component={Tmp}/>
+			</Router>
 		);
 	}
 }
