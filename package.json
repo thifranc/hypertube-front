@@ -16,6 +16,7 @@
     "xo": "^0.17.1"
   },
   "dependencies": {
+    "i18n-react": "^0.3.0-ts1",
     "material-ui": "^0.16.4",
     "react": "^15.4.0",
     "react-dom": "^15.4.0",

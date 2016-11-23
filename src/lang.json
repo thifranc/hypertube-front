@@ -1,0 +1,10 @@
+{
+	"en": {
+		"login": "Login",
+		"password": "Password"
+	},
+	"fr": {
+		"login": "Pseudo",
+		"password": "Mot de passe"
+	}
+}

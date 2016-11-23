@@ -4,8 +4,12 @@ import injectTapEventPlugin from 'react-tap-event-plugin';
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import {yellow300 as primary1Color, yellow200 as primary2Color, yellow100 as primary3Color} from 'material-ui/styles/colors';
+import T from 'i18n-react';
 
-import Login from './Login';
+import lang from './lang';
+
+import Logged from './logged/Logged';
+import Login from './visitor/Login';
 import './App.css';
 
 const muiTheme = getMuiTheme({
@@ -19,13 +23,14 @@ const muiTheme = getMuiTheme({
 const Tmp = () => null;
 
 injectTapEventPlugin();
+T.setTexts(lang.en);
 
 class App extends Component {
 	render() {
 		return (
 			<MuiThemeProvider muiTheme={muiTheme}>
 				<Router history={browserHistory}>
-					<Route path="/" component={Tmp}>
+					<Route path="/" component={Logged}>
 						<IndexRoute component={Tmp}/>
 						<Route path="user/:id" component={Tmp}/>
 						<Route path="profile" component={Tmp}/>
