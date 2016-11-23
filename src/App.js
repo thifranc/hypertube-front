@@ -3,16 +3,16 @@ import {Router, Route, IndexRoute, browserHistory} from 'react-router';
 import injectTapEventPlugin from 'react-tap-event-plugin';
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
-import {yellow800, yellow900, yellow300} from 'material-ui/styles/colors';
+import {yellow300 as primary1Color, yellow200 as primary2Color, yellow100 as primary3Color} from 'material-ui/styles/colors';
 
 import Login from './Login';
 import './App.css';
 
 const muiTheme = getMuiTheme({
 	palette: {
-		primary1Color: yellow800,
-		primary2Color: yellow900,
-		primary3Color: yellow300
+		primary1Color: primary1Color,
+		primary2Color: primary2Color,
+		primary3Color: primary3Color
 	}
 });
 
