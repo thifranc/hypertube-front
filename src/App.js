@@ -8,6 +8,7 @@ import {amber100 as primary1Color, orange100 as primary2Color, brown200 as prima
 
 import Login from './visitor/Login';
 import Register from './visitor/Register';
+import Forget from './visitor/Forget';
 
 const muiTheme = getMuiTheme({
 	palette: {
@@ -33,7 +34,7 @@ class App extends Component {
 					</Route>
 					<Route path="login" component={Login}/>
 					<Route path="register" component={Register}/>
-					<Route path="forget" component={Tmp}/>
+					<Route path="forget" component={Forget}/>
 					<Route path="reset/:token" component={Tmp}/>
 					<Route path="*" component={Tmp}/>
 				</Router>

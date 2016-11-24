@@ -77,7 +77,6 @@ class Login extends Component {
 					<br/>
 				    <RaisedButton
 						label='Log In'
-						id='validateButton'
 						style={marge}
 						disabled={this.state.errLogin}
 						onClick={this.handlePasswd.bind(this)}

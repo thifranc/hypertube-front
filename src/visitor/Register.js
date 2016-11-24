@@ -117,8 +117,7 @@ class Login extends Component {
 						/>
 					<br/>
 				    <RaisedButton
-						label='Log In'
-						id='validateButton'
+						label='Register'
 						style={marge}
 						disabled={this.state.errLogin || this.state.errName || this.state.errFirstname}
 						onClick={this.validForm.bind(this)}
