@@ -1,5 +1,4 @@
 import React, {Component} from 'react';
-//import {browserHistory} from 'react-router';
 
 import Paper from 'material-ui/Paper';
 import TextField from 'material-ui/TextField';
@@ -26,28 +25,42 @@ class Login extends Component {
 		this.state = {
 			login: '',
 			errLogin: false,
+			firstname: '',
+			errFirstname: false,
+			name: '',
+			errName: false,
+			mail: '',
+			errMail: false,
 			passwd: '',
 			errPasswd: false
 		};
 	}
-	handleLogin(e) {
+	handleLowercase(e) {
 		var regLowercase = new RegExp('^[a-z]*$');
+		var err = 'err' + e.target.id.charAt(0).toUpperCase() + e.target.id.substring(1);
+
 		if (!regLowercase.test(e.target.value))
-			this.setState({errLogin: true});
+			this.setState({[err]: true});
 		else
-			this.setState({errLogin: false});
-		this.setState({login: e.target.value});
+			this.setState({[err]: false});
+		this.fillChar(e);
 	}
-	handlePasswd(e) {
+	validForm(e) {
 		var regPasswd = new RegExp('^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z]).{8,}$');
+		var regMail = new RegExp('^[0-9a-z._-]+@{1}[0-9a-z.-]{2,}[.]{1}[a-z]{2,5}$','i');
 
 		if (!regPasswd.test(document.getElementById('passwd').value))
 			this.setState({errPasswd: true});
 		else
 			this.setState({errPasswd: false});
+
+		if (!regMail.test(document.getElementById('mail').value))
+			this.setState({errMail: true});
+		else
+			this.setState({errMail: false});
 	}
 	fillChar(e) {
-		this.setState({passwd: e.target.value});
+		this.setState({[e.target.id.toLowerCase()]: e.target.value});
 	}
 	render() {
 		return (
@@ -55,14 +68,42 @@ class Login extends Component {
 				<Paper zDepth={2}>
 				<AppBar
 				showMenuIconButton={false}
-			    title='Login'
+			    title='Register'
 			  />
 					<TextField style={marge}
 						value={this.state.login}
-						onChange={this.handleLogin.bind(this)}	
+						id='Login'
+						onChange={this.handleLowercase.bind(this)}	
 						floatingLabelText='Login'
 						hintText='Your login'
 						errorText={this.state.errLogin && 'Login is only lowercase characters'}
+						/>
+					<br/>
+					<TextField style={marge}
+						value={this.state.firstname}
+						onChange={this.handleLowercase.bind(this)}	
+						id='Firstname'
+						floatingLabelText='Firstname'
+						hintText='Firstname'
+						errorText={this.state.errFirstname && 'Firstname is only lowercase characters'}
+						/>
+					<br/>
+					<TextField style={marge}
+						value={this.state.name}
+						id='Name'
+						onChange={this.handleLowercase.bind(this)}	
+						floatingLabelText='Name'
+						hintText='Name'
+						errorText={this.state.errName && 'Name is only lowercase characters'}
+						/>
+					<br/>
+					<TextField style={marge}
+						value={this.state.mail}
+						id='mail'
+						onChange={this.fillChar.bind(this)}	
+						hintText='Mail'
+						floatingLabelText='Mail'
+						errorText={this.state.errMail && 'Mail is not correct'}
 						/>
 					<br/>
 					<TextField style={marge}
@@ -79,8 +120,8 @@ class Login extends Component {
 						label='Log In'
 						id='validateButton'
 						style={marge}
-						disabled={this.state.errLogin}
-						onClick={this.handlePasswd.bind(this)}
+						disabled={this.state.errLogin || this.state.errName || this.state.errFirstname}
+						onClick={this.validForm.bind(this)}
 						/>
 				</Paper>
 			</Center>

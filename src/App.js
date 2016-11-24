@@ -7,6 +7,7 @@ import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import {amber100 as primary1Color, orange100 as primary2Color, brown200 as primary3Color} from 'material-ui/styles/colors';
 
 import Login from './visitor/Login';
+import Register from './visitor/Register';
 
 const muiTheme = getMuiTheme({
 	palette: {
@@ -31,7 +32,7 @@ class App extends Component {
 						<Route path="movie/:id" component={Tmp}/>
 					</Route>
 					<Route path="login" component={Login}/>
-					<Route path="register" component={Tmp}/>
+					<Route path="register" component={Register}/>
 					<Route path="forget" component={Tmp}/>
 					<Route path="reset/:token" component={Tmp}/>
 					<Route path="*" component={Tmp}/>
