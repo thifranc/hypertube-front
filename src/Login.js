@@ -15,7 +15,7 @@ class Login extends Component {
 					floatingLabelText="Password"
 					type="password"
 					/><br/>
-			  </div>
+			</div>
 		);
 	}
 }

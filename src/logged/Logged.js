@@ -14,8 +14,4 @@ class Logged extends Component {
 	}
 }
 
-Logged.propTypes = {
-	children: React.PropTypes.element.isRequired
-};
-
 export default Logged;

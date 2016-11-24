@@ -6,5 +6,9 @@
 	"fr": {
 		"login": "Pseudo",
 		"password": "Mot de passe"
+	},
+	"es": {
+		"login": "Pseudo",
+		"password": "Mot de passe"
 	}
 }
