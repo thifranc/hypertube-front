@@ -9,7 +9,7 @@ class Center extends Component {
 					{this.props.children}
 				</div>
 			</div>
-    );
+		);
 	}
 }
 
