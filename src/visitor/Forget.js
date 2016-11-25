@@ -46,8 +46,8 @@ class Forget extends Component {
 	fillChar(e) {
 		this.setState({mail: e.target.value});
 	}
-	handleSwap(e) {
-		this.setState((prevState, props) => {
+	handleSwap() {
+		this.setState(prevState => {
 			return {hidden: !prevState.hidden};
 		});
 		this.setState({errLogin: false});
@@ -55,7 +55,6 @@ class Forget extends Component {
 	}
 	render() {
 		const {messages} = this.context;
-		console.log(messages);
 		return (
 			<Center className="VisitorHeight">
 				<Paper zDepth={2}>
@@ -68,26 +67,25 @@ class Forget extends Component {
 						className="VisitorMarge"
 						onClick={this.handleSwap}
 						/>
-				{this.state.hidden ?
-					<TextField
-						className={this.state.hidden ? "VisitorHidden" : "VisitorMarge"}
-						value={this.state.login}
-						id="login"
-						onChange={this.handleLogin}
-						hintText="Your login"
-						floatingLabelText="Login"
-						errorText={this.state.errLogin && 'Login is only lowercase characters'}
-						/>
-					:
-					<TextField
-						className={this.state.hidden ? "VisitorMarge" : "VisitorHidden"}
-						value={this.state.mail}
-						id="mail"
-						onChange={this.fillChar}
-						hintText="Your mail"
-						floatingLabelText="Mail"
-						errorText={this.state.errMail && 'Mail is not correct'}
-						/>
+					{this.state.hidden ?
+						<TextField
+							className={this.state.hidden ? 'VisitorHidden' : 'VisitorMarge'}
+							value={this.state.login}
+							id="login"
+							onChange={this.handleLogin}
+							hintText="Your login"
+							floatingLabelText="Login"
+							errorText={this.state.errLogin && 'Login is only lowercase characters'}
+							/> :
+							<TextField
+								className={this.state.hidden ? 'VisitorMarge' : 'VisitorHidden'}
+								value={this.state.mail}
+								id="mail"
+								onChange={this.fillChar}
+								hintText="Your mail"
+								floatingLabelText="Mail"
+								errorText={this.state.errMail && 'Mail is not correct'}
+								/>
 					}
 					<br/>
 					<RaisedButton
@@ -101,9 +99,9 @@ class Forget extends Component {
 		);
 	}
 }
+
 Forget.contextTypes = {
 	messages: React.PropTypes.object
 };
-
 
 export default Forget;
