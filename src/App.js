@@ -5,12 +5,14 @@ import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import {amber100 as primary1Color, orange100 as primary2Color, brown200 as primary3Color} from 'material-ui/styles/colors';
 import LangProvider from './LangProvider';
 
-import Logged from './logged/Logged';
-import Login from './visitor/Login';
-
 import './App.css';
 import Register from './visitor/Register';
 import Forget from './visitor/Forget';
+import Login from './visitor/Login';
+
+import Logged from './logged/Logged';
+import Search from './logged/Search';
+import Profile from './logged/Profile';
 
 const muiTheme = getMuiTheme({
 	palette: {
@@ -29,9 +31,9 @@ class App extends Component {
 				<LangProvider>
 					<Router history={browserHistory}>
 						<Route path="/" component={Logged}>
-							<IndexRoute component={Tmp}/>
+							<IndexRoute component={Search}/>
 							<Route path="user/:id" component={Tmp}/>
-							<Route path="profile" component={Tmp}/>
+							<Route path="profile" component={Profile}/>
 							<Route path="movie/:id" component={Tmp}/>
 						</Route>
 						<Route path="login" component={Login}/>
