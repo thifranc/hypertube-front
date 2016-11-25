@@ -24,19 +24,22 @@ class Login extends Component {
 	}
 	handleLogin(e) {
 		var regLowercase = new RegExp('^[a-z]*$');
-		if (!regLowercase.test(e.target.value))
-			{this.setState({errLogin: true});}
-		else
-			{this.setState({errLogin: false});}
+
+		if (!regLowercase.test(e.target.value)) {
+			this.setState({errLogin: true});
+		} else {
+			this.setState({errLogin: false});
+		}
 		this.setState({login: e.target.value});
 	}
-	handlePasswd(e) {
+	handlePasswd() {
 		var regPasswd = new RegExp('^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z]).{8,}$');
 
-		if (!regPasswd.test(this.state.passwd))
-			{this.setState({errPasswd: true});}
-		else
-			{this.setState({errPasswd: false});}
+		if (!regPasswd.test(this.state.passwd)) {
+			this.setState({errPasswd: true});
+		} else {
+			this.setState({errPasswd: false});
+		}
 	}
 	fillChar(e) {
 		this.setState({passwd: e.target.value});
@@ -69,14 +72,14 @@ class Login extends Component {
 						errorText={this.state.errPasswd && 'Password must have one upper, lower, and digit, and be at least 8 char long'}
 						/>
 					<br/>
-				<Center>
-					<RaisedButton
-						label="Log In"
-						className="VisitorMarge"
-						disabled={this.state.errLogin}
-						onClick={this.handlePasswd}
-						/>
-				</Center>
+					<Center>
+						<RaisedButton
+							label="Log In"
+							className="VisitorMarge"
+							disabled={this.state.errLogin}
+							onClick={this.handlePasswd}
+							/>
+					</Center>
 				</Paper>
 			</Center>
 		);
