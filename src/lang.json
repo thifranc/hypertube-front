@@ -1,13 +1,28 @@
 {
 	"en": {
+		"nav" : {
+			"search": "Search",
+			"profil": "Profile",
+			"logout": "Logout"
+		},
 		"login": "Login",
 		"password": "Password"
 	},
 	"fr": {
+		"nav" : {
+			"search": "Recherche",
+			"profil": "Profil",
+			"logout": "Déconnexion "
+		},
 		"login": "Pseudo",
 		"password": "Mot de passe"
 	},
 	"es": {
+		"nav" : {
+			"search": "Search",
+			"profil": "Profile",
+			"logout": "logout"
+		},
 		"login": "Pseudo",
 		"password": "Mot de passe"
 	}
