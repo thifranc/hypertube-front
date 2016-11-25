@@ -6,19 +6,10 @@ import AppBar from 'material-ui/AppBar';
 import RaisedButton from 'material-ui/RaisedButton';
 
 import Center from '../util/Center';
+import './visitor.css';
 
-const style = {
-	height: '100vh'
-};
 
-const marge = {
-	  marginLeft: 20,
-	  marginRight: 20,
-	  marginTop: 10,
-	  marginBottom: 10
-};
-
-class Login extends Component {
+class Register extends Component {
 	constructor() {
 		super();
 		this.state = {
@@ -33,6 +24,9 @@ class Login extends Component {
 			passwd: '',
 			errPasswd: false
 		};
+		this.handleLowercase = this.handleLowercase.bind(this);
+		this.fillChar = this.fillChar.bind(this);
+		this.validForm = this.validForm.bind(this);
 	}
 	handleLowercase(e) {
 		var regLowercase = new RegExp('^[a-z]*$');
@@ -48,12 +42,12 @@ class Login extends Component {
 		var regPasswd = new RegExp('^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z]).{8,}$');
 		var regMail = new RegExp('^[0-9a-z._-]+@{1}[0-9a-z.-]{2,}[.]{1}[a-z]{2,5}$', 'i');
 
-		if (!regPasswd.test(document.getElementById('passwd').value))
+		if (!regPasswd.test(this.state.passwd))
 			{this.setState({errPasswd: true});}
 		else
 			{this.setState({errPasswd: false});}
 
-		if (!regMail.test(document.getElementById('mail').value))
+		if (!regMail.test(this.state.mail))
 			{this.setState({errMail: true});}
 		else
 			{this.setState({errMail: false});}
@@ -63,26 +57,26 @@ class Login extends Component {
 	}
 	render() {
 		return (
-			<Center style={style}>
+			<Center className="VisitorHeight">
 				<Paper zDepth={2}>
 					<AppBar
 						showMenuIconButton={false}
 						title="Register"
 						/>
 					<TextField
-						style={marge}
+						className="VisitorMarge"
 						value={this.state.login}
 						id="Login"
-						onChange={this.handleLowercase.bind(this)}
+						onChange={this.handleLowercase}
 						floatingLabelText="Login"
 						hintText="Your login"
 						errorText={this.state.errLogin && 'Login is only lowercase characters'}
 						/>
 					<br/>
 					<TextField
-						style={marge}
+						className="VisitorMarge"
 						value={this.state.firstname}
-						onChange={this.handleLowercase.bind(this)}
+						onChange={this.handleLowercase}
 						id="Firstname"
 						floatingLabelText="Firstname"
 						hintText="Firstname"
@@ -90,46 +84,48 @@ class Login extends Component {
 						/>
 					<br/>
 					<TextField
-						style={marge}
+						className="VisitorMarge"
 						value={this.state.name}
 						id="Name"
-						onChange={this.handleLowercase.bind(this)}
+						onChange={this.handleLowercase}
 						floatingLabelText="Name"
 						hintText="Name"
 						errorText={this.state.errName && 'Name is only lowercase characters'}
 						/>
 					<br/>
 					<TextField
-						style={marge}
+						className="VisitorMarge"
 						value={this.state.mail}
 						id="mail"
-						onChange={this.fillChar.bind(this)}
+						onChange={this.fillChar}
 						hintText="Mail"
 						floatingLabelText="Mail"
 						errorText={this.state.errMail && 'Mail is not correct'}
 						/>
 					<br/>
 					<TextField
-						style={marge}
+						className="VisitorMarge"
 						value={this.state.passwd}
 						id="passwd"
-						onChange={this.fillChar.bind(this)}
+						onChange={this.fillChar}
 						hintText="Password Field"
 						floatingLabelText="Password"
 						type="password"
 						errorText={this.state.errPasswd && 'Password must have one upper, lower, and digit, and be at least 8 char long'}
 						/>
 					<br/>
+				<Center>
 					<RaisedButton
 						label="Register"
-						style={marge}
+						className="VisitorMarge"
 						disabled={this.state.errLogin || this.state.errName || this.state.errFirstname}
-						onClick={this.validForm.bind(this)}
+						onClick={this.validForm}
 						/>
+				</Center>
 				</Paper>
 			</Center>
 		);
 	}
 }
 
-export default Login;
+export default Register;

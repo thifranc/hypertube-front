@@ -7,29 +7,9 @@ import AppBar from 'material-ui/AppBar';
 import RaisedButton from 'material-ui/RaisedButton';
 
 import Center from '../util/Center';
+import './visitor.css';
 
-const style = {
-	height: '100vh'
-};
-
-const centered = {
-	marginTop: 10,
-	marginBottom: 10,
-	marginLeft: 150
-};
-
-const hidden = {
-	display: 'none'
-};
-
-const marge = {
-	marginLeft: 20,
-	marginRight: 20,
-	marginTop: 10,
-	marginBottom: 10
-};
-
-class Login extends Component {
+class Forget extends Component {
 	constructor() {
 		super();
 		this.state = {
@@ -39,6 +19,10 @@ class Login extends Component {
 			mail: '',
 			errMail: false
 		};
+		this.handleSwap = this.handleSwap.bind(this);
+		this.handleLogin = this.handleLogin.bind(this);
+		this.handleMail = this.handleMail.bind(this);
+		this.fillChar = this.fillChar.bind(this);
 	}
 	handleLogin(e) {
 		let regLowercase = new RegExp('^[a-z]*$');
@@ -70,47 +54,56 @@ class Login extends Component {
 		this.setState({errMail: false});
 	}
 	render() {
+		const {messages} = this.context;
+		console.log(messages);
 		return (
-			<Center style={style}>
+			<Center className="VisitorHeight">
 				<Paper zDepth={2}>
 					<AppBar
 						showMenuIconButton={false}
-						title="Reset your password"
+						title={messages.forget}
 						/>
 					<RaisedButton
 						label="Change"
-						style={marge}
-						onClick={this.handleSwap.bind(this)}
+						className="VisitorMarge"
+						onClick={this.handleSwap}
 						/>
+				{this.state.hidden ?
 					<TextField
-						style={this.state.hidden ? hidden : marge}
+						className={this.state.hidden ? "VisitorHidden" : "VisitorMarge"}
 						value={this.state.login}
 						id="login"
-						onChange={this.handleLogin.bind(this)}
+						onChange={this.handleLogin}
 						hintText="Your login"
 						floatingLabelText="Login"
 						errorText={this.state.errLogin && 'Login is only lowercase characters'}
 						/>
+					:
 					<TextField
-						style={this.state.hidden ? marge : hidden}
+						className={this.state.hidden ? "VisitorMarge" : "VisitorHidden"}
 						value={this.state.mail}
 						id="mail"
-						onChange={this.fillChar.bind(this)}
+						onChange={this.fillChar}
 						hintText="Your mail"
 						floatingLabelText="Mail"
 						errorText={this.state.errMail && 'Mail is not correct'}
 						/>
+					}
 					<br/>
 					<RaisedButton
 						label="Mail me"
-						style={centered}
+						className="VisitorCentered"
 						disabled={this.state.errLogin}
-						onClick={this.handleMail.bind(this)}
+						onClick={this.handleMail}
 						/>
 				</Paper>
 			</Center>
 		);
 	}
 }
+Forget.contextTypes = {
+	messages: React.PropTypes.object
+};
 
-export default Login;
+
+export default Forget;
