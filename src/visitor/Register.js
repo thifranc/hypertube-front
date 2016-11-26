@@ -4,6 +4,7 @@ import Paper from 'material-ui/Paper';
 import TextField from 'material-ui/TextField';
 import AppBar from 'material-ui/AppBar';
 import RaisedButton from 'material-ui/RaisedButton';
+import {Link} from 'react-router';
 
 import Center from '../util/Center';
 import './visitor.css';
@@ -124,6 +125,7 @@ class Register extends Component {
 							disabled={this.state.errLogin || this.state.errName || this.state.errFirstname}
 							onClick={this.validForm}
 							/>
+					<Link to="/login" className="VisitorMarge">Home</Link>
 					</Center>
 				</Paper>
 			</Center>

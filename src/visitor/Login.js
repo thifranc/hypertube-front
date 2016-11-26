@@ -5,6 +5,10 @@ import Paper from 'material-ui/Paper';
 import TextField from 'material-ui/TextField';
 import AppBar from 'material-ui/AppBar';
 import RaisedButton from 'material-ui/RaisedButton';
+import Divider from 'material-ui/Divider';
+import {fullWhite} from 'material-ui/styles/colors';
+import {blue800 as facebookColor, lightBlue200 as twitterColor, grey800 as schoolColor} from 'material-ui/styles/colors';
+import {Link} from 'react-router';
 
 import Center from '../util/Center';
 import './visitor.css';
@@ -52,6 +56,26 @@ class Login extends Component {
 						showMenuIconButton={false}
 						title="Login"
 						/>
+					<RaisedButton
+						className="VisitorMarge"
+						labelColor={fullWhite}
+						label="Facebook"
+						backgroundColor={facebookColor}
+						/>
+					<RaisedButton
+						className="VisitorMarge"
+						labelColor={fullWhite}
+						label="42"
+						backgroundColor={schoolColor}
+						/>
+					<RaisedButton
+						className="VisitorMarge"
+						labelColor={fullWhite}
+						label="Twitter"
+						backgroundColor={twitterColor}
+						/>
+					<Divider/>
+					<Center>
 					<TextField
 						className="VisitorMarge"
 						value={this.state.login}
@@ -79,6 +103,12 @@ class Login extends Component {
 							disabled={this.state.errLogin}
 							onClick={this.handlePasswd}
 							/>
+					</Center>
+					<Divider/>
+					<Center>
+					<Link to="/register" className="VisitorMarge">Sign up</Link>
+					<Link to="/forget" className="VisitorMarge">Reset password</Link>
+					</Center>
 					</Center>
 				</Paper>
 			</Center>

@@ -5,6 +5,7 @@ import Paper from 'material-ui/Paper';
 import TextField from 'material-ui/TextField';
 import AppBar from 'material-ui/AppBar';
 import RaisedButton from 'material-ui/RaisedButton';
+import {Link} from 'react-router';
 
 import Center from '../util/Center';
 import './visitor.css';
@@ -60,7 +61,7 @@ class Forget extends Component {
 				<Paper zDepth={2}>
 					<AppBar
 						showMenuIconButton={false}
-						title={messages.forget}
+						title="Forgot password"
 						/>
 					<RaisedButton
 						label="Change"
@@ -94,6 +95,7 @@ class Forget extends Component {
 						disabled={this.state.errLogin}
 						onClick={this.handleMail}
 						/>
+					<Link to="/login" className="VisitorMarge">Home</Link>
 				</Paper>
 			</Center>
 		);
