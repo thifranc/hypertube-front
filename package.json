@@ -11,6 +11,7 @@
       "no-negated-condition" : 0
     }
   },
+  "proxy": "https://yts.ag",
   "devDependencies": {
     "eslint-config-xo-react": "^0.10.0",
     "eslint-plugin-react": "^6.7.1",
