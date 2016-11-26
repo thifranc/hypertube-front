@@ -109,8 +109,8 @@ class Login extends Component {
 					</Center>
 					<Divider/>
 					<Center>
-					<Link to="/register" className="VisitorMarge">Sign up</Link>
-					<Link to="/forget" className="VisitorMarge">Reset password</Link>
+						<Link to="/register" className="VisitorMarge">Sign up</Link>
+						<Link to="/forget" className="VisitorMarge">Reset password</Link>
 					</Center>
 					</Center>
 				</Paper>
