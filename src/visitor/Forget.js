@@ -23,7 +23,7 @@ class Forget extends Component {
 		this.handleSwap = this.handleSwap.bind(this);
 		this.handleLogin = this.handleLogin.bind(this);
 		this.handleMail = this.handleMail.bind(this);
-		this.fillChar = this.fillChar.bind(this);
+		this.handleFillChar = this.handleFillChar.bind(this);
 	}
 	handleLogin(e) {
 		let regLowercase = new RegExp('^[a-z]*$');
@@ -44,7 +44,7 @@ class Forget extends Component {
 			this.setState({errMail: false});
 		}
 	}
-	fillChar(e) {
+	handleFillChar(e) {
 		this.setState({mail: e.target.value});
 	}
 	handleSwap() {
@@ -55,7 +55,6 @@ class Forget extends Component {
 		this.setState({errMail: false});
 	}
 	render() {
-		const {messages} = this.context;
 		return (
 			<Center className="VisitorHeight">
 				<Paper zDepth={2}>
@@ -82,7 +81,7 @@ class Forget extends Component {
 								className={this.state.hidden ? 'VisitorMarge' : 'VisitorHidden'}
 								value={this.state.mail}
 								id="mail"
-								onChange={this.fillChar}
+								onChange={this.handleFillChar}
 								hintText="Your mail"
 								floatingLabelText="Mail"
 								errorText={this.state.errMail && 'Mail is not correct'}
@@ -101,9 +100,5 @@ class Forget extends Component {
 		);
 	}
 }
-
-Forget.contextTypes = {
-	messages: React.PropTypes.object
-};
 
 export default Forget;

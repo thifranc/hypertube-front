@@ -50,11 +50,11 @@ class Nav extends Component {
 			<div>
 				<Paper zDepth={1}>
 					<BottomNavigation selectedIndex={this.state.selectedIndex}>
-						<div></div>
+						<div/>
 						<BottomNavigationItem label={messages.nav.search} icon={search} onTouchTap={() => this.handleSelectNav(1)}/>
 						<BottomNavigationItem label={messages.nav.profil} icon={account} onTouchTap={() => this.handleSelectNav(2)}/>
 						<BottomNavigationItem label={messages.nav.logout} icon={exit} onTouchTap={() => this.handleSelectNav(3)}/>
-						<div></div>
+						<div/>
 						<div style={{flex: 'none'}}>
 							<SelectField value={lang} onChange={this.handleSelectLang} style={{width: '150px', marginRight: '20px'}}>
 								<MenuItem value={'en'} primaryText="English"/>

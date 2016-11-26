@@ -25,8 +25,8 @@ class Register extends Component {
 			errPasswd: false
 		};
 		this.handleLowercase = this.handleLowercase.bind(this);
-		this.fillChar = this.fillChar.bind(this);
-		this.validForm = this.validForm.bind(this);
+		this.handleFillChar = this.handleFillChar.bind(this);
+		this.handleValidForm = this.handleValidForm.bind(this);
 	}
 	handleLowercase(e) {
 		var regLowercase = new RegExp('^[a-z]*$');
@@ -38,34 +38,35 @@ class Register extends Component {
 		} else {
 			this.setState({[err]: false});
 		}
-		this.fillChar(e);
+		this.handleFillChar(e);
 	}
-	validForm(e) {
+	handleValidForm(e) {
 		e.preventDefault();
 		var regPasswd = new RegExp('^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z]).{8,}$');
 		var regMail = new RegExp('^[0-9a-z._-]+@{1}[0-9a-z.-]{2,}[.]{1}[a-z]{2,5}$', 'i');
 
-
 		this.setState({errPasswd: !regPasswd.test(this.state.passwd)});
 		this.setState({errMail: !regMail.test(this.state.mail)});
 
-		if (!this.state.login)
+		if (!this.state.login) {
 			this.setState({errLogin: true});
-		if (!this.state.name)
+		}
+		if (!this.state.name) {
 			this.setState({errName: true});
-		if (!this.state.firstname)
+		}
+		if (!this.state.firstname) {
 			this.setState({errFirstname: true});
-		//solve pb setState too long
+		}
+		// solve pb setState too long
 
-		if (!this.state.errPasswd && !this.state.errMail
-			&& !this.state.errLogin && !this.state.errFirstname
-			&& !this.state.errName)
-		{
+		if (!this.state.errPasswd && !this.state.errMail &&
+			!this.state.errLogin && !this.state.errFirstname &&
+			!this.state.errName) {
 			console.log('all valid');
-			//insert AJAX call here
+			// insert AJAX call here
 		}
 	}
-	fillChar(e) {
+	handleFillChar(e) {
 		this.setState({[e.target.id.toLowerCase()]: e.target.value});
 	}
 	render() {
@@ -110,7 +111,7 @@ class Register extends Component {
 						className="VisitorMarge"
 						value={this.state.mail}
 						id="mail"
-						onChange={this.fillChar}
+						onChange={this.handleFillChar}
 						hintText="Mail"
 						floatingLabelText="Mail"
 						errorText={this.state.errMail && 'Mail is not correct'}
@@ -120,7 +121,7 @@ class Register extends Component {
 						className="VisitorMarge"
 						value={this.state.passwd}
 						id="passwd"
-						onChange={this.fillChar}
+						onChange={this.handleFillChar}
 						hintText="Password Field"
 						floatingLabelText="Password"
 						type="password"
@@ -132,9 +133,9 @@ class Register extends Component {
 							label="Register"
 							className="VisitorMarge"
 							disabled={this.state.errLogin || this.state.errName || this.state.errFirstname}
-							onClick={this.validForm}
+							onClick={this.handleValidForm}
 							/>
-					<Link to="/login" className="VisitorMarge">Home</Link>
+						<Link to="/login" className="VisitorMarge">Home</Link>
 					</Center>
 				</Paper>
 			</Center>

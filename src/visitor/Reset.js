@@ -21,24 +21,23 @@ class Reset extends Component {
 			errNewPasswd: false
 		};
 		this.token = location.pathname.match(/reset\/(.*?)$/)[1];
-		this.fillChar = this.fillChar.bind(this);
+		this.handleFillChar = this.handleFillChar.bind(this);
 		this.handlePasswd = this.handlePasswd.bind(this);
-		this.showPasswd = this.showPasswd.bind(this);
+		this.handleEye = this.handleEye.bind(this);
 		console.log(this.token);
 	}
-	fillChar(e) {
+	handleFillChar(e) {
 		this.setState({newPasswd: e.target.value});
 	}
 	handlePasswd() {
 		var regPasswd = new RegExp('^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z]).{8,}$');
 		this.setState({errNewPasswd: !regPasswd.test(this.state.newPasswd)});
-		if (!this.state.errNewPasswd)
-		{
+		if (!this.state.errNewPasswd) {
 			console.log('Passwd reset');
-			//AJAX call here with this.token
+			// AJAX call here with this.token
 		}
 	}
-	showPasswd(){
+	handleEye() {
 		this.setState(prevState => {
 			return {showPasswd: !prevState.showPasswd};
 		});
@@ -51,20 +50,20 @@ class Reset extends Component {
 						showMenuIconButton={false}
 						title="Reset password"
 						/>
-						<TextField
-							className={'VisitorMarge'}
-							value={this.state.newPasswd}
-							onChange={this.fillChar}
-							hintText="New password"
-							type={this.state.showPasswd ? "text" : "password"}
-							floatingLabelText="New password"
-							errorText={this.state.errNewPasswd && 'Password must have one upper, lower, and digit, and be at least 8 char long'}
-							/>
-						<Visibility
-							hoverColor={red800}
-							className={'VisitorMarge'}
-							onClick={this.showPasswd}
-							/>
+					<TextField
+						className={'VisitorMarge'}
+						value={this.state.newPasswd}
+						onChange={this.handleFillChar}
+						hintText="New password"
+						type={this.state.showPasswd ? 'text' : 'password'}
+						floatingLabelText="New password"
+						errorText={this.state.errNewPasswd && 'Password must have one upper, lower, and digit, and be at least 8 char long'}
+						/>
+					<Visibility
+						hoverColor={red800}
+						className={'VisitorMarge'}
+						onClick={this.handleEye}
+						/>
 					<br/>
 					<Center>
 						<RaisedButton

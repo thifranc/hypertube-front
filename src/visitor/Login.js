@@ -6,8 +6,7 @@ import TextField from 'material-ui/TextField';
 import AppBar from 'material-ui/AppBar';
 import RaisedButton from 'material-ui/RaisedButton';
 import Divider from 'material-ui/Divider';
-import {fullWhite} from 'material-ui/styles/colors';
-import {blue800 as facebookColor, lightBlue200 as twitterColor, grey800 as schoolColor} from 'material-ui/styles/colors';
+import {fullWhite, blue800 as facebookColor, lightBlue200 as twitterColor, grey800 as schoolColor} from 'material-ui/styles/colors';
 import {Link} from 'react-router';
 
 import Center from '../util/Center';
@@ -24,7 +23,7 @@ class Login extends Component {
 		};
 		this.handleLogin = this.handleLogin.bind(this);
 		this.handlePasswd = this.handlePasswd.bind(this);
-		this.fillChar = this.fillChar.bind(this);
+		this.handleFillChar = this.handleFillChar.bind(this);
 	}
 	handleLogin(e) {
 		var regLowercase = new RegExp('^[a-z]*$');
@@ -44,11 +43,11 @@ class Login extends Component {
 		} else if (!this.state.login) {
 			this.setState({errLogin: true});
 		} else {
-			//insert AJAX call to DB
+			// insert AJAX call to DB
 			this.setState({errPasswd: false});
 		}
 	}
-	fillChar(e) {
+	handleFillChar(e) {
 		this.setState({passwd: e.target.value});
 	}
 	render() {
@@ -79,39 +78,39 @@ class Login extends Component {
 						/>
 					<Divider/>
 					<Center>
-					<TextField
-						className="VisitorMarge"
-						value={this.state.login}
-						onChange={this.handleLogin}
-						floatingLabelText="Login"
-						hintText="Your login"
-						errorText={this.state.errLogin && 'Login is only lowercase characters'}
-						/>
-					<br/>
-					<TextField
-						className="VisitorMarge"
-						value={this.state.passwd}
-						id="passwd"
-						onChange={this.fillChar}
-						hintText="Password Field"
-						floatingLabelText="Password"
-						type="password"
-						errorText={this.state.errPasswd && 'Password must have one upper, lower, and digit, and be at least 8 char long'}
-						/>
-					<br/>
-					<Center>
-						<RaisedButton
-							label="Log In"
+						<TextField
 							className="VisitorMarge"
-							disabled={this.state.errLogin}
-							onClick={this.handlePasswd}
+							value={this.state.login}
+							onChange={this.handleLogin}
+							floatingLabelText="Login"
+							hintText="Your login"
+							errorText={this.state.errLogin && 'Login is only lowercase characters'}
 							/>
-					</Center>
-					<Divider/>
-					<Center>
-						<Link to="/register" className="VisitorMarge">Sign up</Link>
-						<Link to="/forget" className="VisitorMarge">Reset password</Link>
-					</Center>
+						<br/>
+						<TextField
+							className="VisitorMarge"
+							value={this.state.passwd}
+							id="passwd"
+							onChange={this.handleFillChar}
+							hintText="Password Field"
+							floatingLabelText="Password"
+							type="password"
+							errorText={this.state.errPasswd && 'Password must have one upper, lower, and digit, and be at least 8 char long'}
+							/>
+						<br/>
+						<Center>
+							<RaisedButton
+								label="Log In"
+								className="VisitorMarge"
+								disabled={this.state.errLogin}
+								onClick={this.handlePasswd}
+								/>
+						</Center>
+						<Divider/>
+						<Center>
+							<Link to="/register" className="VisitorMarge">Sign up</Link>
+							<Link to="/forget" className="VisitorMarge">Reset password</Link>
+						</Center>
 					</Center>
 				</Paper>
 			</Center>
