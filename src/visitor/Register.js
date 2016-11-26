@@ -32,6 +32,7 @@ class Register extends Component {
 		var regLowercase = new RegExp('^[a-z]*$');
 		var err = 'err' + e.target.id.charAt(0).toUpperCase() + e.target.id.substring(1);
 
+		this.setState({[err]: !regLowercase.test(e.target.value)});
 		if (!regLowercase.test(e.target.value)) {
 			this.setState({[err]: true});
 		} else {
@@ -44,16 +45,24 @@ class Register extends Component {
 		var regPasswd = new RegExp('^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z]).{8,}$');
 		var regMail = new RegExp('^[0-9a-z._-]+@{1}[0-9a-z.-]{2,}[.]{1}[a-z]{2,5}$', 'i');
 
-		if (!regPasswd.test(this.state.passwd)) {
-			this.setState({errPasswd: true});
-		} else {
-			this.setState({errPasswd: false});
-		}
 
-		if (!regMail.test(this.state.mail)) {
-			this.setState({errMail: true});
-		} else {
-			this.setState({errMail: false});
+		this.setState({errPasswd: !regPasswd.test(this.state.passwd)});
+		this.setState({errMail: !regMail.test(this.state.mail)});
+
+		if (!this.state.login)
+			this.setState({errLogin: true});
+		if (!this.state.name)
+			this.setState({errName: true});
+		if (!this.state.firstname)
+			this.setState({errFirstname: true});
+		//solve pb setState too long
+
+		if (!this.state.errPasswd && !this.state.errMail
+			&& !this.state.errLogin && !this.state.errFirstname
+			&& !this.state.errName)
+		{
+			console.log('all valid');
+			//insert AJAX call here
 		}
 	}
 	fillChar(e) {

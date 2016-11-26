@@ -41,7 +41,10 @@ class Login extends Component {
 
 		if (!regPasswd.test(this.state.passwd)) {
 			this.setState({errPasswd: true});
+		} else if (!this.state.login) {
+			this.setState({errLogin: true});
 		} else {
+			//insert AJAX call to DB
 			this.setState({errPasswd: false});
 		}
 	}
