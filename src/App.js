@@ -9,6 +9,7 @@ import './App.css';
 import Register from './visitor/Register';
 import Forget from './visitor/Forget';
 import Login from './visitor/Login';
+import Reset from './visitor/Reset';
 
 import Logged from './logged/Logged';
 import Search from './logged/Search';
@@ -39,7 +40,7 @@ class App extends Component {
 						<Route path="login" component={Login}/>
 						<Route path="register" component={Register}/>
 						<Route path="forget" component={Forget}/>
-						<Route path="reset/:token" component={Tmp}/>
+						<Route path="reset/:token" component={Reset}/>
 						<Route path="*" component={Tmp}/>
 					</Router>
 				</LangProvider>
