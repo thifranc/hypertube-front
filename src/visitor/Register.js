@@ -45,20 +45,16 @@ class Register extends Component {
 		var regPasswd = new RegExp('^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z]).{8,}$');
 		var regMail = new RegExp('^[0-9a-z._-]+@{1}[0-9a-z.-]{2,}[.]{1}[a-z]{2,5}$', 'i');
 
-		this.setState({errPasswd: !regPasswd.test(this.state.passwd)});
-		this.setState({errMail: !regMail.test(this.state.mail)});
-
-		if (!this.state.login) {
-			this.setState({errLogin: true});
-		}
-		if (!this.state.name) {
-			this.setState({errName: true});
-		}
-		if (!this.state.firstname) {
-			this.setState({errFirstname: true});
-		}
-		// solve pb setState too long
-
+		this.setState({
+			errLogin: !this.state.login,
+			errName: !this.state.name,
+			errFirstname: !this.state.firstname,
+			errPasswd: !regPasswd.test(this.state.passwd),
+			errMail: !regMail.test(this.state.mail)
+		}, this.ajaxCall);
+	}
+	ajaxCall() {
+		console.log(this.state);
 		if (!this.state.errPasswd && !this.state.errMail &&
 			!this.state.errLogin && !this.state.errFirstname &&
 			!this.state.errName) {

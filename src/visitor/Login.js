@@ -38,13 +38,15 @@ class Login extends Component {
 	handlePasswd() {
 		var regPasswd = new RegExp('^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z]).{8,}$');
 
-		if (!regPasswd.test(this.state.passwd)) {
-			this.setState({errPasswd: true});
-		} else if (!this.state.login) {
-			this.setState({errLogin: true});
-		} else {
-			// insert AJAX call to DB
-			this.setState({errPasswd: false});
+		this.setState({
+			errPasswd: !regPasswd.test(this.state.passwd)
+		}, this.ajaxCall);
+	}
+	ajaxCall() {
+		console.log(this.state);
+		if (!this.state.errPasswd) {
+			console.log('all valid');
+			// insert AJAX call here
 		}
 	}
 	handleFillChar(e) {
