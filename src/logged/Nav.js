@@ -5,7 +5,6 @@ import MenuItem from 'material-ui/MenuItem';
 import FontIcon from 'material-ui/FontIcon';
 import {BottomNavigation, BottomNavigationItem} from 'material-ui/BottomNavigation';
 import Paper from 'material-ui/Paper';
-import IconLocationOn from 'material-ui/svg-icons/communication/location-on';
 
 const account = <FontIcon className="material-icons">account_circle</FontIcon>;
 const search = <FontIcon className="material-icons">search</FontIcon>;
