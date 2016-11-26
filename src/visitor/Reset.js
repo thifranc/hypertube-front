@@ -20,11 +20,10 @@ class Reset extends Component {
 			showPasswd: false,
 			errNewPasswd: false
 		};
-		this.token = location.pathname.match(/reset\/(.*?)$/)[1];
 		this.handleFillChar = this.handleFillChar.bind(this);
 		this.handlePasswd = this.handlePasswd.bind(this);
 		this.handleEye = this.handleEye.bind(this);
-		console.log(this.token);
+		console.log(this);
 	}
 	handleFillChar(e) {
 		this.setState({newPasswd: e.target.value});
@@ -34,6 +33,8 @@ class Reset extends Component {
 		this.setState({errNewPasswd: !regPasswd.test(this.state.newPasswd)});
 		if (!this.state.errNewPasswd) {
 			console.log('Passwd reset');
+			// use this.props
+			// this.props.params.token;
 			// AJAX call here with this.token
 		}
 	}
