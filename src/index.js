@@ -6,7 +6,6 @@ import './index.css';
 
 injectTapEventPlugin();
 
-/* global document */
 ReactDOM.render(
 	<App/>,
 	document.getElementById('root')
