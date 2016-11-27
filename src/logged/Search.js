@@ -3,6 +3,8 @@ import {GridList, GridTile} from 'material-ui/GridList';
 import IconButton from 'material-ui/IconButton';
 import StarBorder from 'material-ui/svg-icons/toggle/star';
 import Subheader from 'material-ui/Subheader';
+import CircularProgress from 'material-ui/CircularProgress';
+import Center from '../util/Center';
 
 import 'whatwg-fetch';
 
@@ -12,7 +14,8 @@ const styles = {
 		flexWrap: 'wrap',
 		justifyContent: 'space-around'
 	},
-	gridList: {
+	loader: {
+		height: 'calc(100vh - 56px)'
 	}
 };
 
@@ -40,21 +43,26 @@ class Search extends Component {
 	}
 	render() {
 		return (
-			<div style={styles.root}>
-				<GridList cellHeight={'auto'} style={styles.gridList} cols={4}>
-					<Subheader>TODO filter</Subheader>
-					{this.state.movies.map((movie, i) => (
-						<GridTile
-							key={i}
-							title={movie.title}
-							subtitle={movie.year}
-							actionIcon={<IconButton tooltip={movie.rating} touch={true} tooltipPosition="top-center"><StarBorder color="yellow"/></IconButton>}
-							actionPosition="right"
-							>
-							<img style={{width: '100%'}} src={movie.large_cover_image}/>
-						</GridTile>))
-					}
-				</GridList>
+			<div>
+				{!this.state.movies.length ?
+					<Center style={styles.loader}><CircularProgress size={80} thickness={5}/></Center> :
+					<div style={styles.root}>
+						<GridList cellHeight={'auto'} style={styles.gridList} cols={4}>
+							<Subheader>TODO filter</Subheader>
+							{this.state.movies.map((movie, i) => (
+								<GridTile
+									key={i}
+									title={movie.title}
+									subtitle={movie.year}
+									actionIcon={<IconButton tooltip={movie.rating} touch={true} tooltipPosition="top-center"><StarBorder color="yellow"/></IconButton>}
+									actionPosition="right"
+									>
+									<img style={{width: '100%'}} src={movie.large_cover_image}/>
+								</GridTile>))
+							}
+						</GridList>
+					</div>
+				}
 			</div>
 		);
 	}
