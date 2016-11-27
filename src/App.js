@@ -14,6 +14,7 @@ import Reset from './visitor/Reset';
 import Logged from './logged/Logged';
 import Search from './logged/Search';
 import Profile from './logged/Profile';
+import Movie from './logged/Movie';
 
 const muiTheme = getMuiTheme({
 	palette: {
@@ -35,7 +36,7 @@ class App extends Component {
 							<IndexRoute component={Search}/>
 							<Route path="user/:id" component={Tmp}/>
 							<Route path="profile" component={Profile}/>
-							<Route path="movie/:id" component={Tmp}/>
+							<Route path="movie/:id" component={Movie}/>
 						</Route>
 						<Route path="login" component={Login}/>
 						<Route path="register" component={Register}/>
