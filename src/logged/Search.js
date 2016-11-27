@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import {Link} from 'react-router';
 import {GridList, GridTile} from 'material-ui/GridList';
 import IconButton from 'material-ui/IconButton';
 import StarBorder from 'material-ui/svg-icons/toggle/star';
@@ -49,16 +50,18 @@ class Search extends Component {
 					<div style={styles.root}>
 						<GridList cellHeight={'auto'} style={styles.gridList} cols={4}>
 							<Subheader>TODO filter</Subheader>
-							{this.state.movies.map((movie, i) => (
-								<GridTile
-									key={i}
-									title={movie.title}
-									subtitle={movie.year}
-									actionIcon={<IconButton tooltip={movie.rating} touch={true} tooltipPosition="top-center"><StarBorder color="yellow"/></IconButton>}
-									actionPosition="right"
-									>
-									<img style={{width: '100%'}} src={movie.large_cover_image}/>
-								</GridTile>))
+							{this.state.movies.map(movie => (
+								<Link key={movie.id} to={'/movie/' + movie.id}>
+									<GridTile
+										title={movie.title}
+										subtitle={movie.year}
+										actionIcon={<IconButton tooltip={movie.rating} touch={Boolean(true)} tooltipPosition="top-center"><StarBorder color="yellow"/></IconButton>}
+										actionPosition="right"
+										>
+										<img style={{width: '100%'}} src={movie.large_cover_image}/>
+									</GridTile>
+								</Link>
+							))
 							}
 						</GridList>
 					</div>
