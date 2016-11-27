@@ -4,11 +4,12 @@
   "private": true,
   "xo": {
     "extends": "xo-react",
+    "envs": ["node", "browser", "es6"],
     "rules": {
       "unicorn/filename-case": 0,
       "import/no-unassigned-import": 0,
       "react/forbid-component-props": 0,
-      "no-negated-condition" : 0
+      "no-negated-condition": 0
     }
   },
   "proxy": "https://yts.ag",
