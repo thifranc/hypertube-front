@@ -4,7 +4,7 @@ import './Center.css';
 class Center extends Component {
 	render() {
 		return (
-			<div className={this.props.className + ' Center'} >
+			<div style={this.props.style} className={this.props.className + ' Center'} >
 				<div>
 					{this.props.children}
 				</div>
