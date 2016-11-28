@@ -7,6 +7,10 @@
 	display : inline-block;
 }
 
+.VisitorImg {
+	width : 100px;
+}
+
 .VisitorHidden {
 	display: none;
 }

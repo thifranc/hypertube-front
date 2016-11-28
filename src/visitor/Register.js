@@ -13,7 +13,6 @@ import Divider from 'material-ui/Divider';
 import Center from '../util/Center';
 import './visitor.css';
 
-
 class Register extends Component {
 	constructor() {
 		super();
@@ -29,19 +28,23 @@ class Register extends Component {
 			mail: '',
 			errMail: false,
 			passwd: '',
-			errPasswd: false
+			errPasswd: false,
+			preview: ''
 		};
 		this.handleLowercase = this.handleLowercase.bind(this);
 		this.handleFillChar = this.handleFillChar.bind(this);
 		this.handleValidForm = this.handleValidForm.bind(this);
 		this.handleChange = this.handleChange.bind(this);
+		this.handleFileChange = this.handleFileChange.bind(this);
+		this.attachFile = this.attachFile.bind(this);
 	}
 	handleChange(e, index, value) {
 		if (value !== 'en' &&
 			value !== 'fr' &&
-			value !== 'es')
+			value !== 'es') {
 			this.setState({errLang: true});
-		this.setState({language:value});
+		}
+		this.setState({language: value});
 	}
 	handleLowercase(e) {
 		var regLowercase = new RegExp('^[a-z]*$');
@@ -79,7 +82,19 @@ class Register extends Component {
 	handleFillChar(e) {
 		this.setState({[e.target.id.toLowerCase()]: e.target.value});
 	}
+	attachFile(e) {
+		this.setState({preview: e.target.result});
+	}
+	handleFileChange(event) {
+		console.log(event);
+		if (event.target.files && event.target.files[0]) {
+			var reader = new FileReader();
+			reader.onload = this.attachFile;
+			reader.readAsDataURL(event.target.files[0]);
+		}
+	}
 	render() {
+		const classImg = 'VisitorMarge VisitorImg';
 		return (
 			<Center className="VisitorHeight">
 				<Paper zDepth={2}>
@@ -87,10 +102,20 @@ class Register extends Component {
 						showMenuIconButton={false}
 						title="Register"
 						/>
-					<input type="file"
+					<input
+						accept=".png,.gif,.jpg,.jpeg"
 						className="VisitorMarge"
-					>
-					</input>
+						type="file"
+						onChange={this.handleFileChange}
+						/>
+					<br/>
+					<Center>
+						<img
+							className={this.state.preview ? classImg : 'VisitorHidden'}
+							src={this.state.preview}
+							alt=""
+							/>
+					</Center>
 					<Divider/>
 					<TextField
 						className="VisitorMarge"
@@ -143,17 +168,17 @@ class Register extends Component {
 						errorText={this.state.errPasswd && 'Password must have one upper, lower, and digit, and be at least 8 char long'}
 						/>
 					<br/>
-					  <SelectField
+					<SelectField
 						className="VisitorMarge"
 						floatingLabelText="Language"
 						value={this.state.language}
 						onChange={this.handleChange}
 						errorText={this.state.errLang && 'You have to choose between the available languages'}
-					  >
-						<MenuItem value="en" primaryText="English" />
-						<MenuItem value="fr" primaryText="Francais" />
-						<MenuItem value="es" primaryText="Castellano" />
-					  </SelectField>
+						>
+						<MenuItem value="en" primaryText="English"/>
+						<MenuItem value="fr" primaryText="Francais"/>
+						<MenuItem value="es" primaryText="Castellano"/>
+					</SelectField>
 					<br/>
 					<Center>
 						<RaisedButton
