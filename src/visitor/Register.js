@@ -6,8 +6,13 @@ import AppBar from 'material-ui/AppBar';
 import RaisedButton from 'material-ui/RaisedButton';
 import {Link} from 'react-router';
 
+import SelectField from 'material-ui/SelectField';
+import MenuItem from 'material-ui/MenuItem';
+import Divider from 'material-ui/Divider';
+
 import Center from '../util/Center';
 import './visitor.css';
+
 
 class Register extends Component {
 	constructor() {
@@ -15,6 +20,8 @@ class Register extends Component {
 		this.state = {
 			login: '',
 			errLogin: false,
+			language: 'en',
+			errLang: false,
 			firstname: '',
 			errFirstname: false,
 			name: '',
@@ -27,6 +34,14 @@ class Register extends Component {
 		this.handleLowercase = this.handleLowercase.bind(this);
 		this.handleFillChar = this.handleFillChar.bind(this);
 		this.handleValidForm = this.handleValidForm.bind(this);
+		this.handleChange = this.handleChange.bind(this);
+	}
+	handleChange(e, index, value) {
+		if (value !== 'en' &&
+			value !== 'fr' &&
+			value !== 'es')
+			this.setState({errLang: true});
+		this.setState({language:value});
 	}
 	handleLowercase(e) {
 		var regLowercase = new RegExp('^[a-z]*$');
@@ -54,10 +69,9 @@ class Register extends Component {
 		}, this.ajaxCall);
 	}
 	ajaxCall() {
-		console.log(this.state);
 		if (!this.state.errPasswd && !this.state.errMail &&
 			!this.state.errLogin && !this.state.errFirstname &&
-			!this.state.errName) {
+			!this.state.errName && !this.state.errLang) {
 			console.log('all valid');
 			// insert AJAX call here
 		}
@@ -73,6 +87,11 @@ class Register extends Component {
 						showMenuIconButton={false}
 						title="Register"
 						/>
+					<input type="file"
+						className="VisitorMarge"
+					>
+					</input>
+					<Divider/>
 					<TextField
 						className="VisitorMarge"
 						value={this.state.login}
@@ -123,6 +142,18 @@ class Register extends Component {
 						type="password"
 						errorText={this.state.errPasswd && 'Password must have one upper, lower, and digit, and be at least 8 char long'}
 						/>
+					<br/>
+					  <SelectField
+						className="VisitorMarge"
+						floatingLabelText="Language"
+						value={this.state.language}
+						onChange={this.handleChange}
+						errorText={this.state.errLang && 'You have to choose between the available languages'}
+					  >
+						<MenuItem value="en" primaryText="English" />
+						<MenuItem value="fr" primaryText="Francais" />
+						<MenuItem value="es" primaryText="Castellano" />
+					  </SelectField>
 					<br/>
 					<Center>
 						<RaisedButton
