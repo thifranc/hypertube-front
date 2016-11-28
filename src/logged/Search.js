@@ -4,10 +4,13 @@ import {GridList, GridTile} from 'material-ui/GridList';
 import IconButton from 'material-ui/IconButton';
 import StarBorder from 'material-ui/svg-icons/toggle/star';
 import Subheader from 'material-ui/Subheader';
+import FontIcon from 'material-ui/FontIcon';
 import CircularProgress from 'material-ui/CircularProgress';
 import Center from '../util/Center';
 
 import 'whatwg-fetch';
+
+const eye = <FontIcon className="material-icons">remove_red_eyes</FontIcon>;
 
 const styles = {
 	root: {
@@ -26,9 +29,21 @@ class Search extends Component {
 		this.state = {
 			movies: []
 		};
+		this.ticking = true;
+		this.page = 2;
+
+		this.originalLoad = this.originalLoad.bind(this);
+		this.loadMore = this.loadMore.bind(this);
+		this.scrollWatch = this.scrollWatch.bind(this);
 	}
 	componentDidMount() {
-		fetch('/api/v2/list_movies.json', {
+		this.originalLoad();
+	}
+	componentWillUnmount() {
+		window.removeEventListener('scroll', this.scrollWatch, false);
+	}
+	originalLoad() {
+		fetch('/api/v2/list_movies.json?limit=20', {
 			method: 'GET',
 			credentials: 'include',
 			headers: {
@@ -37,10 +52,37 @@ class Search extends Component {
 		})
 			.then(res => res.json())
 			.then(res => {
-				this.setState({movies: res.data.movies});
 				console.log(res);
+				this.setState({movies: res.data.movies});
+				window.addEventListener('scroll', this.scrollWatch, false);
 			})
 			.catch(err => console.log(err));
+	}
+	loadMore() {
+		fetch('/api/v2/list_movies.json?limit=20&page=' + this.page, {
+			method: 'GET',
+			credentials: 'include',
+			headers: {
+				'Content-Type': 'application/json'
+			}
+		})
+			.then(res => res.json())
+			.then(res => {
+				console.log(res);
+				const movies = this.state.movies.concat(res.data.movies);
+				this.setState({movies: movies});
+				this.page++;
+				this.ticking = true;
+			})
+			.catch(err => console.log(err));
+	}
+	scrollWatch() {
+		if (this.ticking) {
+			if ((window.innerHeight + window.scrollY) >= document.body.offsetHeight) {
+				this.loadMore();
+				this.ticking = false;
+			}
+		}
 	}
 	render() {
 		return (
