@@ -12,7 +12,7 @@ import Divider from 'material-ui/Divider';
 
 import Center from '../util/Center';
 import './visitor.css';
-
+var FileInput = require('react-file-input');
 
 class Register extends Component {
 	constructor() {
@@ -29,12 +29,15 @@ class Register extends Component {
 			mail: '',
 			errMail: false,
 			passwd: '',
-			errPasswd: false
+			errPasswd: false,
+			preview: ''
 		};
 		this.handleLowercase = this.handleLowercase.bind(this);
 		this.handleFillChar = this.handleFillChar.bind(this);
 		this.handleValidForm = this.handleValidForm.bind(this);
 		this.handleChange = this.handleChange.bind(this);
+		this.handleFileChange= this.handleFileChange.bind(this);
+		this.attachFile= this.attachFile.bind(this);
 	}
 	handleChange(e, index, value) {
 		if (value !== 'en' &&
@@ -79,7 +82,19 @@ class Register extends Component {
 	handleFillChar(e) {
 		this.setState({[e.target.id.toLowerCase()]: e.target.value});
 	}
+	attachFile(e) {
+		this.setState({preview:e.target.result});
+	}
+	handleFileChange (event) {
+		 if (event.target.files && event.target.files[0]) {
+			         var reader = new FileReader();
+			         reader.onload = this.attachFile;
+			         reader.readAsDataURL(event.target.files[0]);
+			     }
+	}
 	render() {
+		const classImg = "VisitorMarge VisitorImg";
+		const classForm = "VisitorMarge VisitorForm";
 		return (
 			<Center className="VisitorHeight">
 				<Paper zDepth={2}>
@@ -87,10 +102,18 @@ class Register extends Component {
 						showMenuIconButton={false}
 						title="Register"
 						/>
-					<input type="file"
-						className="VisitorMarge"
-					>
-					</input>
+				        <form
+							className={classForm}
+							>
+					          <FileInput
+									placeholder="Choose file"
+				                    accept=".png,.gif,.jpg,.jpeg"
+				                    onChange={this.handleFileChange} />
+					        </form>
+							<img
+								className={classImg}
+								src={this.state.preview}
+								alt="Your Image"/>
 					<Divider/>
 					<TextField
 						className="VisitorMarge"
