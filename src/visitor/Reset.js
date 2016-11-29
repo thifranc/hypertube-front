@@ -44,6 +44,7 @@ class Reset extends Component {
 		});
 	}
 	render() {
+		const {messages, lang} = this.context;
 		return (
 			<Center className="VisitorHeight">
 				<Paper zDepth={2}>
@@ -58,7 +59,7 @@ class Reset extends Component {
 						hintText="New password"
 						type={this.state.showPasswd ? 'text' : 'password'}
 						floatingLabelText="New password"
-						errorText={this.state.errNewPasswd && 'Password must have one upper, lower, and digit, and be at least 8 char long'}
+						errorText={this.state.errNewPasswd && messages.errors.passwd}
 						/>
 					<Visibility
 						hoverColor={red800}
@@ -79,5 +80,12 @@ class Reset extends Component {
 		);
 	}
 }
+
+Reset.contextTypes = {
+	lang: React.PropTypes.string,
+	messages: React.PropTypes.object,
+	langChange: React.PropTypes.func,
+	router: React.PropTypes.object
+};
 
 export default Reset;

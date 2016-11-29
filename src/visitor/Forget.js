@@ -55,15 +55,16 @@ class Forget extends Component {
 		this.setState({errMail: false});
 	}
 	render() {
+		const {messages, lang} = this.context;
 		return (
 			<Center className="VisitorHeight">
 				<Paper zDepth={2}>
 					<AppBar
 						showMenuIconButton={false}
-						title="Forgot password"
+						title={messages.forget.forget}
 						/>
 					<RaisedButton
-						label="Change"
+						label={messages.forget.change}
 						className="VisitorMarge"
 						onClick={this.handleSwap}
 						/>
@@ -73,23 +74,23 @@ class Forget extends Component {
 							value={this.state.login}
 							id="login"
 							onChange={this.handleLogin}
-							hintText="Your login"
-							floatingLabelText="Login"
-							errorText={this.state.errLogin && 'Login is only lowercase characters'}
+							hintText={messages.login}
+							floatingLabelText={messages.login}
+							errorText={this.state.errLogin && messages.errors.lowercase}
 							/> :
 							<TextField
 								className={this.state.hidden ? 'VisitorMarge' : 'VisitorHidden'}
 								value={this.state.mail}
 								id="mail"
 								onChange={this.handleFillChar}
-								hintText="Your mail"
-								floatingLabelText="Mail"
-								errorText={this.state.errMail && 'Mail is not correct'}
+								hintText={messages.mail}
+								floatingLabelText={messages.mail}
+								errorText={this.state.errMail && messages.errors.mail}
 								/>
 					}
 					<br/>
 					<RaisedButton
-						label="Mail me"
+						label={messages.forget.mailMe}
 						className="VisitorCentered"
 						disabled={this.state.errLogin}
 						onClick={this.handleMail}
@@ -100,5 +101,12 @@ class Forget extends Component {
 		);
 	}
 }
+
+Forget.contextTypes = {
+	lang: React.PropTypes.string,
+	messages: React.PropTypes.object,
+	langChange: React.PropTypes.func,
+	router: React.PropTypes.object
+};
 
 export default Forget;

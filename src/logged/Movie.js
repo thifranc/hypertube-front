@@ -2,7 +2,6 @@ import React, {Component} from 'react';
 import CircularProgress from 'material-ui/CircularProgress';
 import FontIcon from 'material-ui/FontIcon';
 import Center from '../util/Center';
-import Carousel from 'nuka-carousel';
 
 import 'whatwg-fetch';
 import './Movie.css';

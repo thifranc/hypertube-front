@@ -15,6 +15,7 @@ import Logged from './logged/Logged';
 import Search from './logged/Search';
 import Profile from './logged/Profile';
 import Movie from './logged/Movie';
+import User from './logged/User';
 
 const muiTheme = getMuiTheme({
 	palette: {
@@ -34,7 +35,7 @@ class App extends Component {
 					<Router history={browserHistory}>
 						<Route path="/" component={Logged}>
 							<IndexRoute component={Search}/>
-							<Route path="user/:id" component={Tmp}/>
+							<Route path="user/:id" component={User}/>
 							<Route path="profile" component={Profile}/>
 							<Route path="movie/:id" component={Movie}/>
 						</Route>

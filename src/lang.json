@@ -5,8 +5,31 @@
 			"profil": "Profile",
 			"logout": "Logout"
 		},
+		"user" : {
+			"user": "User",
+			"lastSeen": "Last movie seen"
+		},
+		"errors" : {
+			"lowercase": "Only lowercase characters",
+			"mail": "Mail is not correct",
+			"passwd": "Password must have one upper, lower, and digit, and be at least 8 character long"
+		},
+		"loginPage" : {
+			"log": "Log in",
+			"register": "Register"
+		},
+		"forget" : {
+			"forget":"Forgot password",
+			"change":"Change",
+			"mailMe":"Mail me"
+		},
 		"login": "Login",
-		"password": "Password"
+		"language": "Language",
+		"passwd": "Password",
+		"firstname": "Firstname",
+		"name": "Name",
+		"home": "Home",
+		"mail": "Mail"
 	},
 	"fr": {
 		"nav" : {
@@ -14,16 +37,63 @@
 			"profil": "Profil",
 			"logout": "Déconnexion "
 		},
+		"user" : {
+			"user": "Utilisateur",
+			"lastSeen": "Dernier film vu"
+		},
+		"errors" : {
+			"lowercase": "Seulement des minuscules",
+			"mail": "Le courriel n'est pas correct",
+			"passwd": "Doit contenir une majuscule, une miniuscule, un chiffre, et 8 caracteres"
+		},
+		"loginPage" : {
+			"log":"Se connecter",
+			"register":"Creer un compte"
+		},
+		"forget" : {
+			"forget":"Mot de passe oublié",
+			"change":"Changer",
+			"mailMe":"Envoyer courriel"
+		},
 		"login": "Pseudo",
-		"password": "Mot de passe"
+		"language": "Langage",
+		"passwd": "Mot de passe",
+		"firstname": "Prénom",
+		"name": "Nom",
+		"home": "Accueil",
+		"mail": "Courriel"
 	},
 	"es": {
 		"nav" : {
-			"search": "Search",
-			"profil": "Profile",
-			"logout": "logout"
+			"search": "Buscar",
+			"profil": "Perfil",
+			"logout": "Salir"
 		},
-		"login": "Pseudo",
-		"password": "Mot de passe"
+		"user" : {
+			"user": "Usuario",
+			"lastSeen": "Ultima pelicula vista"
+		},
+		"errors" : {
+			"lowercase": "Solamente minúsculas letras",
+			"mail": "El correo no es correcto",
+			"passwd": "La contraseña una minúsculas, una majuscula, un cifra y ser de 8 letras o mas"
+		},
+		"loginPage" : {
+			"log":"Entrar",
+			"register":"Registrarme"
+		},
+		"forget" : {
+			"forget":"Contraseña olvida",
+			"change":"Cambiar",
+			"mailMe":"Enviarme correo"
+		},
+		"login": "Nombre de usuario",
+		"language": "Lenguaje",
+		"passwd": "Contraseña",
+		"lowercaseError": "Solamente minúsculas letras",
+		"firstname": "Nombre",
+		"name": "Apellido",
+		"home": "Accueil",
+		"mail": "Correo electrónico"
 	}
 }
