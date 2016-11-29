@@ -3,6 +3,20 @@
   min-height: calc(100vh - 56px);
   position: relative;
 }
+.closeDiv {
+  width: 50%;
+  margin-left: auto;
+  margin-right: auto;
+}
+.imgDiv {
+  width: 100%;
+  display:block;
+  margin-left: auto;
+  margin-right: auto;
+}
+.center {
+  text-align: center;
+}
 .MovieBackground {
   position: absolute;
   top: 0;
