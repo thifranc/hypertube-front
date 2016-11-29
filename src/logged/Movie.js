@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import CircularProgress from 'material-ui/CircularProgress';
 import FontIcon from 'material-ui/FontIcon';
 import Center from '../util/Center';
+import Carousel from 'nuka-carousel';
 
 import 'whatwg-fetch';
 import './Movie.css';
@@ -33,7 +34,7 @@ class Movie extends Component {
 			.then(res => res.json())
 			.then(res => {
 				this.setState({movie: res.data.movie});
-				console.log(res);
+				console.log(res.data.movie);
 			})
 			.catch(err => console.log(err));
 	}
@@ -44,14 +45,21 @@ class Movie extends Component {
 				{!Object.keys(movie).length ?
 					<Center style={styles.loader}><CircularProgress size={80} thickness={5}/></Center> :
 					<div className="MovieContainer">
-						<div className="MovieBackground" style={{backgroundImage: 'url(' + movie.large_screenshot_image1 + ')'}}></div>
-						<div className="MovieInfoBlock">
-							<h1>{movie.title}</h1>
-							<ul>
-								<li>{movie.year}</li>
-								<li>{movie.rating} {star}</li>
-							</ul>
-							<p>{movie.description_full}</p>
+						<div className="MovieMainColumn">
+							<div className="MovieMedia">
+								<img className="MovieMediaImage" src={movie.large_cover_image} alt="movie large cover image"/>
+							</div>
+							<div className="MovieInfo">
+								<h1>{movie.title}</h1>
+							</div>
+						</div>
+						<div className="MovieSecColumn">
+							<div className="MovieTorrentBlock">
+								<ul>
+									<li>Torrent</li>
+									<li>Torrent</li>
+								</ul>
+							</div>
 						</div>
 					</div>
 				}
