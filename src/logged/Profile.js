@@ -192,18 +192,6 @@ class Register extends Component {
 						errorText={this.state.errMail && 'Mail is not correct'}
 						/>
 					<br/>
-					<SelectField
-						className="VisitorMarge"
-						floatingLabelText="Language"
-						value={this.state.language}
-						onChange={this.handleChange}
-						errorText={this.state.errLang && 'You have to choose between the available languages'}
-						>
-						<MenuItem value="en" primaryText="English"/>
-						<MenuItem value="fr" primaryText="Francais"/>
-						<MenuItem value="es" primaryText="Castellano"/>
-					</SelectField>
-					<br/>
 					<Center>
 						<RaisedButton
 							label="Save changes"

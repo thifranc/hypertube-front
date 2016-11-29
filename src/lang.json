@@ -5,8 +5,25 @@
 			"profil": "Profile",
 			"logout": "Logout"
 		},
+		"user" : {
+			"user": "User",
+			"lastSeen": "Last movie seen"
+		},
+		"login" : {
+			"log":"Log in",
+			"register":"Register"
+		},
+		"forget" : {
+			"forget":"Forgot password",
+			"change":"Change",
+			"mailMe":"Mail me"
+		},
 		"login": "Login",
-		"password": "Password"
+		"password": "Password",
+		"firstname": "Firstname",
+		"name": "Name",
+		"home": "Home",
+		"mail": "Mail"
 	},
 	"fr": {
 		"nav" : {
@@ -14,16 +31,50 @@
 			"profil": "Profil",
 			"logout": "Déconnexion "
 		},
+		"user" : {
+			"user": "Utilisateur",
+			"lastSeen": "Dernier film vu"
+		},
+		"login" : {
+			"log":"Se connecter",
+			"register":"Creer un compte"
+		},
+		"forget" : {
+			"forget":"Mot de passe oublié",
+			"change":"Changer",
+			"mailMe":"Envoyer courriel"
+		},
 		"login": "Pseudo",
-		"password": "Mot de passe"
+		"password": "Mot de passe",
+		"firstname": "Prénom",
+		"name": "Nom",
+		"home": "Accueil",
+		"mail": "Courriel"
 	},
 	"es": {
 		"nav" : {
-			"search": "Search",
-			"profil": "Profile",
-			"logout": "logout"
+			"search": "Buscar",
+			"profil": "Perfil",
+			"logout": "Salir"
 		},
-		"login": "Pseudo",
-		"password": "Mot de passe"
+		"user" : {
+			"user": "Usuario",
+			"lastSeen": "Ultima pelicula vista"
+		},
+		"login" : {
+			"log":"Entrar",
+			"register":"Registrarme"
+		},
+		"forget" : {
+			"forget":"Contraseña olvida",
+			"change":"Cambiar",
+			"mailMe":"Enviarme correo"
+		},
+		"login": "Nombre de usuario",
+		"password": "Contraseña",
+		"firstname": "Nombre",
+		"name": "Apellido",
+		"home": "Accueil",
+		"mail": "Correo electrónico"
 	}
 }
