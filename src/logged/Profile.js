@@ -36,8 +36,6 @@ class Register extends Component {
 			errName: false,
 			mail: '',
 			errMail: false,
-			passwd: '',
-			errPasswd: false,
 			preview: ''
 		};
 		this.handleLowercase = this.handleLowercase.bind(this);
@@ -53,6 +51,7 @@ class Register extends Component {
 		})
 			.then(res => res.json())
 			.then(res => {
+				console.log('bonjour mom');
 				this.setState({
 					login: res.data.login,
 					name: res.data.name,
@@ -63,7 +62,18 @@ class Register extends Component {
 				});
 			})
 			.then(() => console.log(this.state.movie))
-			.catch(err => console.log(err));
+			.catch(err => {
+				console.log(err);
+				console.log('ERREUR COMME TOI');
+				this.setState({
+					login: 'login',
+					name: 'name',
+					firstname: 'firstname',
+					mail: 'mail@lol.fr',
+					language: 'en',
+					preview:'http://www.filecluster.com/howto/wp-content/uploads/2014/07/User-Default.jpg'
+				});
+			});
 	}
 	handleChange(e, index, value) {
 		if (value !== 'en' &&
@@ -87,19 +97,17 @@ class Register extends Component {
 	}
 	handleValidForm(e) {
 		e.preventDefault();
-		var regPasswd = new RegExp('^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z]).{8,}$');
 		var regMail = new RegExp('^[0-9a-z._-]+@{1}[0-9a-z.-]{2,}[.]{1}[a-z]{2,5}$', 'i');
 
 		this.setState({
 			errLogin: !this.state.login,
 			errName: !this.state.name,
 			errFirstname: !this.state.firstname,
-			errPasswd: !regPasswd.test(this.state.passwd),
 			errMail: !regMail.test(this.state.mail)
 		}, this.ajaxCall);
 	}
 	ajaxCall() {
-		if (!this.state.errPasswd && !this.state.errMail &&
+		if (!this.state.errMail &&
 			!this.state.errLogin && !this.state.errFirstname &&
 			!this.state.errName && !this.state.errLang) {
 			console.log('all valid');
@@ -127,7 +135,7 @@ class Register extends Component {
 				<Paper zDepth={2}>
 					<AppBar
 						showMenuIconButton={false}
-						title="Register"
+						title="Your Profile"
 						/>
 					<input
 						accept=".png,.gif,.jpg,.jpeg"
@@ -184,17 +192,6 @@ class Register extends Component {
 						errorText={this.state.errMail && 'Mail is not correct'}
 						/>
 					<br/>
-					<TextField
-						className="VisitorMarge"
-						value={this.state.passwd}
-						id="passwd"
-						onChange={this.handleFillChar}
-						hintText="Password Field"
-						floatingLabelText="Password"
-						type="password"
-						errorText={this.state.errPasswd && 'Password must have one upper, lower, and digit, and be at least 8 char long'}
-						/>
-					<br/>
 					<SelectField
 						className="VisitorMarge"
 						floatingLabelText="Language"
@@ -209,12 +206,11 @@ class Register extends Component {
 					<br/>
 					<Center>
 						<RaisedButton
-							label="Register"
+							label="Save changes"
 							className="VisitorMarge"
 							disabled={this.state.errLogin || this.state.errName || this.state.errFirstname}
 							onClick={this.handleValidForm}
 							/>
-						<Link to="/login" className="VisitorMarge">Home</Link>
 					</Center>
 				</Paper>
 			</Center>

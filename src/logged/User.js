@@ -24,7 +24,7 @@ const styles = {
 	}
 };
 
-var	defaultProfile = {
+var	defaultuser = {
 	img: 'http://www.filecluster.com/howto/wp-content/uploads/2014/07/User-Default.jpg',
 	login: 'login',
 	name: 'name',
@@ -33,11 +33,11 @@ var	defaultProfile = {
 	lastSeen: 6198
 };
 
-class Profile extends Component {
+class User extends Component {
 	constructor() {
 		super();
 		this.state = {
-			profile: defaultProfile,
+			user: defaultuser,
 			movie: {}
 		};
 	}
@@ -50,13 +50,13 @@ class Profile extends Component {
 			})
 			.then(res => {
 				if (typeof (res) !== 'undefined')
-					{this.setState({profile: res.data});}
+					{this.setState({user: res.data});}
 			})
 			.then(() => {
-				if (this.state.profile.lastSeen)
+				if (this.state.user.lastSeen)
 				{
 					return (
-						fetch('/api/v2/movie_details.json?movie_id=' + this.state.profile.lastSeen + '&with_images=true', {
+						fetch('/api/v2/movie_details.json?movie_id=' + this.state.user.lastSeen + '&with_images=true', {
 							method: 'GET',
 							credentials: 'include',
 							headers: {
@@ -75,12 +75,12 @@ class Profile extends Component {
 			.catch(err => console.log(err));
 	}
 	render() {
-		const profile = this.state.profile;
+		const user = this.state.user;
 		const movie = this.state.movie;
 		return (
 			<div>
 				<Paper zDepth={1}>
-				{!Object.keys(profile).length ?
+				{!Object.keys(user).length ?
 					<Center style={styles.loader}><CircularProgress size={80} thickness={5}/></Center> :
 					<Center>
 					<AppBar
@@ -88,12 +88,12 @@ class Profile extends Component {
 						title="User"
 						/>
 						<div className="center">
-							<img style={styles.img} src={profile.img}/>
+							<img style={styles.img} src={user.img}/>
 							<List style={styles.inline}>
-								<ListItem primaryText={profile.login}/>
-								<ListItem primaryText={profile.name}/>
-								<ListItem primaryText={profile.firstname}/>
-								<ListItem primaryText={profile.mail}/>
+								<ListItem primaryText={user.login}/>
+								<ListItem primaryText={user.name}/>
+								<ListItem primaryText={user.firstname}/>
+								<ListItem primaryText={user.mail}/>
 							</List>
 						</div>
 					</Center>
@@ -124,4 +124,4 @@ class Profile extends Component {
 	}
 }
 
-export default Profile;
+export default User;
