@@ -43,7 +43,7 @@ class Search extends Component {
 		window.removeEventListener('scroll', this.scrollWatch, false);
 	}
 	originalLoad() {
-		fetch('/api/v2/list_movies.json?limit=20', {
+		fetch('/api/yts/list_movies.json?limit=20', {
 			method: 'GET',
 			credentials: 'include',
 			headers: {
@@ -59,7 +59,7 @@ class Search extends Component {
 			.catch(err => console.log(err));
 	}
 	loadMore() {
-		fetch('/api/v2/list_movies.json?limit=20&page=' + this.page, {
+		fetch('/api/yts/list_movies.json?limit=20&page=' + this.page, {
 			method: 'GET',
 			credentials: 'include',
 			headers: {

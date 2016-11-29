@@ -12,7 +12,7 @@
       "no-negated-condition": 0
     }
   },
-  "proxy": "https://yts.ag",
+  "proxy": "http://localhost:4242",
   "devDependencies": {
     "eslint-config-xo-react": "^0.10.0",
     "eslint-plugin-react": "^6.7.1",

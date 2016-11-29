@@ -23,7 +23,7 @@ class Movie extends Component {
 	}
 	componentDidMount() {
 		const filmId = this.props.params.id;
-		fetch('/api/v2/movie_details.json?movie_id=' + filmId + '&with_images=true', {
+		fetch('/api/yts/movie_details.json?movie_id=' + filmId + '&with_images=true', {
 			method: 'GET',
 			credentials: 'include',
 			headers: {
