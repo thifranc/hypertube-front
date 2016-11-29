@@ -95,12 +95,13 @@ class Register extends Component {
 	}
 	render() {
 		const classImg = 'VisitorMarge VisitorImg';
+		const {messages, lang} = this.context;
 		return (
 			<Center className="VisitorHeight">
 				<Paper zDepth={2}>
 					<AppBar
 						showMenuIconButton={false}
-						title="Register"
+						title={messages.loginPage.register}
 						/>
 					<input
 						accept=".png,.gif,.jpg,.jpeg"
@@ -122,8 +123,8 @@ class Register extends Component {
 						value={this.state.login}
 						id="Login"
 						onChange={this.handleLowercase}
-						floatingLabelText="Login"
-						hintText="Your login"
+						floatingLabelText={messages.login}
+						hintText={messages.login}
 						errorText={this.state.errLogin && 'Login is only lowercase characters'}
 						/>
 					<br/>
@@ -132,8 +133,8 @@ class Register extends Component {
 						value={this.state.firstname}
 						onChange={this.handleLowercase}
 						id="Firstname"
-						floatingLabelText="Firstname"
-						hintText="Firstname"
+						floatingLabelText={messages.firstname}
+						hintText={messages.firstname}
 						errorText={this.state.errFirstname && 'Firstname is only lowercase characters'}
 						/>
 					<br/>
@@ -142,8 +143,8 @@ class Register extends Component {
 						value={this.state.name}
 						id="Name"
 						onChange={this.handleLowercase}
-						floatingLabelText="Name"
-						hintText="Name"
+						floatingLabelText={messages.name}
+						hintText={messages.name}
 						errorText={this.state.errName && 'Name is only lowercase characters'}
 						/>
 					<br/>
@@ -152,8 +153,8 @@ class Register extends Component {
 						value={this.state.mail}
 						id="mail"
 						onChange={this.handleFillChar}
-						hintText="Mail"
-						floatingLabelText="Mail"
+						hintText={messages.mail}
+						floatingLabelText={messages.mail}
 						errorText={this.state.errMail && 'Mail is not correct'}
 						/>
 					<br/>
@@ -162,15 +163,15 @@ class Register extends Component {
 						value={this.state.passwd}
 						id="passwd"
 						onChange={this.handleFillChar}
-						hintText="Password Field"
-						floatingLabelText="Password"
+						hintText={messages.passwd}
+						floatingLabelText={messages.passwd}
 						type="password"
 						errorText={this.state.errPasswd && 'Password must have one upper, lower, and digit, and be at least 8 char long'}
 						/>
 					<br/>
 					<SelectField
 						className="VisitorMarge"
-						floatingLabelText="Language"
+						floatingLabelText={messages.language}
 						value={this.state.language}
 						onChange={this.handleChange}
 						errorText={this.state.errLang && 'You have to choose between the available languages'}
@@ -182,7 +183,7 @@ class Register extends Component {
 					<br/>
 					<Center>
 						<RaisedButton
-							label="Register"
+							label={messages.loginPage.register}
 							className="VisitorMarge"
 							disabled={this.state.errLogin || this.state.errName || this.state.errFirstname}
 							onClick={this.handleValidForm}
@@ -194,5 +195,12 @@ class Register extends Component {
 		);
 	}
 }
+
+Register.contextTypes = {
+	lang: React.PropTypes.string,
+	messages: React.PropTypes.object,
+	langChange: React.PropTypes.func,
+	router: React.PropTypes.object
+};
 
 export default Register;

@@ -22,7 +22,7 @@ var	defaultProfile = {
 	lastSeen: 6198
 };
 
-class Register extends Component {
+class Profile extends Component {
 	constructor() {
 		super();
 		this.state = {
@@ -129,13 +129,14 @@ class Register extends Component {
 		}
 	}
 	render() {
+		const {messages, lang} = this.context;
 		const classImg = 'VisitorMarge VisitorImg';
 		return (
 			<Center className="VisitorHeight">
 				<Paper zDepth={2}>
 					<AppBar
 						showMenuIconButton={false}
-						title="Your Profile"
+						title={messages.nav.profil}
 						/>
 					<input
 						accept=".png,.gif,.jpg,.jpeg"
@@ -157,8 +158,8 @@ class Register extends Component {
 						value={this.state.login}
 						id="Login"
 						onChange={this.handleLowercase}
-						floatingLabelText="Login"
-						hintText="Your login"
+						floatingLabelText={messages.login}
+						hintText={messages.login}
 						errorText={this.state.errLogin && 'Login is only lowercase characters'}
 						/>
 					<br/>
@@ -167,8 +168,8 @@ class Register extends Component {
 						value={this.state.firstname}
 						onChange={this.handleLowercase}
 						id="Firstname"
-						floatingLabelText="Firstname"
-						hintText="Firstname"
+						floatingLabelText={messages.firstname}
+						hintText={messages.firstname}
 						errorText={this.state.errFirstname && 'Firstname is only lowercase characters'}
 						/>
 					<br/>
@@ -177,8 +178,8 @@ class Register extends Component {
 						value={this.state.name}
 						id="Name"
 						onChange={this.handleLowercase}
-						floatingLabelText="Name"
-						hintText="Name"
+						floatingLabelText={messages.name}
+						hintText={messages.name}
 						errorText={this.state.errName && 'Name is only lowercase characters'}
 						/>
 					<br/>
@@ -187,8 +188,8 @@ class Register extends Component {
 						value={this.state.mail}
 						id="mail"
 						onChange={this.handleFillChar}
-						hintText="Mail"
-						floatingLabelText="Mail"
+						hintText={messages.mail}
+						floatingLabelText={messages.mail}
 						errorText={this.state.errMail && 'Mail is not correct'}
 						/>
 					<br/>
@@ -206,4 +207,11 @@ class Register extends Component {
 	}
 }
 
-export default Register;
+Profile.contextTypes = {
+	lang: React.PropTypes.string,
+	messages: React.PropTypes.object,
+	langChange: React.PropTypes.func,
+	router: React.PropTypes.object
+};
+
+export default Profile;

@@ -75,6 +75,7 @@ class User extends Component {
 			.catch(err => console.log(err));
 	}
 	render() {
+		const {messages, lang} = this.context;
 		const user = this.state.user;
 		const movie = this.state.movie;
 		return (
@@ -85,7 +86,7 @@ class User extends Component {
 					<Center>
 					<AppBar
 						showMenuIconButton={false}
-						title="User"
+						title={messages.user.user}
 						/>
 						<div className="center">
 							<img style={styles.img} src={user.img}/>
@@ -106,7 +107,7 @@ class User extends Component {
 						<div className="closeDiv center">
 						<AppBar
 							showMenuIconButton={false}
-							title="Last movie seen"
+							title={messages.user.lastSeen}
 							/>
 							<img className="imgDiv" src={movie.large_cover_image}/>
 							<h1>{movie.title}</h1>
@@ -123,5 +124,12 @@ class User extends Component {
 		);
 	}
 }
+
+User.contextTypes = {
+	lang: React.PropTypes.string,
+	messages: React.PropTypes.object,
+	langChange: React.PropTypes.func,
+	router: React.PropTypes.object
+};
 
 export default User;

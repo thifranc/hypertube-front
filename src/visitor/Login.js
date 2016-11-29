@@ -53,12 +53,13 @@ class Login extends Component {
 		this.setState({passwd: e.target.value});
 	}
 	render() {
+		const {messages, lang} = this.context;
 		return (
 			<Center className="VisitorHeight">
 				<Paper zDepth={2}>
 					<AppBar
 						showMenuIconButton={false}
-						title="Login"
+						title={messages.loginPage.log}
 						/>
 					<RaisedButton
 						className="VisitorMarge"
@@ -84,8 +85,8 @@ class Login extends Component {
 							className="VisitorMarge"
 							value={this.state.login}
 							onChange={this.handleLogin}
-							floatingLabelText="Login"
-							hintText="Your login"
+							floatingLabelText={messages.login}
+							hintText={messages.login}
 							errorText={this.state.errLogin && 'Login is only lowercase characters'}
 							/>
 						<br/>
@@ -94,15 +95,15 @@ class Login extends Component {
 							value={this.state.passwd}
 							id="passwd"
 							onChange={this.handleFillChar}
-							hintText="Password Field"
-							floatingLabelText="Password"
+							hintText={messages.passwd}
+							floatingLabelText={messages.passwd}
 							type="password"
 							errorText={this.state.errPasswd && 'Password must have one upper, lower, and digit, and be at least 8 char long'}
 							/>
 						<br/>
 						<Center>
 							<RaisedButton
-								label="Log In"
+								label={messages.loginPage.log}
 								className="VisitorMarge"
 								disabled={this.state.errLogin}
 								onClick={this.handlePasswd}
@@ -110,7 +111,7 @@ class Login extends Component {
 						</Center>
 						<Divider/>
 						<Center>
-							<Link to="/register" className="VisitorMarge">Sign up</Link>
+							<Link to="/register" className="VisitorMarge">{messages.loginPage.register}</Link>
 							<Link to="/forget" className="VisitorMarge">Reset password</Link>
 						</Center>
 					</Center>
@@ -119,5 +120,12 @@ class Login extends Component {
 		);
 	}
 }
+
+Login.contextTypes = {
+	lang: React.PropTypes.string,
+	messages: React.PropTypes.object,
+	langChange: React.PropTypes.func,
+	router: React.PropTypes.object
+};
 
 export default Login;

@@ -9,9 +9,9 @@
 			"user": "User",
 			"lastSeen": "Last movie seen"
 		},
-		"login" : {
-			"log":"Log in",
-			"register":"Register"
+		"loginPage" : {
+			"log": "Log in",
+			"register": "Register"
 		},
 		"forget" : {
 			"forget":"Forgot password",
@@ -19,7 +19,8 @@
 			"mailMe":"Mail me"
 		},
 		"login": "Login",
-		"password": "Password",
+		"language": "Language",
+		"passwd": "Password",
 		"firstname": "Firstname",
 		"name": "Name",
 		"home": "Home",
@@ -35,7 +36,7 @@
 			"user": "Utilisateur",
 			"lastSeen": "Dernier film vu"
 		},
-		"login" : {
+		"loginPage" : {
 			"log":"Se connecter",
 			"register":"Creer un compte"
 		},
@@ -45,7 +46,8 @@
 			"mailMe":"Envoyer courriel"
 		},
 		"login": "Pseudo",
-		"password": "Mot de passe",
+		"language": "Langage",
+		"passwd": "Mot de passe",
 		"firstname": "Prénom",
 		"name": "Nom",
 		"home": "Accueil",
@@ -61,7 +63,7 @@
 			"user": "Usuario",
 			"lastSeen": "Ultima pelicula vista"
 		},
-		"login" : {
+		"loginPage" : {
 			"log":"Entrar",
 			"register":"Registrarme"
 		},
@@ -71,7 +73,8 @@
 			"mailMe":"Enviarme correo"
 		},
 		"login": "Nombre de usuario",
-		"password": "Contraseña",
+		"language": "Lenguaje",
+		"passwd": "Contraseña",
 		"firstname": "Nombre",
 		"name": "Apellido",
 		"home": "Accueil",
