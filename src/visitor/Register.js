@@ -125,7 +125,7 @@ class Register extends Component {
 						onChange={this.handleLowercase}
 						floatingLabelText={messages.login}
 						hintText={messages.login}
-						errorText={this.state.errLogin && 'Login is only lowercase characters'}
+						errorText={this.state.errLogin && messages.errors.lowercase}
 						/>
 					<br/>
 					<TextField
@@ -135,7 +135,7 @@ class Register extends Component {
 						id="Firstname"
 						floatingLabelText={messages.firstname}
 						hintText={messages.firstname}
-						errorText={this.state.errFirstname && 'Firstname is only lowercase characters'}
+						errorText={this.state.errFirstname && messages.errors.lowercase}
 						/>
 					<br/>
 					<TextField
@@ -145,7 +145,7 @@ class Register extends Component {
 						onChange={this.handleLowercase}
 						floatingLabelText={messages.name}
 						hintText={messages.name}
-						errorText={this.state.errName && 'Name is only lowercase characters'}
+						errorText={this.state.errName && messages.errors.lowercase}
 						/>
 					<br/>
 					<TextField
@@ -155,7 +155,7 @@ class Register extends Component {
 						onChange={this.handleFillChar}
 						hintText={messages.mail}
 						floatingLabelText={messages.mail}
-						errorText={this.state.errMail && 'Mail is not correct'}
+						errorText={this.state.errMail && messages.errors.mail}
 						/>
 					<br/>
 					<TextField
@@ -166,7 +166,7 @@ class Register extends Component {
 						hintText={messages.passwd}
 						floatingLabelText={messages.passwd}
 						type="password"
-						errorText={this.state.errPasswd && 'Password must have one upper, lower, and digit, and be at least 8 char long'}
+						errorText={this.state.errPasswd && messages.errors.passwd}
 						/>
 					<br/>
 					<SelectField

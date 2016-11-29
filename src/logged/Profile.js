@@ -4,10 +4,7 @@ import Paper from 'material-ui/Paper';
 import TextField from 'material-ui/TextField';
 import AppBar from 'material-ui/AppBar';
 import RaisedButton from 'material-ui/RaisedButton';
-import {Link} from 'react-router';
 
-import SelectField from 'material-ui/SelectField';
-import MenuItem from 'material-ui/MenuItem';
 import Divider from 'material-ui/Divider';
 
 import Center from '../util/Center';
@@ -71,7 +68,7 @@ class Profile extends Component {
 					firstname: 'firstname',
 					mail: 'mail@lol.fr',
 					language: 'en',
-					preview:'http://www.filecluster.com/howto/wp-content/uploads/2014/07/User-Default.jpg'
+					preview: 'http://www.filecluster.com/howto/wp-content/uploads/2014/07/User-Default.jpg'
 				});
 			});
 	}
@@ -160,7 +157,7 @@ class Profile extends Component {
 						onChange={this.handleLowercase}
 						floatingLabelText={messages.login}
 						hintText={messages.login}
-						errorText={this.state.errLogin && 'Login is only lowercase characters'}
+						errorText={this.state.errLogin && messages.errors.lowercase}
 						/>
 					<br/>
 					<TextField
@@ -170,7 +167,7 @@ class Profile extends Component {
 						id="Firstname"
 						floatingLabelText={messages.firstname}
 						hintText={messages.firstname}
-						errorText={this.state.errFirstname && 'Firstname is only lowercase characters'}
+						errorText={this.state.errFirstname && messages.errors.lowercase}
 						/>
 					<br/>
 					<TextField
@@ -180,7 +177,7 @@ class Profile extends Component {
 						onChange={this.handleLowercase}
 						floatingLabelText={messages.name}
 						hintText={messages.name}
-						errorText={this.state.errName && 'Name is only lowercase characters'}
+						errorText={this.state.errName && messages.errors.lowercase}
 						/>
 					<br/>
 					<TextField
@@ -190,7 +187,7 @@ class Profile extends Component {
 						onChange={this.handleFillChar}
 						hintText={messages.mail}
 						floatingLabelText={messages.mail}
-						errorText={this.state.errMail && 'Mail is not correct'}
+						errorText={this.state.errMail && messages.errors.mail}
 						/>
 					<br/>
 					<Center>

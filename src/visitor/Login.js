@@ -87,7 +87,7 @@ class Login extends Component {
 							onChange={this.handleLogin}
 							floatingLabelText={messages.login}
 							hintText={messages.login}
-							errorText={this.state.errLogin && 'Login is only lowercase characters'}
+							errorText={this.state.errLogin && messages.errors.lowercase}
 							/>
 						<br/>
 						<TextField
@@ -98,7 +98,7 @@ class Login extends Component {
 							hintText={messages.passwd}
 							floatingLabelText={messages.passwd}
 							type="password"
-							errorText={this.state.errPasswd && 'Password must have one upper, lower, and digit, and be at least 8 char long'}
+							errorText={this.state.errPasswd && messages.errors.passwd}
 							/>
 						<br/>
 						<Center>

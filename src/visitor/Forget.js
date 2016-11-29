@@ -76,7 +76,7 @@ class Forget extends Component {
 							onChange={this.handleLogin}
 							hintText={messages.login}
 							floatingLabelText={messages.login}
-							errorText={this.state.errLogin && 'Login is only lowercase characters'}
+							errorText={this.state.errLogin && messages.errors.lowercase}
 							/> :
 							<TextField
 								className={this.state.hidden ? 'VisitorMarge' : 'VisitorHidden'}
@@ -85,7 +85,7 @@ class Forget extends Component {
 								onChange={this.handleFillChar}
 								hintText={messages.mail}
 								floatingLabelText={messages.mail}
-								errorText={this.state.errMail && 'Mail is not correct'}
+								errorText={this.state.errMail && messages.errors.mail}
 								/>
 					}
 					<br/>

@@ -49,12 +49,12 @@ class User extends Component {
 				res.json();
 			})
 			.then(res => {
-				if (typeof (res) !== 'undefined')
-					{this.setState({user: res.data});}
+				if (typeof (res) !== 'undefined') {
+					this.setState({user: res.data});
+				}
 			})
 			.then(() => {
-				if (this.state.user.lastSeen)
-				{
+				if (this.state.user.lastSeen) {
 					return (
 						fetch('/api/v2/movie_details.json?movie_id=' + this.state.user.lastSeen + '&with_images=true', {
 							method: 'GET',
@@ -65,8 +65,9 @@ class User extends Component {
 						})
 					);
 				}
-				else
-					{return null;}
+				else {
+					return null;
+				}
 			})
 			.then(res => res.json())
 			.then(res => {
@@ -81,43 +82,43 @@ class User extends Component {
 		return (
 			<div>
 				<Paper zDepth={1}>
-				{!Object.keys(user).length ?
-					<Center style={styles.loader}><CircularProgress size={80} thickness={5}/></Center> :
-					<Center>
-					<AppBar
-						showMenuIconButton={false}
-						title={messages.user.user}
-						/>
-						<div className="center">
-							<img style={styles.img} src={user.img}/>
-							<List style={styles.inline}>
-								<ListItem primaryText={user.login}/>
-								<ListItem primaryText={user.name}/>
-								<ListItem primaryText={user.firstname}/>
-								<ListItem primaryText={user.mail}/>
-							</List>
-						</div>
-					</Center>
+					{!Object.keys(user).length ?
+						<Center style={styles.loader}><CircularProgress size={80} thickness={5}/></Center> :
+						<Center>
+							<AppBar
+								showMenuIconButton={false}
+								title={messages.user.user}
+								/>
+							<div className="center">
+								<img style={styles.img} src={user.img}/>
+								<List style={styles.inline}>
+									<ListItem primaryText={user.login}/>
+									<ListItem primaryText={user.name}/>
+									<ListItem primaryText={user.firstname}/>
+									<ListItem primaryText={user.mail}/>
+								</List>
+							</div>
+						</Center>
 				}
 				</Paper>
 				<Paper zDepth={1}>
-				{!Object.keys(movie).length ?
-					<p> No movie seen yet, recommand him one ! </p> :
-					<Center>
-						<div className="closeDiv center">
-						<AppBar
-							showMenuIconButton={false}
-							title={messages.user.lastSeen}
-							/>
-							<img className="imgDiv" src={movie.large_cover_image}/>
-							<h1>{movie.title}</h1>
-							<List style={{display: 'inline-block'}}>
-								<ListItem primaryText={movie.rating} leftIcon={<ActionGrade/>}/>
-								<ListItem primaryText={movie.year} leftIcon={<Date/>}/>
-							</List>
-							<p>{movie.description_full}</p>
-						</div>
-					</Center>
+					{!Object.keys(movie).length ?
+						<p> No movie seen yet, recommand him one ! </p> :
+						<Center>
+							<div className="closeDiv center">
+								<AppBar
+									showMenuIconButton={false}
+									title={messages.user.lastSeen}
+									/>
+								<img className="imgDiv" src={movie.large_cover_image}/>
+								<h1>{movie.title}</h1>
+								<List style={{display: 'inline-block'}}>
+									<ListItem primaryText={movie.rating} leftIcon={<ActionGrade/>}/>
+									<ListItem primaryText={movie.year} leftIcon={<Date/>}/>
+								</List>
+								<p>{movie.description_full}</p>
+							</div>
+						</Center>
 				}
 				</Paper>
 			</div>

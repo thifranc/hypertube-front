@@ -9,6 +9,11 @@
 			"user": "User",
 			"lastSeen": "Last movie seen"
 		},
+		"errors" : {
+			"lowercase": "Only lowercase characters",
+			"mail": "Mail is not correct",
+			"passwd": "Password must have one upper, lower, and digit, and be at least 8 character long"
+		},
 		"loginPage" : {
 			"log": "Log in",
 			"register": "Register"
@@ -35,6 +40,11 @@
 		"user" : {
 			"user": "Utilisateur",
 			"lastSeen": "Dernier film vu"
+		},
+		"errors" : {
+			"lowercase": "Seulement des minuscules",
+			"mail": "Le courriel n'est pas correct",
+			"passwd": "Doit contenir une majuscule, une miniuscule, un chiffre, et 8 caracteres"
 		},
 		"loginPage" : {
 			"log":"Se connecter",
@@ -63,6 +73,11 @@
 			"user": "Usuario",
 			"lastSeen": "Ultima pelicula vista"
 		},
+		"errors" : {
+			"lowercase": "Solamente minúsculas letras",
+			"mail": "El correo no es correcto",
+			"passwd": "La contraseña una minúsculas, una majuscula, un cifra y ser de 8 letras o mas"
+		},
 		"loginPage" : {
 			"log":"Entrar",
 			"register":"Registrarme"
@@ -75,6 +90,7 @@
 		"login": "Nombre de usuario",
 		"language": "Lenguaje",
 		"passwd": "Contraseña",
+		"lowercaseError": "Solamente minúsculas letras",
 		"firstname": "Nombre",
 		"name": "Apellido",
 		"home": "Accueil",
