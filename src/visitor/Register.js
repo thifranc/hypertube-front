@@ -29,6 +29,7 @@ class Register extends Component {
 			errMail: false,
 			passwd: '',
 			errPasswd: false,
+			img: '',
 			preview: ''
 		};
 		this.handleLowercase = this.handleLowercase.bind(this);
@@ -76,7 +77,26 @@ class Register extends Component {
 			!this.state.errLogin && !this.state.errFirstname &&
 			!this.state.errName && !this.state.errLang) {
 			console.log('all valid');
-			// insert AJAX call here
+			var data = {
+				name : this.state.name,
+				firstname : this.state.firstname,
+				pseudo : this.state.login,
+				password : this.state.passwd,
+				email : this.state.mail,
+				lang : this.state.language,
+				path_img : this.state.img
+			};
+			data = JSON.stringify(data);
+			console.log(data);
+
+			fetch('/api/user', {
+				method: 'POST',
+				body:data
+			})
+					.then(res => {
+						console.log(res);
+					})
+					.catch(err => console.log);
 		}
 	}
 	handleFillChar(e) {
@@ -87,10 +107,14 @@ class Register extends Component {
 	}
 	handleFileChange(event) {
 		console.log(event);
+		console.log(event.target.files[0]);
 		if (event.target.files && event.target.files[0]) {
 			var reader = new FileReader();
 			reader.onload = this.attachFile;
 			reader.readAsDataURL(event.target.files[0]);
+			console.log(this.state.preview);
+			var img = event.target.files[0].name;
+			this.setState({img:img});
 		}
 	}
 	render() {
