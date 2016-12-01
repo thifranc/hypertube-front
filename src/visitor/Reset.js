@@ -31,17 +31,17 @@ class Reset extends Component {
 	ajaxCall() {
 		if (!this.state.errNewPasswd) {
 			var data = JSON.stringify({
-				id : this.props.params.id,
-				token : this.props.params.token,
-				password : this.state.newPasswd
+				id: this.props.params.id,
+				token: this.props.params.token,
+				password: this.state.newPasswd
 			});
 			fetch('/api/user/reset', {
-				method : 'PATCH',
-				body : data
+				method: 'PATCH',
+				body: data
 			})
 				.then(res => res.json())
 				.then(res => console.log(res))
-				.catch(err => console.log(err))
+				.catch(err => console.log(err));
 		}
 	}
 	handlePasswd() {

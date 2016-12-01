@@ -57,9 +57,9 @@ class Movie extends Component {
 							<Paper zDepth={2}>
 								<div className="MovieMedia">
 									<Carousel wrapAround={Boolean(true)} autoplay={Boolean(true)}>
-										<img src={movie.large_screenshot_image1} alt="movie large cover image" onLoad={() => {window.dispatchEvent(new Event('resize'));}} />
-										<img src={movie.large_screenshot_image2} alt="movie large cover image" onLoad={() => {window.dispatchEvent(new Event('resize'));}} />
-										<img src={movie.large_screenshot_image3} alt="movie large cover image" onLoad={() => {window.dispatchEvent(new Event('resize'));}} />
+										<img src={movie.large_screenshot_image1} alt="movie large cover image" onLoad={() => {window.dispatchEvent(new Event('resize'));}}/>
+										<img src={movie.large_screenshot_image2} alt="movie large cover image" onLoad={() => {window.dispatchEvent(new Event('resize'));}}/>
+										<img src={movie.large_screenshot_image3} alt="movie large cover image" onLoad={() => {window.dispatchEvent(new Event('resize'));}}/>
 									</Carousel>
 								</div>
 								<div className="MovieInfo">
@@ -90,14 +90,14 @@ class Movie extends Component {
 											</TableRow>
 										</TableHeader>
 										<TableBody>
-									{movie.torrents.map((torrent, index) => (
-										<TableRow key={index}>
-											<TableRowColumn><Play/></TableRowColumn>
-											<TableRowColumn>{torrent.peers}</TableRowColumn>
-											<TableRowColumn>{torrent.seeds}</TableRowColumn>
-											<TableRowColumn>Yts</TableRowColumn>
-											<TableRowColumn><Eye/></TableRowColumn>
-										</TableRow>
+											{movie.torrents.map((torrent, index) => (
+												<TableRow key={index}>
+													<TableRowColumn><Play/></TableRowColumn>
+													<TableRowColumn>{torrent.peers}</TableRowColumn>
+													<TableRowColumn>{torrent.seeds}</TableRowColumn>
+													<TableRowColumn>Yts</TableRowColumn>
+													<TableRowColumn><Eye/></TableRowColumn>
+												</TableRow>
 										))}
 										</TableBody>
 									</Table>

@@ -44,7 +44,6 @@ class Login extends Component {
 	}
 	ajaxCall() {
 		if (!this.state.errPasswd && !this.state.errLogin) {
-
 			fetch('/api/user/auth/hypertube/' + this.state.login + '/' + this.state.passwd, {
 				method: 'GET'
 			})
