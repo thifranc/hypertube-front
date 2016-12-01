@@ -76,23 +76,26 @@ class Register extends Component {
 		if (!this.state.errPasswd && !this.state.errMail &&
 			!this.state.errLogin && !this.state.errFirstname &&
 			!this.state.errName && !this.state.errLang) {
-			console.log('all valid');
 			var data = {
 				name : this.state.name,
 				firstname : this.state.firstname,
 				pseudo : this.state.login,
 				password : this.state.passwd,
 				email : this.state.mail,
-				lang : this.state.language,
-				path_img : this.state.img
+				lang : this.state.language
 			};
 			data = JSON.stringify(data);
 			console.log(data);
 
 			fetch('/api/user', {
 				method: 'POST',
+				headers: {
+					    'Accept': 'application/json, application/xml',
+					    'Content-Type': 'multipart/form-data'
+					  },
 				body:data
 			})
+				.then(res => res.json())
 					.then(res => {
 						console.log(res);
 					})
@@ -128,6 +131,7 @@ class Register extends Component {
 						title={messages.loginPage.register}
 						/>
 					<input
+						name="path_img"
 						accept=".png,.gif,.jpg,.jpeg"
 						className="VisitorMarge"
 						type="file"
