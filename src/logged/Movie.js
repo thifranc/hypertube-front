@@ -54,9 +54,9 @@ class Movie extends Component {
 							<Paper zDepth={2}>
 								<div className="MovieMedia">
 									<Carousel wrapAround={Boolean(true)} autoplay={Boolean(true)}>
-										<img src={movie.large_screenshot_image1} alt="movie large cover image" onLoad={() => {window.dispatchEvent(new Event('resize'));}}/>
-										<img src={movie.large_screenshot_image2} alt="movie large cover image" onLoad={() => {window.dispatchEvent(new Event('resize'));}}/>
-										<img src={movie.large_screenshot_image3} alt="movie large cover image" onLoad={() => {window.dispatchEvent(new Event('resize'));}}/>
+										<img src={movie.large_screenshot_image1} alt="movie large sceenshot 1" onLoad={() => {window.dispatchEvent(new Event('resize'));}}/>
+										<img src={movie.large_screenshot_image2} alt="movie large sceenshot 2" onLoad={() => {window.dispatchEvent(new Event('resize'));}}/>
+										<img src={movie.large_screenshot_image3} alt="movie large sceenshot 3" onLoad={() => {window.dispatchEvent(new Event('resize'));}}/>
 									</Carousel>
 								</div>
 								<div className="MovieInfo">
