@@ -28,15 +28,26 @@ class Reset extends Component {
 	handleFillChar(e) {
 		this.setState({newPasswd: e.target.value});
 	}
+	ajaxCall() {
+		if (!this.state.errNewPasswd) {
+			var data = JSON.stringify({
+				id : this.props.params.id,
+				token : this.props.params.token,
+				password : this.state.newPasswd
+			});
+			fetch('/api/user/reset', {
+				method : 'PATCH',
+				body : data
+			})
+				.then(res => console.log(res))
+				.catch(err => console.log(err))
+		}
+	}
 	handlePasswd() {
 		var regPasswd = new RegExp('^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z]).{8,}$');
-		this.setState({errNewPasswd: !regPasswd.test(this.state.newPasswd)});
-		if (!this.state.errNewPasswd) {
-			console.log('Passwd reset');
-			// use this.props
-			// this.props.params.token;
-			// AJAX call here with this.token
-		}
+		this.setState(
+			{errNewPasswd: !regPasswd.test(this.state.newPasswd)},
+			this.ajaxCall);
 	}
 	handleEye() {
 		this.setState(prevState => {
