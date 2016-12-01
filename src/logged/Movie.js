@@ -1,18 +1,15 @@
 import React, {Component} from 'react';
 import Paper from 'material-ui/Paper';
 import CircularProgress from 'material-ui/CircularProgress';
-import FontIcon from 'material-ui/FontIcon';
-import Center from '../util/Center';
-import {List, ListItem} from 'material-ui/List';
-import ActionInfo from 'material-ui/svg-icons/action/info';
+import AppBar from 'material-ui/AppBar';
 import StarBorder from 'material-ui/svg-icons/toggle/star';
-import Eye from 'material-ui/svg-icons/image/remove-red-eye';
+import Cross from 'material-ui/svg-icons/navigation/close';
+import Tick from 'material-ui/svg-icons/action/done';
 import Play from 'material-ui/svg-icons/av/play-arrow';
 import IconButton from 'material-ui/IconButton';
 import Carousel from 'nuka-carousel';
-
-import {Table, TableBody, TableFooter, TableHeader, TableHeaderColumn, TableRow, TableRowColumn} from 'material-ui/Table';
-import TextField from 'material-ui/TextField';
+import {Table, TableBody, TableHeader, TableHeaderColumn, TableRow, TableRowColumn} from 'material-ui/Table';
+import Center from '../util/Center';
 
 import 'whatwg-fetch';
 import './Movie.css';
@@ -76,27 +73,30 @@ class Movie extends Component {
 						<div className="MovieSecColumn">
 							<Paper zDepth={2}>
 								<div className="MovieTorrentBlock">
+					<AppBar
+						showMenuIconButton={false}
+						title="Torrents"
+						/>
 									<Table>
-										<TableHeader>
+										<TableHeader displaySelectAll={Boolean(false)} adjustForCheckbox={Boolean(false)}>
 											<TableRow selectable={false}>
-												<TableHeaderColumn colSpan="5" tooltip="Torrents" style={{textAlign: 'center'}}>Torrents</TableHeaderColumn>
-											</TableRow>
-											<TableRow selectable={false}>
-												<TableHeaderColumn tooltip="Play">Play</TableHeaderColumn>
-												<TableHeaderColumn tooltip="Peers">Peers</TableHeaderColumn>
-												<TableHeaderColumn tooltip="Seeds">Seeds</TableHeaderColumn>
-												<TableHeaderColumn tooltip="Tracker">Tracker</TableHeaderColumn>
-												<TableHeaderColumn tooltip="Viewed">View</TableHeaderColumn>
+												<TableHeaderColumn>Peers</TableHeaderColumn>
+												<TableHeaderColumn>Seeds</TableHeaderColumn>
+												<TableHeaderColumn>Tracker</TableHeaderColumn>
+												<TableHeaderColumn>Quality</TableHeaderColumn>
+												<TableHeaderColumn>Loaded</TableHeaderColumn>
+												<TableHeaderColumn>Play</TableHeaderColumn>
 											</TableRow>
 										</TableHeader>
-										<TableBody>
+										<TableBody displayRowCheckbox={Boolean(false)}>
 											{movie.torrents.map((torrent, index) => (
 												<TableRow key={index}>
-													<TableRowColumn><Play/></TableRowColumn>
 													<TableRowColumn>{torrent.peers}</TableRowColumn>
 													<TableRowColumn>{torrent.seeds}</TableRowColumn>
 													<TableRowColumn>Yts</TableRowColumn>
-													<TableRowColumn><Eye/></TableRowColumn>
+													<TableRowColumn>{torrent.quality}</TableRowColumn>
+													<TableRowColumn><Cross color="red"/><Tick color="green"/></TableRowColumn>
+													<TableRowColumn><IconButton><Play/></IconButton></TableRowColumn>
 												</TableRow>
 										))}
 										</TableBody>

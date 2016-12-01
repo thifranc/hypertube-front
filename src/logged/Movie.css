@@ -27,3 +27,16 @@
   margin-right: 20px;
   display: inline-block;
 }
+@media (max-width: 1206px) {
+  .MovieContainer {
+    flex-direction: column;
+  }
+  .MovieMainColumn {
+    width: calc(100% - 30px);
+    max-width: none;
+  }
+  .MovieSecColumn {
+    width: calc(100% - 30px);
+    max-width: none;
+  }
+}

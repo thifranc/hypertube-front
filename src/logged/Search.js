@@ -4,13 +4,10 @@ import {GridList, GridTile} from 'material-ui/GridList';
 import IconButton from 'material-ui/IconButton';
 import StarBorder from 'material-ui/svg-icons/toggle/star';
 import Subheader from 'material-ui/Subheader';
-import FontIcon from 'material-ui/FontIcon';
 import CircularProgress from 'material-ui/CircularProgress';
 import Center from '../util/Center';
 
 import 'whatwg-fetch';
-
-const eye = <FontIcon className="material-icons">remove_red_eyes</FontIcon>;
 
 const styles = {
 	root: {
