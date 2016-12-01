@@ -43,12 +43,12 @@ class Profile extends Component {
 		this.attachFile = this.attachFile.bind(this);
 	}
 	componentDidMount() {
-		fetch('/profile', {
+		fetch('/api/user/me', {
 			method: 'GET'
 		})
 			.then(res => res.json())
 			.then(res => {
-				console.log('bonjour mom');
+				console.log(res);
 				this.setState({
 					login: res.data.login,
 					name: res.data.name,
@@ -58,10 +58,7 @@ class Profile extends Component {
 					preview: res.data.img
 				});
 			})
-			.then(() => console.log(this.state.movie))
 			.catch(err => {
-				console.log(err);
-				console.log('ERREUR COMME TOI');
 				this.setState({
 					login: 'login',
 					name: 'name',

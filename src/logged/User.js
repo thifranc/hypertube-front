@@ -42,13 +42,13 @@ class User extends Component {
 		};
 	}
 	componentDidMount() {
-		fetch('/user', {
+		var id = this.props.params.id;
+		fetch('/api/user/' + id, {
 			method: 'GET'
 		})
+			.then(res => res.json())
 			.then(res => {
-				res.json();
-			})
-			.then(res => {
+				console.log(res);
 				if (typeof (res) !== 'undefined') {
 					this.setState({user: res.data});
 				}

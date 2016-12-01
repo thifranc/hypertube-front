@@ -75,8 +75,39 @@ class Register extends Component {
 		if (!this.state.errPasswd && !this.state.errMail &&
 			!this.state.errLogin && !this.state.errFirstname &&
 			!this.state.errName && !this.state.errLang) {
-			console.log('all valid');
-			// insert AJAX call here
+			var data = {
+				name: this.state.name,
+				firstname: this.state.firstname,
+				pseudo: this.state.login,
+				password: this.state.passwd,
+				email: this.state.mail,
+				lang: this.state.language
+			};
+
+			var formData = new FormData();
+
+			for (name in data) {
+				formData.append(name, data[name]);
+			}
+			formData.append('path_img', this.state.img);
+			console.log('looll', formData);
+			console.log(this.state.img);
+
+			for (var pair of formData.entries()) {
+				console.log(pair[0] + ', ' + pair[1]);
+			}
+			fetch('/api/user', {
+				method: 'POST',
+				body: formData
+			})
+			.then(res => res.json())
+
+			.then(res => {
+				console.log(res);
+			})
+			.catch(err => {
+				console.log(err);
+			});
 		}
 	}
 	handleFillChar(e) {
@@ -86,11 +117,14 @@ class Register extends Component {
 		this.setState({preview: e.target.result});
 	}
 	handleFileChange(event) {
-		console.log(event);
+		console.log('bonjour maman');
+		console.log(event.target.files[0]);
 		if (event.target.files && event.target.files[0]) {
 			var reader = new FileReader();
 			reader.onload = this.attachFile;
 			reader.readAsDataURL(event.target.files[0]);
+			console.log(this.state.preview);
+			this.setState({img: event.target.files[0]});
 		}
 	}
 	render() {
@@ -104,6 +138,7 @@ class Register extends Component {
 						title={messages.loginPage.register}
 						/>
 					<input
+						name="path_img"
 						accept=".png,.gif,.jpg,.jpeg"
 						className="VisitorMarge"
 						type="file"

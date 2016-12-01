@@ -42,7 +42,7 @@ class App extends Component {
 						<Route path="login" component={Login}/>
 						<Route path="register" component={Register}/>
 						<Route path="forget" component={Forget}/>
-						<Route path="reset/:token" component={Reset}/>
+						<Route path="reset/:id/:token" component={Reset}/>
 						<Route path="*" component={Tmp}/>
 					</Router>
 				</LangProvider>

@@ -43,10 +43,16 @@ class Login extends Component {
 		}, this.ajaxCall);
 	}
 	ajaxCall() {
-		console.log(this.state);
-		if (!this.state.errPasswd) {
-			console.log('all valid');
-			// insert AJAX call here
+		if (!this.state.errPasswd && !this.state.errLogin) {
+
+			fetch('/api/user/auth/hypertube/' + this.state.login + '/' + this.state.passwd, {
+				method: 'GET'
+			})
+				.then(res => res.json())
+				.then(res => {
+					console.log(res);
+				})
+				.catch(err => console.log);
 		}
 	}
 	handleFillChar(e) {
