@@ -29,7 +29,6 @@ class Register extends Component {
 			errMail: false,
 			passwd: '',
 			errPasswd: false,
-			img: '',
 			preview: ''
 		};
 		this.handleLowercase = this.handleLowercase.bind(this);
@@ -77,29 +76,38 @@ class Register extends Component {
 			!this.state.errLogin && !this.state.errFirstname &&
 			!this.state.errName && !this.state.errLang) {
 			var data = {
-				name : this.state.name,
-				firstname : this.state.firstname,
-				pseudo : this.state.login,
-				password : this.state.passwd,
-				email : this.state.mail,
-				lang : this.state.language
+				name: this.state.name,
+				firstname: this.state.firstname,
+				pseudo: this.state.login,
+				password: this.state.passwd,
+				email: this.state.mail,
+				lang: this.state.language
 			};
-			data = JSON.stringify(data);
-			console.log(data);
 
+			var formData = new FormData();
+
+			for (name in data) {
+				formData.append(name, data[name]);
+			}
+			formData.append('path_img', this.state.img);
+			console.log('looll', formData);
+			console.log(this.state.img);
+
+			for (var pair of formData.entries()) {
+				console.log(pair[0] + ', ' + pair[1]);
+			}
 			fetch('/api/user', {
 				method: 'POST',
-				headers: {
-					    'Accept': 'application/json, application/xml',
-					    'Content-Type': 'multipart/form-data'
-					  },
-				body:data
+				body: formData
 			})
-				.then(res => res.json())
-					.then(res => {
-						console.log(res);
-					})
-					.catch(err => console.log);
+			.then(res => res.json())
+
+			.then(res => {
+				console.log(res);
+			})
+			.catch(err => {
+				console.log(err);
+			});
 		}
 	}
 	handleFillChar(e) {
@@ -109,15 +117,14 @@ class Register extends Component {
 		this.setState({preview: e.target.result});
 	}
 	handleFileChange(event) {
-		console.log(event);
+		console.log('bonjour maman');
 		console.log(event.target.files[0]);
 		if (event.target.files && event.target.files[0]) {
 			var reader = new FileReader();
 			reader.onload = this.attachFile;
 			reader.readAsDataURL(event.target.files[0]);
 			console.log(this.state.preview);
-			var img = event.target.files[0].name;
-			this.setState({img:img});
+			this.setState({img: event.target.files[0]});
 		}
 	}
 	render() {

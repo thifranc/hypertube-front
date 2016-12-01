@@ -37,11 +37,32 @@ class Forget extends Component {
 	}
 	handleMail(e) {
 		let regMail = new RegExp('^[0-9a-z._-]+@{1}[0-9a-z.-]{2,}[.]{1}[a-z]{2,5}$', 'i');
-
-		if (regMail.test(e.target.value) === false) {
-			this.setState({errMail: true});
-		} else {
-			this.setState({errMail: false});
+		this.setState({
+			errMail: !regMail.test(this.state.mail)
+		}, this.ajaxCall);
+		console.log('bonjour lol');
+	}
+	ajaxCall() {
+		var data = {};
+		if (this.state.hidden && !this.state.errLogin && this.state.login) {
+			data = JSON.stringify({login: this.state.login});
+		} else if (!this.state.hidden && !this.state.errMail) {
+			data = JSON.stringify({login: this.state.mail});
+		}
+		if (typeof (data) === 'string') {
+			fetch('/api/user/forget', {
+				method: 'PATCH',
+				body: data
+			})
+				.then(res => {
+					console.log(res);
+				})
+				.then(res => {
+					console.log(res);
+				})
+				.catch(err => {
+					console.log(err);
+				});
 		}
 	}
 	handleFillChar(e) {
