@@ -25,6 +25,7 @@
   },
   "dependencies": {
     "material-ui": "^0.16.4",
+    "nuka-carousel": "^2.0.3",
     "react": "^15.4.0",
     "react-dom": "^15.4.0",
     "react-router": "^3.0.0",

@@ -1,48 +1,29 @@
 .MovieContainer {
   width: 100%;
   min-height: calc(100vh - 56px);
-  background: linear-gradient(-90deg, rgba(0, 0, 0, 1), rgba(72, 63, 63, 1));
+  background: linear-gradient(-90deg, rgba(224, 224, 224, 1), rgba(58, 46, 46, 1));
   display: flex;
   position: relative;
 }
-.closeDiv {
-  width: 50%;
-  margin-left: auto;
-  margin-right: auto;
+.MovieMainColumn {
+  padding: 15px;
+  max-width: 60%;
+  min-width: 400px;
 }
-.imgDiv {
-  width: 100%;
-  display:block;
-  margin-left: auto;
-  margin-right: auto;
+.MovieSecColumn {
+  max-width: 40%;
+  padding: 15px;
 }
-.center {
-  text-align: center;
+.MovieMedia{
 }
-.MovieBackground {
-  position: absolute;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  left: 0;
-  width: 100%;
-  background: top right no-repeat;
-  background-size: cover;
+.MovieInfo {
+  padding: 15px;
 }
-.MovieBackground:before {
-  content: '';
-  position: absolute;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  left: 0;
-  background: linear-gradient(90deg, rgba(0, 0, 0, 1), rgba(0, 0, 0, 0));
+.MovieInfoElemBlock {
+  padding: 0;
+  margin: 0;
 }
-.MovieInfoBlock {
-  position: absolute;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  left: 0;
-  color: #fff;
+.MovieInfoElem{
+  margin-right: 20px;
+  display: inline-block;
 }
