@@ -39,6 +39,7 @@ class Reset extends Component {
 				method : 'PATCH',
 				body : data
 			})
+				.then(res => res.json())
 				.then(res => console.log(res))
 				.catch(err => console.log(err))
 		}

@@ -54,9 +54,7 @@ class Forget extends Component {
 				method: 'PATCH',
 				body: data
 			})
-				.then(res => {
-					console.log(res);
-				})
+				.then(res => res.json())
 				.then(res => {
 					console.log(res);
 				})

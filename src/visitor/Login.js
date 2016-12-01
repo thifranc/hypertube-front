@@ -48,9 +48,7 @@ class Login extends Component {
 			fetch('/api/user/auth/hypertube/' + this.state.login + '/' + this.state.passwd, {
 				method: 'GET'
 			})
-				.then(res => {
-					console.log(res);
-				})
+				.then(res => res.json())
 				.then(res => {
 					console.log(res);
 				})
