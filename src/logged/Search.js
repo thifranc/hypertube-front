@@ -24,6 +24,7 @@ class Search extends Component {
 	constructor() {
 		super();
 		this.state = {
+			column: 4,
 			movies: []
 		};
 		this.ticking = true;
@@ -32,12 +33,14 @@ class Search extends Component {
 		this.originalLoad = this.originalLoad.bind(this);
 		this.loadMore = this.loadMore.bind(this);
 		this.scrollWatch = this.scrollWatch.bind(this);
+		this.columnWatch = this.columnWatch.bind(this);
 	}
 	componentDidMount() {
 		this.originalLoad();
 	}
 	componentWillUnmount() {
 		window.removeEventListener('scroll', this.scrollWatch, false);
+		window.removeEventListener('resize', this.columnWatch, false);
 	}
 	originalLoad() {
 		fetch('/api/yts/list_movies.json?limit=20', {
@@ -51,7 +54,9 @@ class Search extends Component {
 			.then(res => {
 				console.log(res);
 				this.setState({movies: res.data.movies});
+				this.columnWatch();
 				window.addEventListener('scroll', this.scrollWatch, false);
+				window.addEventListener('resize', this.columnWatch, false);
 			})
 			.catch(err => console.log(err));
 	}
@@ -81,13 +86,25 @@ class Search extends Component {
 			}
 		}
 	}
+	columnWatch() {
+		const width = window.innerWidth;
+		if (width > 1300) {
+			this.setState({column: 4});
+		} else if (width > 1000 && width < 1300) {
+			this.setState({column: 3});
+		} else if (width > 800 && width < 1000) {
+			this.setState({column: 2});
+		} else if (width < 600) {
+			this.setState({column: 1});
+		}
+	}
 	render() {
 		return (
 			<div>
 				{!this.state.movies.length ?
 					<Center style={styles.loader}><CircularProgress size={80} thickness={5}/></Center> :
 					<div style={styles.root}>
-						<GridList cellHeight={'auto'} style={styles.gridList} cols={4}>
+						<GridList cellHeight={'auto'} style={styles.gridList} cols={this.state.column}>
 							<Subheader>TODO filter</Subheader>
 							{this.state.movies.map(movie => (
 								<Link key={movie.id} to={'/movie/' + movie.id}>
