@@ -31,10 +31,12 @@ class Search extends Component {
 		this.state = {
 			column: 4,
 			genre: '',
-			rateMin: '',
-			rateMax: '',
-			yearMin: '',
-			yearMax: '',
+			term: '',
+			rateMin: 0,
+			rateMax: 10,
+			yearMin: 0,
+			yearMax: new Date().getFullYear(),
+			sortBy : '',
 			movies: []
 		};
 		this.ticking = true;
@@ -44,10 +46,11 @@ class Search extends Component {
 		this.loadMore = this.loadMore.bind(this);
 		this.scrollWatch = this.scrollWatch.bind(this);
 		this.columnWatch = this.columnWatch.bind(this);
-		this.handleChange = this.handleChange.bind(this);
 		this.ajaxCall = this.ajaxCall.bind(this);
 		this.handleGetValueYear = this.handleGetValueYear.bind(this);
 		this.handleGetValueRate = this.handleGetValueRate.bind(this);
+		this.handleSelectSortBy = this.handleSelectSortBy.bind(this);
+		this.handleSelectGenre = this.handleSelectGenre.bind(this);
 	}
 	componentDidMount() {
 		this.originalLoad();
@@ -131,7 +134,10 @@ class Search extends Component {
 		}
 	}
 	ajaxCall() {
-		fetch('/api/yts/list_movies.json?genre=' + this.state.genre + '&minimum_rating=' + this.state.rateMin, {
+		fetch('/api/yts/list_movies.json?genre=' + this.state.genre
+				+ '&minimum_rating=' + this.state.rateMin
+				+ '&query_term=' + this.state.term
+				+ '&sort_by=' + this.state.sortBy, {
 			method: 'GET',
 			credentials: 'include',
 			headers: {
@@ -140,29 +146,44 @@ class Search extends Component {
 		})
 			.then(res => res.json())
 			.then(res => {
+				console.log(res.data.movies);
+				return res.data.movies.filter(el => {
+					return (
+						this.state.yearMin < el.year && el.year < this.state.yearMax &&
+						el.rating < this.state.rateMax
+					);
+				})
+			})
+			.then (res => {
 				console.log(res);
-				this.setState({movies: res.data.movies});
+				this.setState({movies: res});
 				this.columnWatch();
 				window.addEventListener('scroll', this.scrollWatch, false);
 				window.addEventListener('resize', this.columnWatch, false);
 			})
 			.catch(err => console.log(err));
 	}
-	handleChange(e, index, value) {
+	handleSelectSortBy(e, i, value) {
+		this.setState({sortBy: value}, this.ajaxCall);
+	}
+	handleSelectGenre(e, i, value) {
 		this.setState({genre: value}, this.ajaxCall);
 	}
 	handleGetValueYear(e) {
-		console.log(e[0]);
 		this.setState({yearMin: e[0]});
 		this.setState({yearMax: e[1]});
 	}
 	handleGetValueRate(e) {
-		console.log(e);
 		this.setState({rateMin: e[0]});
 		this.setState({rateMax: e[1]});
 	}
-	callAPI() {}
 	render() {
+		const genre = ['Action', 'Animation', 'Adventure',
+			'Biography', 'Comedie', 'Crime', 'Documentary',
+			'Drama', 'Family', 'Fantasy', 'Film-noir', 'History',
+			'Horror', 'Music', 'Mystery', 'Romance', 'Sci-Fi',
+			'Thriller', 'War', 'Western'];
+		const sortBy = ['title', 'year', 'rating', 'peers', 'seeds', 'download_count', 'like_count', 'date_added'];
 		return (
 			<div>
 				{!this.state.movies.length ?
@@ -171,34 +192,34 @@ class Search extends Component {
 						<GridList cellHeight={'auto'} style={styles.gridList} cols={this.state.column}>
 							<Subheader>
 								<SelectField
+									id="genre"
 									floatingLabelText="Genre"
 									value={this.state.genre}
-									onChange={this.handleChange}
+									onChange={this.handleSelectGenre}
 									>
-									<MenuItem value="Action" primaryText="Action"/>
-									<MenuItem value="Animation" primaryText="Animation"/>
-									<MenuItem value="Adventure" primaryText="Adventure"/>
-									<MenuItem value="Biography" primaryText="Biography"/>
-									<MenuItem value="Comedie" primaryText="Comedie"/>
-									<MenuItem value="Crime" primaryText="Crime"/>
-									<MenuItem value="Documentary" primaryText="Documentary"/>
-									<MenuItem value="Drama" primaryText="Drama"/>
-									<MenuItem value="Family" primaryText="Family"/>
-									<MenuItem value="Fantasy" primaryText="Fantasy"/>
-									<MenuItem value="Film-noir" primaryText="Film-noir"/>
-									<MenuItem value="History" primaryText="History"/>
-									<MenuItem value="Horror" primaryText="Horror"/>
-									<MenuItem value="Music" primaryText="Music"/>
-									<MenuItem value="Mystery" primaryText="Mystery"/>
-									<MenuItem value="Romance" primaryText="Romance"/>
-									<MenuItem value="Sci-Fi" primaryText="Sci-Fi"/>
-									<MenuItem value="Thriller" primaryText="Thriller"/>
-									<MenuItem value="War" primaryText="War"/>
-									<MenuItem value="Western" primaryText="Western"/>
+									{genre.map(el => <MenuItem key={el} value={el} primaryText={el}/>)}
 								</SelectField>
-								<Slider min={0} max={12} range defaultValue={[0, 10]} onChange={this.handleGetValueRate} onAfterChange={this.ajaxCall}/>
-								<Slider min={0} max={new Date().getFullYear()} range defaultValue={[0, new Date().getFullYear()]} onChange={this.handleGetValueYear} onAfterChange={this.ajaxCall}/>
+								<SelectField
+									id="sortBy"
+									floatingLabelText="Sort By"
+									value={this.state.sortBy}
+									onChange={this.handleSelectSortBy}
+									>
+									{sortBy.map(el => <MenuItem key={el} value={el} primaryText={el}/>)}
+								</SelectField>
+								<Slider
+									min={this.state.rateMin} max={this.state.rateMax}
+									range defaultValue={[this.state.rateMin, this.state.rateMax]}
+									onChange={this.handleGetValueRate}
+									onAfterChange={this.ajaxCall}/>
+								<Slider
+									min={this.state.yearMin} max={this.state.yearMax} range
+									defaultValue={[this.state.yearMin, this.state.yearMax]}
+									onChange={this.handleGetValueYear}
+									onAfterChange={this.ajaxCall}/>
 								//add input search to search by cast
+							// http://www.material-ui.com/#/components/text-field
+							//   change this.state.term
 							</Subheader>
 							{this.state.movies.map(movie => (
 								<Link key={movie.id} to={'/movie/' + movie.id}>
