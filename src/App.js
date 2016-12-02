@@ -27,8 +27,6 @@ const muiTheme = getMuiTheme({
 
 const Tmp = () => null;
 
-var isLogged = function () {
-};
 function requireAuth(nextState, replace) {
 	console.log(!localStorage.getItem('token'));
 	if (!localStorage.getItem('token')) {
