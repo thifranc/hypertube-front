@@ -27,13 +27,25 @@ const muiTheme = getMuiTheme({
 
 const Tmp = () => null;
 
+var isLogged = function () {
+};
+function requireAuth(nextState, replace) {
+	console.log(!localStorage.getItem('token'));
+	if (!localStorage.getItem('token')) {
+		replace({
+			pathname: '/login',
+			state: {nextPathname: nextState.location.pathname}
+		});
+	}
+}
+
 class App extends Component {
 	render() {
 		return (
 			<MuiThemeProvider muiTheme={muiTheme}>
 				<LangProvider>
 					<Router history={browserHistory}>
-						<Route path="/" component={Logged}>
+						<Route path="/" component={Logged} onEnter={requireAuth}>
 							<IndexRoute component={Search}/>
 							<Route path="user/:id" component={User}/>
 							<Route path="profile" component={Profile}/>

@@ -4,11 +4,17 @@ import Nav from './Nav';
 import './Logged.css';
 
 class Logged extends Component {
+	constructor() {
+		super();
+		this.state = {
+			token: localStorage.getItem('token')
+		};
+	}
 	render() {
 		return (
 			<div className="LoggedBlock">
 				<Nav/>
-				{this.props.children}
+				{React.cloneElement(this.props.children, {token: this.state.token})}
 			</div>
 		);
 	}

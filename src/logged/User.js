@@ -30,7 +30,7 @@ var	defaultuser = {
 	name: 'name',
 	firstname: 'firstname',
 	mail: 'mail',
-	lastSeen: 6198
+	lastSeen: 6204
 };
 
 class User extends Component {
@@ -42,9 +42,16 @@ class User extends Component {
 		};
 	}
 	componentDidMount() {
+		console.log('BONJOUR THIBO');
+		console.log(this);
+		console.log(this.props);
+		console.log(this.state);
 		var id = this.props.params.id;
 		fetch('/api/user/' + id, {
-			method: 'GET'
+			method: 'GET',
+			headers: {
+				Authorization: 'Bearer ' + this.props.token
+			}
 		})
 			.then(res => res.json())
 			.then(res => {
@@ -73,7 +80,10 @@ class User extends Component {
 			.then(res => {
 				this.setState({movie: res.data.movie});
 			})
-			.catch(err => console.log(err));
+			.catch(err => {
+				console.log('AN ERROR OCCURRED');
+				console.log(err);
+			});
 	}
 	render() {
 		const {messages, lang} = this.context;
