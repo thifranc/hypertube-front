@@ -7,6 +7,7 @@ import Subheader from 'material-ui/Subheader';
 import CircularProgress from 'material-ui/CircularProgress';
 import Center from '../util/Center';
 import Slider from 'rc-slider';
+import TextField from 'material-ui/TextField';
 
 import SelectField from 'material-ui/SelectField';
 import MenuItem from 'material-ui/MenuItem';
@@ -32,6 +33,8 @@ class Search extends Component {
 			column: 4,
 			genre: '',
 			term: '',
+			errSearch: '',
+			search: '',
 			rateMin: 0,
 			rateMax: 10,
 			yearMin: 0,
@@ -51,6 +54,7 @@ class Search extends Component {
 		this.handleGetValueRate = this.handleGetValueRate.bind(this);
 		this.handleSelectSortBy = this.handleSelectSortBy.bind(this);
 		this.handleSelectGenre = this.handleSelectGenre.bind(this);
+		this.handleLowercase = this.handleLowercase.bind(this);
 	}
 	componentDidMount() {
 		this.originalLoad();
@@ -136,7 +140,7 @@ class Search extends Component {
 	ajaxCall() {
 		fetch('/api/yts/list_movies.json?genre=' + this.state.genre
 				+ '&minimum_rating=' + this.state.rateMin
-				+ '&query_term=' + this.state.term
+				+ '&query_term=' + this.state.search
 				+ '&sort_by=' + this.state.sortBy, {
 			method: 'GET',
 			credentials: 'include',
@@ -177,6 +181,17 @@ class Search extends Component {
 		this.setState({rateMin: e[0]});
 		this.setState({rateMax: e[1]});
 	}
+	handleLowercase(e) {
+		var regLowercase = new RegExp('^[a-z]*$');
+		var err = 'err' + e.target.id;
+
+		this.setState({[err]: !regLowercase.test(e.target.value)});
+		this.handleFillChar(e);
+	}
+	handleFillChar(e) {
+		this.setState({[e.target.id.toLowerCase()]: e.target.value});
+		this.ajaxCall();
+	}
 	render() {
 		const genre = ['Action', 'Animation', 'Adventure',
 			'Biography', 'Comedie', 'Crime', 'Documentary',
@@ -207,6 +222,14 @@ class Search extends Component {
 									>
 									{sortBy.map(el => <MenuItem key={el} value={el} primaryText={el}/>)}
 								</SelectField>
+								<TextField
+									value={this.state.search}
+									onChange={this.handleLowercase}
+									id="Search"
+									floatingLabelText="Search"//{messages.login}
+									hintText="search"//{messages.login}
+									errorText={this.state.errSearch && "Only lowercase characters please"}
+								/>
 								<Slider
 									min={this.state.rateMin} max={this.state.rateMax}
 									range defaultValue={[this.state.rateMin, this.state.rateMax]}
