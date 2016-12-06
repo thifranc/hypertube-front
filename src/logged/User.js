@@ -58,6 +58,8 @@ class User extends Component {
 			.then(res => {
 				console.log(res);
 				if (typeof (res) !== 'undefined') {
+					if (!res.data.path_img)
+						res.data.path_img = "default.jpg";
 					this.setState({user: res.data});
 				}
 			})

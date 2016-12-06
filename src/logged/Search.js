@@ -23,6 +23,9 @@ const styles = {
 	},
 	loader: {
 		height: 'calc(100vh - 56px)'
+	},
+	sliders: {
+		width: "50%"
 	}
 };
 
@@ -233,18 +236,26 @@ class Search extends Component {
 									hintText={messages.search.search}
 									errorText={this.state.errSearch && messages.errors.lowercase}
 									/>
+								<div style={styles.sliders}>
+								<p>
+									{messages.search.rate}
+								</p>
 								<Slider
 									min={this.state.rateMin} max={this.state.rateMax}
 									range defaultValue={[this.state.rateMin, this.state.rateMax]}
 									onChange={this.handleGetValueRate}
 									onAfterChange={this.handleAJAX}
 									/>
+								<p>
+									{messages.search.year}
+								</p>
 								<Slider
 									min={this.state.yearMin} max={this.state.yearMax} range
 									defaultValue={[this.state.yearMin, this.state.yearMax]}
 									onChange={this.handleGetValueYear}
 									onAfterChange={this.handleAJAX}
 									/>
+								</div>
 							</Subheader>
 							{this.state.movies.map(movie => (
 								<Link key={movie.id} to={'/movie/' + movie.id}>

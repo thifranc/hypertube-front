@@ -13,6 +13,9 @@ import Center from '../util/Center';
 
 import 'whatwg-fetch';
 import './Movie.css';
+const extraTorrentModule = require("extratorrent-api");
+
+const extraTorrentAPI = new extraTorrentModule();
 
 const styles = {
 	loader: {
@@ -40,6 +43,10 @@ class Movie extends Component {
 			.then(res => {
 				this.setState({movie: res.data.movie});
 				console.log(res.data.movie);
+				return extraTorrentAPI.search(res.data.movie.title);
+			})
+			.then(res => {
+				console.log(res);
 			})
 			.catch(err => console.log(err));
 	}
