@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-// import {browserHistory} from 'react-router';
+import {browserHistory} from 'react-router';
 
 import Paper from 'material-ui/Paper';
 import TextField from 'material-ui/TextField';
@@ -51,6 +51,7 @@ class Login extends Component {
 				.then(res => {
 					console.log(res);
 					localStorage.setItem('token', res.data.token);
+					browserHistory.push('/');
 				})
 				.catch(err => console.log(err));
 		}

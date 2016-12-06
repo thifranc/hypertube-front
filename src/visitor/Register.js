@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import {browserHistory} from 'react-router';
 
 import Paper from 'material-ui/Paper';
 import TextField from 'material-ui/TextField';
@@ -98,7 +99,9 @@ class Register extends Component {
 			.then(res => res.json())
 
 			.then(res => {
-				console.log(res);
+				console.log(res.token);
+				localStorage.setItem('token', res.token);
+				browserHistory.push('/');
 			})
 			.catch(err => {
 				console.log(err);

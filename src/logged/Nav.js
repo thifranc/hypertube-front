@@ -39,6 +39,7 @@ class Nav extends Component {
 		} else if (index === 2) {
 			browserHistory.push('/profile');
 		} else if (index === 3) {
+			localStorage.clear();
 			browserHistory.push('/login');
 		}
 	}

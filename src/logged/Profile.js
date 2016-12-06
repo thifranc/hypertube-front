@@ -44,12 +44,12 @@ class Profile extends Component {
 			.then(res => {
 				console.log(res);
 				this.setState({
-					login: res.data.login,
-					name: res.data.name,
-					firstname: res.data.firstname,
-					mail: res.data.mail,
-					language: res.data.language,
-					preview: res.data.img
+					login: res.data[0].pseudo,
+					name: res.data[0].name,
+					firstname: res.data[0].firstname,
+					mail: res.data[0].email,
+					language: res.data[0].lang,
+					preview: res.data[0].path_img
 				});
 			})
 			.catch(err => console.log(err));
