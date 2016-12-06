@@ -39,14 +39,10 @@ class Movie extends Component {
 				'Content-Type': 'application/json'
 			}
 		})
-			.then(res => res.text())
-			.then(res => {
-				 return JSON.parse(JSON.parse(res).body);
-			})
+			.then(res => res.json())
 			.then(res => {
 				console.log(res);
 				this.setState({movie: res.data.movie});
-			//	return extraTorrentAPI.search(res.data.movie.title);
 			})
 			.catch(err => console.log(err));
 	}
