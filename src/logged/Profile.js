@@ -44,7 +44,10 @@ class Profile extends Component {
 	}
 	componentDidMount() {
 		fetch('/api/user/me', {
-			method: 'GET'
+			method: 'GET',
+			headers: {
+				Authorization: 'Bearer ' + this.props.token
+			}
 		})
 			.then(res => res.json())
 			.then(res => {

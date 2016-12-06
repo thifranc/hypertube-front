@@ -73,10 +73,10 @@ class Movie extends Component {
 						<div className="MovieSecColumn">
 							<Paper zDepth={2}>
 								<div className="MovieTorrentBlock">
-					<AppBar
-						showMenuIconButton={false}
-						title="Torrents"
-						/>
+									<AppBar
+										showMenuIconButton={false}
+										title="Torrents"
+										/>
 									<Table>
 										<TableHeader displaySelectAll={Boolean(false)} adjustForCheckbox={Boolean(false)}>
 											<TableRow selectable={false}>

@@ -51,11 +51,6 @@ class Register extends Component {
 		var err = 'err' + e.target.id.charAt(0).toUpperCase() + e.target.id.substring(1);
 
 		this.setState({[err]: !regLowercase.test(e.target.value)});
-		if (!regLowercase.test(e.target.value)) {
-			this.setState({[err]: true});
-		} else {
-			this.setState({[err]: false});
-		}
 		this.handleFillChar(e);
 	}
 	handleValidForm(e) {
