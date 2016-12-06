@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-// import {browserHistory} from 'react-router';
+import {browserHistory} from 'react-router';
 
 import Paper from 'material-ui/Paper';
 import TextField from 'material-ui/TextField';
@@ -8,7 +8,6 @@ import RaisedButton from 'material-ui/RaisedButton';
 import Divider from 'material-ui/Divider';
 import {fullWhite, blue800 as facebookColor, lightBlue200 as twitterColor, grey800 as schoolColor} from 'material-ui/styles/colors';
 import {Link} from 'react-router';
-import FacebookLogin from 'react-facebook-login';
 
 import Center from '../util/Center';
 import './visitor.css';
@@ -25,7 +24,9 @@ class Login extends Component {
 		this.handleLogin = this.handleLogin.bind(this);
 		this.handlePasswd = this.handlePasswd.bind(this);
 		this.handleFillChar = this.handleFillChar.bind(this);
-		this.responseFacebook = this.responseFacebook.bind(this);
+		this.handleFacebook = this.handleFacebook.bind(this);
+		this.handleTwitter = this.handleTwitter.bind(this);
+		this.handle42 = this.handle42.bind(this);
 	}
 	handleLogin(e) {
 		var regLowercase = new RegExp('^[a-z]*$');
@@ -53,35 +54,52 @@ class Login extends Component {
 				.then(res => {
 					console.log(res);
 					localStorage.setItem('token', res.data.token);
+					browserHistory.push('/');
 				})
-				.catch(err => console.log);
+				.catch(err => console.log(err));
 		}
+	}
+	handleFacebook() {
+		fetch('/api/user/auth/facebook', {
+			method: 'GET'
+		})
+			.then(res => res.text())
+			.then(res => {
+				console.log(res);
+//				localStorage.setItem('token', res.data.token);
+//				browserHistory.push('/');
+			})
+			.catch(err => console.log(err));
+	}
+	handleTwitter() {
+		fetch('/api/user/auth/twitter', {
+			method: 'GET'
+		})
+			.then(res => res.json())
+			.then(res => {
+				console.log(res);
+//				localStorage.setItem('token', res.data.token);
+//				browserHistory.push('/');
+			})
+			.catch(err => console.log(err));
+	}
+	handle42() {
+		fetch('/api/user/auth/42', {
+			method: 'GET'
+		})
+			.then(res => res.json())
+			.then(res => {
+				console.log(res);
+//				localStorage.setItem('token', res.data.token);
+//				browserHistory.push('/');
+			})
+			.catch(err => console.log(err));
 	}
 	handleFillChar(e) {
 		this.setState({passwd: e.target.value});
 	}
-	responseFacebook(response) {
-		console.log(response);
-		const data = JSON.stringify(response);
-
-		fetch('/api/user/facebook', {
-			method: 'POST',
-			headers: {
-				'Accept': 'application/json',
-				'Content-Type': 'application/json'
-			},
-			body: data
-		})
-		.then(res => res.json())
-		.then(res => {
-			console.log(res);
-		})
-		.catch(err => {
-			console.log(err);
-		});
-	}
 	render() {
-		const {messages, lang} = this.context;
+		const {messages} = this.context;
 		return (
 			<Center className="VisitorHeight">
 				<Paper zDepth={2}>
@@ -89,23 +107,25 @@ class Login extends Component {
 						showMenuIconButton={false}
 						title={messages.loginPage.log}
 						/>
-					<FacebookLogin
-						appId="592965297562891"
-						textButton="Facebook"
-						fields="languages,last_name,first_name,name,email,picture"
-						callback={this.responseFacebook}
-						cssClass="my-facebook-button-class"
+					<RaisedButton
+						className="VisitorMarge"
+						labelColor={fullWhite}
+						label="Facebook"
+						onClick={this.handleFacebook}
+						backgroundColor={facebookColor}
 						/>
 					<RaisedButton
 						className="VisitorMarge"
 						labelColor={fullWhite}
 						label="42"
+						onClick={this.handle42}
 						backgroundColor={schoolColor}
 						/>
 					<RaisedButton
 						className="VisitorMarge"
 						labelColor={fullWhite}
 						label="Twitter"
+						onClick={this.handleTwitter}
 						backgroundColor={twitterColor}
 						/>
 					<Divider/>
