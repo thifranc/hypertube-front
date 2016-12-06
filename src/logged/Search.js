@@ -5,12 +5,12 @@ import IconButton from 'material-ui/IconButton';
 import StarBorder from 'material-ui/svg-icons/toggle/star';
 import Subheader from 'material-ui/Subheader';
 import CircularProgress from 'material-ui/CircularProgress';
-import Center from '../util/Center';
-import Slider from 'rc-slider';
 import TextField from 'material-ui/TextField';
-
 import SelectField from 'material-ui/SelectField';
 import MenuItem from 'material-ui/MenuItem';
+
+import Center from '../util/Center';
+import Slider from 'rc-slider';
 
 import 'whatwg-fetch';
 import 'rc-slider/assets/index.css';
@@ -39,7 +39,7 @@ class Search extends Component {
 			rateMax: 10,
 			yearMin: 0,
 			yearMax: new Date().getFullYear(),
-			sortBy : '',
+			sortBy: '',
 			movies: []
 		};
 		this.ticking = true;
@@ -49,7 +49,7 @@ class Search extends Component {
 		this.loadMore = this.loadMore.bind(this);
 		this.scrollWatch = this.scrollWatch.bind(this);
 		this.columnWatch = this.columnWatch.bind(this);
-		this.ajaxCall = this.ajaxCall.bind(this);
+		this.handleAJAX = this.handleAJAX.bind(this);
 		this.handleGetValueYear = this.handleGetValueYear.bind(this);
 		this.handleGetValueRate = this.handleGetValueRate.bind(this);
 		this.handleSelectSortBy = this.handleSelectSortBy.bind(this);
@@ -137,29 +137,27 @@ class Search extends Component {
 			this.setState({column: 1});
 		}
 	}
-	ajaxCall() {
-		fetch('/api/yts/list_movies.json?genre=' + this.state.genre
-				+ '&minimum_rating=' + this.state.rateMin
-				+ '&query_term=' + this.state.search
-				+ '&sort_by=' + this.state.sortBy, {
-			method: 'GET',
-			credentials: 'include',
-			headers: {
-				'Content-Type': 'application/json'
-			}
-		})
+	handleAJAX() {
+		fetch('/api/yts/list_movies.json?genre=' + this.state.genre +
+				'&minimum_rating=' + this.state.rateMin +
+				'&query_term=' + this.state.search +
+				'&sort_by=' + this.state.sortBy, {
+					method: 'GET',
+					credentials: 'include',
+					headers: {
+						'Content-Type': 'application/json'
+					}
+				})
 			.then(res => res.json())
 			.then(res => {
-				console.log(res.data.movies);
 				return res.data.movies.filter(el => {
 					return (
-						this.state.yearMin < el.year && el.year < this.state.yearMax &&
-						el.rating < this.state.rateMax
+						this.state.yearMin <= el.year && el.year <= this.state.yearMax &&
+						el.rating <= this.state.rateMax
 					);
-				})
+				});
 			})
-			.then (res => {
-				console.log(res);
+			.then(res => {
 				this.setState({movies: res});
 				this.columnWatch();
 				window.addEventListener('scroll', this.scrollWatch, false);
@@ -168,10 +166,10 @@ class Search extends Component {
 			.catch(err => console.log(err));
 	}
 	handleSelectSortBy(e, i, value) {
-		this.setState({sortBy: value}, this.ajaxCall);
+		this.setState({sortBy: value}, this.handleAJAX);
 	}
 	handleSelectGenre(e, i, value) {
-		this.setState({genre: value}, this.ajaxCall);
+		this.setState({genre: value}, this.handleAJAX);
 	}
 	handleGetValueYear(e) {
 		this.setState({yearMin: e[0]});
@@ -185,12 +183,16 @@ class Search extends Component {
 		var regLowercase = new RegExp('^[a-z]*$');
 		var err = 'err' + e.target.id;
 
-		this.setState({[err]: !regLowercase.test(e.target.value)});
-		this.handleFillChar(e);
+		this.setState({[err]: !regLowercase.test(e.target.value)},
+			this.handleFillChar(e)
+		);
 	}
 	handleFillChar(e) {
-		this.setState({[e.target.id.toLowerCase()]: e.target.value});
-		this.ajaxCall();
+		if (!this.state.errSearch) {
+			{this.setState({search: e.target.value},
+				this.handleAJAX
+			);}
+		}
 	}
 	render() {
 		const genre = ['Action', 'Animation', 'Adventure',
@@ -199,6 +201,7 @@ class Search extends Component {
 			'Horror', 'Music', 'Mystery', 'Romance', 'Sci-Fi',
 			'Thriller', 'War', 'Western'];
 		const sortBy = ['title', 'year', 'rating', 'peers', 'seeds', 'download_count', 'like_count', 'date_added'];
+		const {messages} = this.context;
 		return (
 			<div>
 				{!this.state.movies.length ?
@@ -208,7 +211,7 @@ class Search extends Component {
 							<Subheader>
 								<SelectField
 									id="genre"
-									floatingLabelText="Genre"
+									floatingLabelText={messages.search.genre}
 									value={this.state.genre}
 									onChange={this.handleSelectGenre}
 									>
@@ -216,7 +219,7 @@ class Search extends Component {
 								</SelectField>
 								<SelectField
 									id="sortBy"
-									floatingLabelText="Sort By"
+									floatingLabelText={messages.search.sortBy}
 									value={this.state.sortBy}
 									onChange={this.handleSelectSortBy}
 									>
@@ -226,23 +229,22 @@ class Search extends Component {
 									value={this.state.search}
 									onChange={this.handleLowercase}
 									id="Search"
-									floatingLabelText="Search"//{messages.login}
-									hintText="search"//{messages.login}
-									errorText={this.state.errSearch && "Only lowercase characters please"}
-								/>
+									floatingLabelText={messages.search.search}
+									hintText={messages.search.search}
+									errorText={this.state.errSearch && messages.errors.lowercase}
+									/>
 								<Slider
 									min={this.state.rateMin} max={this.state.rateMax}
 									range defaultValue={[this.state.rateMin, this.state.rateMax]}
 									onChange={this.handleGetValueRate}
-									onAfterChange={this.ajaxCall}/>
+									onAfterChange={this.handleAJAX}
+									/>
 								<Slider
 									min={this.state.yearMin} max={this.state.yearMax} range
 									defaultValue={[this.state.yearMin, this.state.yearMax]}
 									onChange={this.handleGetValueYear}
-									onAfterChange={this.ajaxCall}/>
-								//add input search to search by cast
-							// http://www.material-ui.com/#/components/text-field
-							//   change this.state.term
+									onAfterChange={this.handleAJAX}
+									/>
 							</Subheader>
 							{this.state.movies.map(movie => (
 								<Link key={movie.id} to={'/movie/' + movie.id}>
@@ -264,5 +266,12 @@ class Search extends Component {
 		);
 	}
 }
+
+Search.contextTypes = {
+	lang: React.PropTypes.string,
+	messages: React.PropTypes.object,
+	langChange: React.PropTypes.func,
+	router: React.PropTypes.object
+};
 
 export default Search;
