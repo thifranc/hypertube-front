@@ -32,21 +32,21 @@ class Movie extends Component {
 	}
 	componentDidMount() {
 		const filmId = this.props.params.id;
-		fetch('/api/yts/movie_details.json?movie_id=' + filmId + '&with_images=true', {
+		fetch('/api/getTorrent/' + filmId, {
 			method: 'GET',
 			credentials: 'include',
 			headers: {
 				'Content-Type': 'application/json'
 			}
 		})
-			.then(res => res.json())
+			.then(res => res.text())
 			.then(res => {
-				this.setState({movie: res.data.movie});
-				console.log(res.data.movie);
-				return extraTorrentAPI.search(res.data.movie.title);
+				 return JSON.parse(JSON.parse(res).body);
 			})
 			.then(res => {
 				console.log(res);
+				this.setState({movie: res.data.movie});
+			//	return extraTorrentAPI.search(res.data.movie.title);
 			})
 			.catch(err => console.log(err));
 	}
