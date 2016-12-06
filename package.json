@@ -24,6 +24,7 @@
     "xo": "^0.17.1"
   },
   "dependencies": {
+    "extratorrent-api": "^1.0.8",
     "material-ui": "^0.16.4",
     "nuka-carousel": "^2.0.3",
     "rc-slider": "^5.3.5",

@@ -9,6 +9,13 @@
 			"user": "User",
 			"lastSeen": "Last movie seen"
 		},
+		"search" : {
+			"search": "Search",
+			"sortBy": "Sort By",
+			"genre": "Genre",
+			"rate": "Rate",
+			"year": "Year"
+		},
 		"errors" : {
 			"lowercase": "Only lowercase characters",
 			"mail": "Mail is not correct",
@@ -41,6 +48,13 @@
 			"user": "Utilisateur",
 			"lastSeen": "Dernier film vu"
 		},
+		"search" : {
+			"search": "Recherche",
+			"sortBy": "Trier par",
+			"genre": "Genre",
+			"rate": "Note",
+			"year": "Annee"
+		},
 		"errors" : {
 			"lowercase": "Seulement des minuscules",
 			"mail": "Le courriel n'est pas correct",
@@ -72,6 +86,13 @@
 		"user" : {
 			"user": "Usuario",
 			"lastSeen": "Ultima pelicula vista"
+		},
+		"search" : {
+			"search": "Buscar",
+			"sortBy": "Clasificar por",
+			"genre": "Categorías",
+			"rate": "Puntúa",
+			"year": "Año"
 		},
 		"errors" : {
 			"lowercase": "Solamente minúsculas letras",

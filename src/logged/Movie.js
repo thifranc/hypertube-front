@@ -13,6 +13,9 @@ import Center from '../util/Center';
 
 import 'whatwg-fetch';
 import './Movie.css';
+const extraTorrentModule = require("extratorrent-api");
+
+const extraTorrentAPI = new extraTorrentModule();
 
 const styles = {
 	loader: {
@@ -29,7 +32,7 @@ class Movie extends Component {
 	}
 	componentDidMount() {
 		const filmId = this.props.params.id;
-		fetch('/api/yts/movie_details.json?movie_id=' + filmId + '&with_images=true', {
+		fetch('/api/getTorrent/' + filmId, {
 			method: 'GET',
 			credentials: 'include',
 			headers: {
@@ -38,8 +41,8 @@ class Movie extends Component {
 		})
 			.then(res => res.json())
 			.then(res => {
+				console.log(res);
 				this.setState({movie: res.data.movie});
-				console.log(res.data.movie);
 			})
 			.catch(err => console.log(err));
 	}

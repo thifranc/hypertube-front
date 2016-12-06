@@ -10,15 +10,6 @@ import Divider from 'material-ui/Divider';
 import Center from '../util/Center';
 import '../visitor/visitor.css';
 
-var	defaultProfile = {
-	img: 'http://www.filecluster.com/howto/wp-content/uploads/2014/07/User-Default.jpg',
-	login: 'login',
-	name: 'name',
-	firstname: 'firstname',
-	mail: 'mail',
-	lastSeen: 6198
-};
-
 class Profile extends Component {
 	constructor() {
 		super();
@@ -53,24 +44,15 @@ class Profile extends Component {
 			.then(res => {
 				console.log(res);
 				this.setState({
-					login: res.data.login,
-					name: res.data.name,
-					firstname: res.data.firstname,
-					mail: res.data.mail,
-					language: res.data.language,
-					preview: res.data.img
+					login: res.data[0].pseudo,
+					name: res.data[0].name,
+					firstname: res.data[0].firstname,
+					mail: res.data[0].email,
+					language: res.data[0].lang,
+					preview: res.data[0].path_img ? res.data[0].path_img : "default.jpg"
 				});
 			})
-			.catch(err => {
-				this.setState({
-					login: 'login',
-					name: 'name',
-					firstname: 'firstname',
-					mail: 'mail@lol.fr',
-					language: 'en',
-					preview: 'http://www.filecluster.com/howto/wp-content/uploads/2014/07/User-Default.jpg'
-				});
-			});
+			.catch(err => console.log(err));
 	}
 	handleChange(e, index, value) {
 		if (value !== 'en' &&
@@ -126,7 +108,7 @@ class Profile extends Component {
 		}
 	}
 	render() {
-		const {messages, lang} = this.context;
+		const {messages} = this.context;
 		const classImg = 'VisitorMarge VisitorImg';
 		return (
 			<Center className="VisitorHeight">
