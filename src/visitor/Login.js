@@ -8,6 +8,7 @@ import RaisedButton from 'material-ui/RaisedButton';
 import Divider from 'material-ui/Divider';
 import {fullWhite, blue800 as facebookColor, lightBlue200 as twitterColor, grey800 as schoolColor} from 'material-ui/styles/colors';
 import {Link} from 'react-router';
+import FacebookLogin from 'react-facebook-login';
 
 import Center from '../util/Center';
 import './visitor.css';
@@ -24,6 +25,7 @@ class Login extends Component {
 		this.handleLogin = this.handleLogin.bind(this);
 		this.handlePasswd = this.handlePasswd.bind(this);
 		this.handleFillChar = this.handleFillChar.bind(this);
+		this.responseFacebook = this.responseFacebook.bind(this);
 	}
 	handleLogin(e) {
 		var regLowercase = new RegExp('^[a-z]*$');
@@ -58,6 +60,26 @@ class Login extends Component {
 	handleFillChar(e) {
 		this.setState({passwd: e.target.value});
 	}
+	responseFacebook(response) {
+		console.log(response);
+		const data = JSON.stringify(response);
+
+		fetch('/api/user/facebook', {
+			method: 'POST',
+			headers: {
+				'Accept': 'application/json',
+				'Content-Type': 'application/json'
+			},
+			body: data
+		})
+		.then(res => res.json())
+		.then(res => {
+			console.log(res);
+		})
+		.catch(err => {
+			console.log(err);
+		});
+	}
 	render() {
 		const {messages, lang} = this.context;
 		return (
@@ -67,11 +89,12 @@ class Login extends Component {
 						showMenuIconButton={false}
 						title={messages.loginPage.log}
 						/>
-					<RaisedButton
-						className="VisitorMarge"
-						labelColor={fullWhite}
-						label="Facebook"
-						backgroundColor={facebookColor}
+					<FacebookLogin
+						appId="592965297562891"
+						textButton="Facebook"
+						fields="languages,last_name,first_name,name,email,picture"
+						callback={this.responseFacebook}
+						cssClass="my-facebook-button-class"
 						/>
 					<RaisedButton
 						className="VisitorMarge"
