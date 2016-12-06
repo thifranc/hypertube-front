@@ -52,14 +52,14 @@ class Login extends Component {
 					console.log(res);
 					localStorage.setItem('token', res.data.token);
 				})
-				.catch(err => console.log);
+				.catch(err => console.log(err));
 		}
 	}
 	handleFillChar(e) {
 		this.setState({passwd: e.target.value});
 	}
 	render() {
-		const {messages, lang} = this.context;
+		const {messages} = this.context;
 		return (
 			<Center className="VisitorHeight">
 				<Paper zDepth={2}>

@@ -35,12 +35,11 @@ class Forget extends Component {
 		}
 		this.setState({login: e.target.value});
 	}
-	handleMail(e) {
+	handleMail() {
 		let regMail = new RegExp('^[0-9a-z._-]+@{1}[0-9a-z.-]{2,}[.]{1}[a-z]{2,5}$', 'i');
 		this.setState({
 			errMail: !regMail.test(this.state.mail)
 		}, this.ajaxCall);
-		console.log('bonjour lol');
 	}
 	ajaxCall() {
 		var data = {};
@@ -74,7 +73,7 @@ class Forget extends Component {
 		this.setState({errMail: false});
 	}
 	render() {
-		const {messages, lang} = this.context;
+		const {messages} = this.context;
 		return (
 			<Center className="VisitorHeight">
 				<Paper zDepth={2}>

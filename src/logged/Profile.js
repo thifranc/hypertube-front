@@ -10,15 +10,6 @@ import Divider from 'material-ui/Divider';
 import Center from '../util/Center';
 import '../visitor/visitor.css';
 
-var	defaultProfile = {
-	img: 'http://www.filecluster.com/howto/wp-content/uploads/2014/07/User-Default.jpg',
-	login: 'login',
-	name: 'name',
-	firstname: 'firstname',
-	mail: 'mail',
-	lastSeen: 6198
-};
-
 class Profile extends Component {
 	constructor() {
 		super();
@@ -61,16 +52,7 @@ class Profile extends Component {
 					preview: res.data.img
 				});
 			})
-			.catch(err => {
-				this.setState({
-					login: 'login',
-					name: 'name',
-					firstname: 'firstname',
-					mail: 'mail@lol.fr',
-					language: 'en',
-					preview: 'http://www.filecluster.com/howto/wp-content/uploads/2014/07/User-Default.jpg'
-				});
-			});
+			.catch(err => console.log(err));
 	}
 	handleChange(e, index, value) {
 		if (value !== 'en' &&
@@ -126,7 +108,7 @@ class Profile extends Component {
 		}
 	}
 	render() {
-		const {messages, lang} = this.context;
+		const {messages} = this.context;
 		const classImg = 'VisitorMarge VisitorImg';
 		return (
 			<Center className="VisitorHeight">

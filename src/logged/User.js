@@ -1,11 +1,12 @@
 import React, {Component} from 'react';
 import CircularProgress from 'material-ui/CircularProgress';
 import {List, ListItem} from 'material-ui/List';
-import Center from '../util/Center';
 import ActionGrade from 'material-ui/svg-icons/action/grade';
 import Date from 'material-ui/svg-icons/action/date-range';
 import Paper from 'material-ui/Paper';
 import AppBar from 'material-ui/AppBar';
+
+import Center from '../util/Center';
 
 import 'whatwg-fetch';
 import './Movie.css';
@@ -71,8 +72,7 @@ class User extends Component {
 							}
 						})
 					);
-				}
-				else {
+				} else {
 					return null;
 				}
 			})
@@ -86,7 +86,7 @@ class User extends Component {
 			});
 	}
 	render() {
-		const {messages, lang} = this.context;
+		const {messages} = this.context;
 		const user = this.state.user;
 		const movie = this.state.movie;
 		return (
