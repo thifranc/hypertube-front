@@ -7,15 +7,14 @@ import Cross from 'material-ui/svg-icons/navigation/close';
 import Tick from 'material-ui/svg-icons/action/done';
 import Play from 'material-ui/svg-icons/av/play-arrow';
 import IconButton from 'material-ui/IconButton';
-import Carousel from 'nuka-carousel';
 import {Table, TableBody, TableHeader, TableHeaderColumn, TableRow, TableRowColumn} from 'material-ui/Table';
+import Carousel from 'nuka-carousel';
+
 import Center from '../util/Center';
+import ReactDisqus from 'react-disqus';
 
 import 'whatwg-fetch';
 import './Movie.css';
-const extraTorrentModule = require("extratorrent-api");
-
-const extraTorrentAPI = new extraTorrentModule();
 
 const styles = {
 	loader: {
@@ -29,9 +28,11 @@ class Movie extends Component {
 		this.state = {
 			movie: {}
 		};
+		this.handleNewComment = this.handleNewComment.bind(this);
 	}
 	componentDidMount() {
 		const filmId = this.props.params.id;
+		console.log('bojnour thibo', this.props);
 		fetch('/api/getTorrent/' + filmId, {
 			method: 'GET',
 			credentials: 'include',
@@ -46,6 +47,9 @@ class Movie extends Component {
 			})
 			.catch(err => console.log(err));
 	}
+    handleNewComment(comment) {
+        console.log(comment.text);
+    }
 	render() {
 		const movie = this.state.movie;
 		return (
@@ -104,6 +108,18 @@ class Movie extends Component {
 										))}
 										</TableBody>
 									</Table>
+								</div>
+							</Paper>
+							<br/>
+							<Paper zDepth={2}>
+								<AppBar
+									showMenuIconButton={false}
+									title="Comments"
+									/>
+								<div className="MovieComments">
+									<ReactDisqus
+										shortname="localhost-4r6pb8tmz4"
+										identifier="123" />
 								</div>
 							</Paper>
 						</div>

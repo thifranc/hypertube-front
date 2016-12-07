@@ -16,6 +16,11 @@
 }
 .MovieMedia{
 }
+.MovieComments{
+  padding: 15px;
+  max-width: 100%;
+  min-width: 400px;
+}
 .MovieInfo {
   padding: 15px;
 }

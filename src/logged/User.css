@@ -1,0 +1,14 @@
+.closeDiv {
+  width: 50%;
+  margin-left: auto;
+  margin-right: auto;
+}
+.imgDiv {
+  width: 100%;
+  display:block;
+  margin-left: auto;
+  margin-right: auto;
+}
+.center {
+  text-align: center;
+}

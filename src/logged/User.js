@@ -9,7 +9,7 @@ import AppBar from 'material-ui/AppBar';
 import Center from '../util/Center';
 
 import 'whatwg-fetch';
-import './Movie.css';
+import './User.css';
 
 const styles = {
 	loader: {
@@ -25,28 +25,15 @@ const styles = {
 	}
 };
 
-var	defaultuser = {
-	img: 'http://www.filecluster.com/howto/wp-content/uploads/2014/07/User-Default.jpg',
-	login: 'login',
-	name: 'name',
-	firstname: 'firstname',
-	mail: 'mail',
-	lastSeen: 6204
-};
-
 class User extends Component {
 	constructor() {
 		super();
 		this.state = {
-			user: defaultuser,
+			user: {},
 			movie: {}
 		};
 	}
 	componentDidMount() {
-		console.log('BONJOUR THIBO');
-		console.log(this);
-		console.log(this.props);
-		console.log(this.state);
 		var id = this.props.params.id;
 		fetch('/api/user/' + id, {
 			method: 'GET',
@@ -83,7 +70,6 @@ class User extends Component {
 				this.setState({movie: res.data.movie});
 			})
 			.catch(err => {
-				console.log('AN ERROR OCCURRED');
 				console.log(err);
 			});
 	}
@@ -104,10 +90,10 @@ class User extends Component {
 							<div className="center">
 								<img style={styles.img} src={user.img}/>
 								<List style={styles.inline}>
-									<ListItem primaryText={user.login}/>
+									<ListItem primaryText={user.pseudo}/>
 									<ListItem primaryText={user.name}/>
 									<ListItem primaryText={user.firstname}/>
-									<ListItem primaryText={user.mail}/>
+									<ListItem primaryText={user.email}/>
 								</List>
 							</div>
 						</Center>
@@ -115,7 +101,7 @@ class User extends Component {
 				</Paper>
 				<Paper zDepth={1}>
 					{!Object.keys(movie).length ?
-						<p> No movie seen yet, recommand him one ! </p> :
+						<Center><p> No movie seen yet, recommand him one ! </p></Center> :
 						<Center>
 							<div className="closeDiv center">
 								<AppBar
