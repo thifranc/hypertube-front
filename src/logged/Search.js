@@ -26,6 +26,9 @@ const styles = {
 	},
 	sliders: {
 		width: '50%'
+	},
+	opacityPlus: {
+		opacity:0.6
 	}
 };
 
@@ -43,12 +46,14 @@ class Search extends Component {
 			yearMin: 0,
 			yearMax: new Date().getFullYear(),
 			sortBy: '',
+			views: [],
 			movies: []
 		};
 		this.ticking = true;
 		this.page = 2;
 
 		this.originalLoad = this.originalLoad.bind(this);
+		this.getViews = this.getViews.bind(this);
 		this.loadMore = this.loadMore.bind(this);
 		this.scrollWatch = this.scrollWatch.bind(this);
 		this.columnWatch = this.columnWatch.bind(this);
@@ -61,6 +66,23 @@ class Search extends Component {
 	}
 	componentDidMount() {
 		this.originalLoad();
+		this.getViews();
+	}
+	getViews() {
+		fetch('/api/video/view', {
+			method: 'GET',
+			credentials: 'include',
+			headers: {
+				Authorization: 'Bearer ' + this.props.token,
+				'Content-Type': 'application/json'
+			}
+		})
+			.then(res => res.json())
+			.then(res => {
+				console.log(res);
+				this.setState({views: res.data});
+			})
+			.catch(err => console.log(err));
 	}
 	componentWillUnmount() {
 		window.removeEventListener('scroll', this.scrollWatch, false);
@@ -197,6 +219,10 @@ class Search extends Component {
 			);}
 		}
 	}
+	handleMovieSeen(e) {
+		console.log(e);
+		console.log('hovered');
+	}
 	render() {
 		const genre = ['Action', 'Animation', 'Adventure',
 			'Biography', 'Comedie', 'Crime', 'Documentary',
@@ -260,12 +286,18 @@ class Search extends Component {
 							{this.state.movies.map(movie => (
 								<Link key={movie.id} to={'/movie/' + movie.id}>
 									<GridTile
+										style={styles.opacityPlus}
 										title={movie.title}
 										subtitle={movie.year}
 										actionIcon={<IconButton tooltip={movie.rating} touch={Boolean(true)} tooltipPosition="top-center"><StarBorder color="yellow"/></IconButton>}
 										actionPosition="right"
 										>
-										<img style={{width: '100%'}} src={movie.large_cover_image}/>
+										<img
+											style={{width: '100%'}}
+											src={movie.large_cover_image}
+											onMouseEnter={this.handleMovieSeen}
+											onMouseLeave={this.handleMovieSeen}
+											/>
 									</GridTile>
 								</Link>
 							))
