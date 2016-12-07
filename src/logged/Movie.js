@@ -10,12 +10,10 @@ import IconButton from 'material-ui/IconButton';
 import Carousel from 'nuka-carousel';
 import {Table, TableBody, TableHeader, TableHeaderColumn, TableRow, TableRowColumn} from 'material-ui/Table';
 import Center from '../util/Center';
+import Dialog from 'material-ui/Dialog';
 
 import 'whatwg-fetch';
 import './Movie.css';
-const extraTorrentModule = require("extratorrent-api");
-
-const extraTorrentAPI = new extraTorrentModule();
 
 const styles = {
 	loader: {
@@ -23,12 +21,26 @@ const styles = {
 	}
 };
 
+const customContentStyle = {
+  width: '100%',
+  height: '100vh',
+  maxWidth: 'none',
+  maxHeight: 'none',
+};
+
+const Video = (props) => (
+	<video src="http://localhost:64606" autoPlay controls/>
+);
+
 class Movie extends Component {
 	constructor() {
 		super();
 		this.state = {
-			movie: {}
+			movie: {},
+			open: true
 		};
+		this.handleOpen = this.handleOpen.bind(this);
+		this.handleClose= this.handleClose.bind(this);
 	}
 	componentDidMount() {
 		const filmId = this.props.params.id;
@@ -46,10 +58,26 @@ class Movie extends Component {
 			})
 			.catch(err => console.log(err));
 	}
+	handleOpen() {
+		this.setState({open: true});
+	};
+	handleClose() {
+		this.setState({open: false});
+	};
 	render() {
 		const movie = this.state.movie;
 		return (
 			<div>
+        <Dialog
+					autoDetectWindowHeight={false}
+          title="Video"
+          modal={true}
+          contentStyle={customContentStyle}
+          open={this.state.open}
+        >
+					<Video src="" />
+        </Dialog>
+
 				{!Object.keys(movie).length ?
 					<Center style={styles.loader}><CircularProgress size={80} thickness={5}/></Center> :
 					<div className="MovieContainer">
@@ -109,6 +137,8 @@ class Movie extends Component {
 								</div>
 							</Paper>
 						</div>
+
+
 					</div>
 				}
 			</div>
