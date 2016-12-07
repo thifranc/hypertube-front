@@ -86,18 +86,20 @@ class Movie extends Component {
 												<TableHeaderColumn>Peers</TableHeaderColumn>
 												<TableHeaderColumn>Seeds</TableHeaderColumn>
 												<TableHeaderColumn>Tracker</TableHeaderColumn>
-												<TableHeaderColumn>Quality</TableHeaderColumn>
+												<TableHeaderColumn>Size</TableHeaderColumn>
 												<TableHeaderColumn>Loaded</TableHeaderColumn>
 												<TableHeaderColumn>Play</TableHeaderColumn>
 											</TableRow>
 										</TableHeader>
 										<TableBody displayRowCheckbox={Boolean(false)}>
-											{movie.torrents.map((torrent, index) => (
+											{movie.torrents
+												.filter(torrent => (torrent.seeds > 10))
+												.map((torrent, index) => (
 												<TableRow key={index}>
 													<TableRowColumn>{torrent.peers}</TableRowColumn>
 													<TableRowColumn>{torrent.seeds}</TableRowColumn>
-													<TableRowColumn>Yts</TableRowColumn>
-													<TableRowColumn>{torrent.quality}</TableRowColumn>
+													<TableRowColumn>{torrent.hash ? "yts" : "extratorrent"}</TableRowColumn>
+													<TableRowColumn>{torrent.size}</TableRowColumn>
 													<TableRowColumn><Cross color="red"/><Tick color="green"/></TableRowColumn>
 													<TableRowColumn><IconButton><Play/></IconButton></TableRowColumn>
 												</TableRow>
