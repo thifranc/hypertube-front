@@ -40,19 +40,18 @@ class Profile extends Component {
 				Authorization: 'Bearer ' + this.props.token
 			}
 		})
-			.then(res => res.json())
-			.then(res => {
-				console.log(res);
-				this.setState({
-					login: res.data[0].pseudo,
-					name: res.data[0].name,
-					firstname: res.data[0].firstname,
-					mail: res.data[0].email,
-					language: res.data[0].lang,
-					preview: res.data[0].path_img ? res.data[0].path_img : "default.jpg"
-				});
-			})
-			.catch(err => console.log(err));
+		.then(res => res.json())
+		.then(res => {
+			this.setState({
+				login: res.data[0].pseudo,
+				name: res.data[0].name,
+				firstname: res.data[0].firstname,
+				mail: res.data[0].email,
+				language: res.data[0].lang,
+				preview: res.data[0].path_img ? res.data[0].path_img : "http://localhost:4242/picture/default.jpg"
+			});
+		})
+		.catch(err => console.log(err));
 	}
 	handleChange(e, index, value) {
 		if (value !== 'en' &&

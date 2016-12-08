@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import {browserHistory} from 'react-router';
 import CircularProgress from 'material-ui/CircularProgress';
 import {List, ListItem} from 'material-ui/List';
 import ActionGrade from 'material-ui/svg-icons/action/grade';
@@ -33,46 +34,76 @@ class User extends Component {
 			movie: {}
 		};
 	}
+	// componentDidMount() {
+	// 	var id = this.props.params.id;
+	// 	fetch('/api/user/' + id, {
+	// 		method: 'GET',
+	// 		headers: {
+	// 			Authorization: 'Bearer ' + this.props.token
+	// 		}
+	// 	})
+	// 	.then(res => res.json())
+	// 	.then(res => {
+	// 		if (typeof (res) !== 'undefined') {
+	// 			if (!res.data.path_img)
+	// 				res.data.path_img = "http://localhost:4242/picture/default.jpg";
+	// 			this.setState({user: res.data});
+	// 		}
+	// 	})
+	// 	.then(() => {
+	// 		if (this.state.user.lastSeen) {
+	// 			return (
+	// 				fetch('/api/v2/movie_details.json?movie_id=' + this.state.user.lastSeen + '&with_images=true', {
+	// 					method: 'GET',
+	// 					credentials: 'include',
+	// 					headers: {
+	// 						'Content-Type': 'application/json'
+	// 					}
+	// 				})
+	// 			);
+	// 		} else {
+	// 			return null;
+	// 		}
+	// 	})
+	// 	.then(res => res.json())
+	// 	.then(res => {
+	// 		this.setState({movie: res.data.movie});
+	// 	})
+	// 	.catch(err => {
+	// 		console.log(err);
+	// 		// browserHistory.push('/');				
+	// 	});
+	// }
+
 	componentDidMount() {
+		let user = null;
 		var id = this.props.params.id;
+
 		fetch('/api/user/' + id, {
 			method: 'GET',
 			headers: {
 				Authorization: 'Bearer ' + this.props.token
 			}
 		})
-			.then(res => res.json())
-			.then(res => {
-				console.log(res);
-				if (typeof (res) !== 'undefined') {
-					if (!res.data.path_img)
-						res.data.path_img = "default.jpg";
-					this.setState({user: res.data});
-				}
-			})
-			.then(() => {
-				if (this.state.user.lastSeen) {
-					return (
-						fetch('/api/v2/movie_details.json?movie_id=' + this.state.user.lastSeen + '&with_images=true', {
-							method: 'GET',
-							credentials: 'include',
-							headers: {
-								'Content-Type': 'application/json'
-							}
-						})
-					);
-				} else {
-					return null;
-				}
-			})
-			.then(res => res.json())
-			.then(res => {
-				this.setState({movie: res.data.movie});
-			})
-			.catch(err => {
-				console.log(err);
-			});
+		.then(res => {
+			if (res.status != 200)
+				return Promise.reject('Bad user');
+			return res.json();
+		})
+		.then(res => {
+			user = res.data;
+			if (!res.data.path_img)
+				user.path_img = "http://localhost:4242/picture/default.jpg";
+			this.setState({user : user});
+			console.log('User with movies => ', user);
+		})
+		.catch(err => {
+			console.log(err);
+			browserHistory.push('/');				
+		});
 	}
+
+
 	render() {
 		const {messages} = this.context;
 		const user = this.state.user;

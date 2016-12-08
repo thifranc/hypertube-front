@@ -32,7 +32,6 @@ class Movie extends Component {
 	}
 	componentDidMount() {
 		const filmId = this.props.params.id;
-		console.log('bojnour thibo', this.props);
 		fetch('/api/getTorrent/' + filmId, {
 			method: 'GET',
 			credentials: 'include',
@@ -40,12 +39,22 @@ class Movie extends Component {
 				'Content-Type': 'application/json'
 			}
 		})
-			.then(res => res.json())
-			.then(res => {
-				console.log(res);
-				this.setState({movie: res.data.movie});
-			})
-			.catch(err => console.log(err));
+		.then(res => res.json())
+		.then(res => {
+			this.setState({movie: res.data.movie});
+		})
+		.catch(err => console.log(err));
+
+		var data = new FormData();
+		data.append('id', filmId);
+		fetch('/api/video/view', {
+			method: 'POST',
+			headers: {
+				Authorization: 'Bearer ' + this.props.token
+			},
+			body : data
+		})
+		.catch(err => console.log(err));
 	}
     handleNewComment(comment) {
         console.log(comment.text);

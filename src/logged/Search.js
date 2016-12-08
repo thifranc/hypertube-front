@@ -27,9 +27,12 @@ const styles = {
 	sliders: {
 		width: '50%'
 	},
-	opacityPlus: {
-		opacity:0.6
-	}
+	isView: {
+		opacity: 0.5
+	}/*,
+	isNotView : {
+
+	}*/
 };
 
 class Search extends Component {
@@ -53,7 +56,6 @@ class Search extends Component {
 		this.page = 2;
 
 		this.originalLoad = this.originalLoad.bind(this);
-		this.getViews = this.getViews.bind(this);
 		this.loadMore = this.loadMore.bind(this);
 		this.scrollWatch = this.scrollWatch.bind(this);
 		this.columnWatch = this.columnWatch.bind(this);
@@ -63,32 +65,47 @@ class Search extends Component {
 		this.handleSelectSortBy = this.handleSelectSortBy.bind(this);
 		this.handleSelectGenre = this.handleSelectGenre.bind(this);
 		this.handleLowercase = this.handleLowercase.bind(this);
+
+		this.markIsView = this.markIsView.bind(this);
 	}
 	componentDidMount() {
 		this.originalLoad();
-		this.getViews();
 	}
-	getViews() {
-		fetch('/api/video/view', {
-			method: 'GET',
-			credentials: 'include',
+
+	componentWillUnmount() {
+		window.removeEventListener('scroll', this.scrollWatch, false);
+		window.removeEventListener('resize', this.columnWatch, false);
+	}
+
+	markIsView(movies) {
+		return fetch('/api/video/view', {
+			method : 'GET',
+			credentials : 'include',
 			headers: {
 				Authorization: 'Bearer ' + this.props.token,
 				'Content-Type': 'application/json'
 			}
 		})
-			.then(res => res.json())
-			.then(res => {
-				console.log(res);
-				this.setState({views: res.data});
-			})
-			.catch(err => console.log(err));
+		.then(res => res.json())
+		.then(res => {
+			if (!res.data || !res.data[0])
+				return ;
+
+			let myView = [];
+			
+			res.data.map((obj) => myView.push(obj.id_movies) );
+			for (var i = movies.length - 1; i >= 0; i--) {
+				if (myView.includes(movies[i].id))
+					movies[i].view = styles.isView;
+			}
+			return movies;
+		})
+		.catch(err => console.log('ERROR FATAL : ', err));
 	}
-	componentWillUnmount() {
-		window.removeEventListener('scroll', this.scrollWatch, false);
-		window.removeEventListener('resize', this.columnWatch, false);
-	}
+
 	originalLoad() {
+		let movies = null;
+
 		fetch('/api/yts/list_movies.json?limit=20', {
 			method: 'GET',
 			credentials: 'include',
@@ -96,17 +113,22 @@ class Search extends Component {
 				'Content-Type': 'application/json'
 			}
 		})
-			.then(res => res.json())
-			.then(res => {
-				console.log(res);
-				this.setState({movies: res.data.movies});
-				this.columnWatch();
-				window.addEventListener('scroll', this.scrollWatch, false);
-				window.addEventListener('resize', this.columnWatch, false);
-			})
-			.catch(err => console.log(err));
+		.then(res => res.json())
+		.then(res => {
+			movies = res.data.movies;
+			return this.markIsView(movies);
+		})
+		.then(res => {
+			this.setState({movies: movies});
+			this.columnWatch();
+			window.addEventListener('scroll', this.scrollWatch, false);
+			window.addEventListener('resize', this.columnWatch, false);
+		})
+		.catch(err => console.log('originalLoad ==> ', err));
 	}
+
 	specificLoad() { // name date mark
+		let movies = null;
 		fetch('/api/yts/list_movies.json?limit=20', {
 			method: 'GET',
 			credentials: 'include',
@@ -114,17 +136,22 @@ class Search extends Component {
 				'Content-Type': 'application/json'
 			}
 		})
-			.then(res => res.json())
-			.then(res => {
-				console.log(res);
-				this.setState({movies: res.data.movies});
-				this.columnWatch();
-				window.addEventListener('scroll', this.scrollWatch, false);
-				window.addEventListener('resize', this.columnWatch, false);
-			})
-			.catch(err => console.log(err));
+		.then(res => res.json())
+		.then(res => {
+			movies = res.data.movies;
+			return this.markIsView(movies);
+		})
+		.then(movies => {
+			this.setState({movies: movies});
+			this.columnWatch();
+			window.addEventListener('scroll', this.scrollWatch, false);
+			window.addEventListener('resize', this.columnWatch, false);
+		})
+		.catch(err => console.log(err));
 	}
+
 	loadMore() {
+		let movies = null;
 		fetch('/api/yts/list_movies.json?limit=20&page=' + this.page, {
 			method: 'GET',
 			credentials: 'include',
@@ -132,16 +159,20 @@ class Search extends Component {
 				'Content-Type': 'application/json'
 			}
 		})
-			.then(res => res.json())
-			.then(res => {
-				console.log(res);
-				const movies = this.state.movies.concat(res.data.movies);
-				this.setState({movies: movies});
-				this.page++;
-				this.ticking = true;
-			})
-			.catch(err => console.log(err));
+		.then(res => res.json())
+		.then(res => {
+			movies = res.data.movies;
+			return this.markIsView(movies);
+		})
+		.then(movies => {
+			let all_movies = this.state.movies.concat(movies);
+			this.setState({movies: all_movies});
+			this.page++;
+			this.ticking = true;
+		})
+		.catch(err => console.log(err));
 	}
+
 	scrollWatch() {
 		if (this.ticking) {
 			if ((window.innerHeight + window.scrollY) >= document.body.offsetHeight) {
@@ -150,6 +181,7 @@ class Search extends Component {
 			}
 		}
 	}
+
 	columnWatch() {
 		const width = window.innerWidth;
 		if (width > 1300) {
@@ -162,6 +194,7 @@ class Search extends Component {
 			this.setState({column: 1});
 		}
 	}
+
 	handleAJAX() {
 		fetch('/api/yts/list_movies.json?genre=' + this.state.genre +
 				'&minimum_rating=' + this.state.rateMin +
@@ -220,8 +253,8 @@ class Search extends Component {
 		}
 	}
 	handleMovieSeen(e) {
-		console.log(e);
-		console.log('hovered');
+		// console.log(e);
+		// console.log('hovered');
 	}
 	render() {
 		const genre = ['Action', 'Animation', 'Adventure',
@@ -243,8 +276,8 @@ class Search extends Component {
 									floatingLabelText={messages.search.genre}
 									value={this.state.genre}
 									onChange={this.handleSelectGenre}
-									>
-									{genre.map(el => <MenuItem key={el} value={el} primaryText={el}/>)}
+								>
+								{genre.map(el => <MenuItem key={el} value={el} primaryText={el}/>)}
 								</SelectField>
 								<SelectField
 									id="sortBy"
@@ -283,10 +316,13 @@ class Search extends Component {
 									/>
 								</div>
 							</Subheader>
+
+
+
 							{this.state.movies.map(movie => (
 								<Link key={movie.id} to={'/movie/' + movie.id}>
 									<GridTile
-										style={styles.opacityPlus}
+										style={movie.view}
 										title={movie.title}
 										subtitle={movie.year}
 										actionIcon={<IconButton tooltip={movie.rating} touch={Boolean(true)} tooltipPosition="top-center"><StarBorder color="yellow"/></IconButton>}
