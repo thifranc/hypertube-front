@@ -82,22 +82,21 @@ class Register extends Component {
 
 			var formData = new FormData();
 
-			for (name in data) {
+			for (var name in data) {
 				formData.append(name, data[name]);
 			}
 			formData.append('path_img', this.state.img);
-			console.log('looll', formData);
-			console.log(this.state.img);
+			// console.log('looll', formData);
+			// console.log(this.state.img);
 
-			for (var pair of formData.entries()) {
-				console.log(pair[0] + ', ' + pair[1]);
-			}
+			// for (var pair of formData.entries()) {
+			// 	// console.log(pair[0] + ', ' + pair[1]);
+			// }
 			fetch('/api/user', {
 				method: 'POST',
 				body: formData
 			})
 			.then(res => res.json())
-
 			.then(res => {
 				console.log(res.token);
 				localStorage.setItem('token', res.token);
@@ -127,7 +126,7 @@ class Register extends Component {
 	}
 	render() {
 		const classImg = 'VisitorMarge VisitorImg';
-		const {messages, lang} = this.context;
+		const {messages} = this.context;
 		return (
 			<Center className="VisitorHeight">
 				<Paper zDepth={2}>

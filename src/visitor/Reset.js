@@ -56,7 +56,7 @@ class Reset extends Component {
 		});
 	}
 	render() {
-		const {messages, lang} = this.context;
+		const {messages} = this.context;
 		return (
 			<Center className="VisitorHeight">
 				<Paper zDepth={2}>

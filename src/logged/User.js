@@ -2,8 +2,8 @@ import React, {Component} from 'react';
 import {browserHistory} from 'react-router';
 import CircularProgress from 'material-ui/CircularProgress';
 import {List, ListItem} from 'material-ui/List';
-import ActionGrade from 'material-ui/svg-icons/action/grade';
-import Date from 'material-ui/svg-icons/action/date-range';
+// import ActionGrade from 'material-ui/svg-icons/action/grade';
+// import Date from 'material-ui/svg-icons/action/date-range';
 import Paper from 'material-ui/Paper';
 import AppBar from 'material-ui/AppBar';
 
@@ -76,7 +76,7 @@ class User extends Component {
 			}
 		})
 		.then(res => {
-			if (res.status != 200)
+			if (res.status !== 200)
 				return Promise.reject('Bad user');
 			return res.json();
 		})
@@ -86,7 +86,7 @@ class User extends Component {
 				user.path_img = "http://localhost:4242/picture/default.jpg";
 			var countFetch = 0;
 			let len = user.movie_view.length;
-			if (len == 0) {
+			if (len === 0) {
 				this.setState({user : user});
 				return ;
 			}
@@ -159,7 +159,7 @@ class User extends Component {
 								title={messages.user.user}
 							/>
 							<div className="center">
-								<img style={styles.img} src={user.img}/>
+								<img style={styles.img} src={user.img} alt="user"/>
 								<List style={styles.inline}>
 									<ListItem primaryText={user.pseudo}/>
 									<ListItem primaryText={user.name}/>
@@ -210,7 +210,7 @@ class User extends Component {
 											actionIcon={<IconButton tooltip={movie.rating} touch={Boolean(true)} tooltipPosition="top-center"><StarBorder color="yellow"/></IconButton>}
 											actionPosition="right"
 										>
-											<img style={{width: '100%'}} src={movie.large_cover_image} />
+											<img style={{width: '100%'}} src={movie.large_cover_image} alt="picture"/>
 										</GridTile>
 									</Link>
 								))

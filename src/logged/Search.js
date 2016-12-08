@@ -29,10 +29,7 @@ const styles = {
 	},
 	isView: {
 		opacity: 0.5
-	}/*,
-	isNotView : {
-
-	}*/
+	}
 };
 
 class Search extends Component {
@@ -60,6 +57,7 @@ class Search extends Component {
 		this.scrollWatch = this.scrollWatch.bind(this);
 		this.columnWatch = this.columnWatch.bind(this);
 		this.handleAJAX = this.handleAJAX.bind(this);
+
 		this.handleGetValueYear = this.handleGetValueYear.bind(this);
 		this.handleGetValueRate = this.handleGetValueRate.bind(this);
 		this.handleSelectSortBy = this.handleSelectSortBy.bind(this);
@@ -234,6 +232,7 @@ class Search extends Component {
 		this.setState({yearMax: e[1]});
 	}
 	handleGetValueRate(e) {
+		console.log(e[0])
 		this.setState({rateMin: e[0]});
 		this.setState({rateMax: e[1]});
 	}
@@ -247,9 +246,7 @@ class Search extends Component {
 	}
 	handleFillChar(e) {
 		if (!this.state.errSearch) {
-			{this.setState({search: e.target.value},
-				this.handleAJAX
-			);}
+			this.setState({search: e.target.value}, this.handleAJAX);
 		}
 	}
 	handleMovieSeen(e) {

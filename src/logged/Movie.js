@@ -61,6 +61,9 @@ class Movie extends Component {
     }
 	render() {
 		const movie = this.state.movie;
+
+		console.log(movie)
+
 		return (
 			<div>
 				{!Object.keys(movie).length ?
@@ -88,6 +91,7 @@ class Movie extends Component {
 						</div>
 						<div className="MovieSecColumn">
 							<Paper zDepth={2}>
+
 								<div className="MovieTorrentBlock">
 									<AppBar
 										showMenuIconButton={false}
@@ -118,6 +122,10 @@ class Movie extends Component {
 										</TableBody>
 									</Table>
 								</div>
+
+
+
+
 							</Paper>
 							<br/>
 							<Paper zDepth={2}>

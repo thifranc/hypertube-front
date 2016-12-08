@@ -83,7 +83,7 @@ class Login42 extends Component {
     };
     const { cssClass, buttonText, children } = this.props;
     return (
-      <button className = {cssClass} onClick= {this.onBtnClick} style= {cssClass ? {} : defaultStyle}>
+      <button className={cssClass} onClick={this.onBtnClick} style={cssClass ? {} : defaultStyle}>
         { children ? children : buttonText }
       </button>
     );
