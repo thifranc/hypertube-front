@@ -43,7 +43,7 @@ class User extends Component {
 		super();
 		this.state = {
 			user: {},
-			movie: {},
+			movies: [],
 			column : 6
 		};
 		this.movies = [];
@@ -86,6 +86,11 @@ class User extends Component {
 				user.path_img = "http://localhost:4242/picture/default.jpg";
 			var countFetch = 0;
 			let len = user.movie_view.length;
+			if (len == 0) {
+				this.setState({user : user});
+				return ;
+			}
+			this.movies = new Array(len).fill(len);
 
 			// let fetchAll = [];
 			// for (let i = 0; i < len; i++) {
@@ -96,24 +101,18 @@ class User extends Component {
 			// 		})
 			// 	);
 			// }
+
 			// Promise.all(fetchAll.map(p => p.catch(e => e)))
-			// .then(response => {
-			// 	console.log('Response => ', response);
-			// 	for (let i = 0; i < len; i++) {
-			// 		response[i].json()
-			// 		.then(response => {
-			// 			console.log('response final => ', response)
-			// 		})
-			// 	}
+			// .then((response) => {
+			// 	let jsonify = [];
+
+			// 	for (let i = 0; i < len; i++)
+			// 		jsonify.push(response[i].json());
+			// 	return Promise.all(jsonify);
 			// })
 			// .then((response) => {
-			// 	console.log('Response final => ', response);
+			// 	console.log('Response => ', response)
 			// })
-			// .catch((error) => {
-			// 	console.log('Error => ', error);
-			// })
-
-
 
 			for (let i = 0; i < len; i++) {
 				fetch('/api/yts/movie_details.json?movie_id=' + user.movie_view[i]['id_movies'] + '&with_images=true', {
@@ -125,10 +124,10 @@ class User extends Component {
 					return res.json();
 				})
 				.then((res) => {
-					this.movies.push(res.data.movie);
+					this.movies.splice(i, 1, res.data.movie);
 					if (countFetch >= len) {
-						this.setState({user : user});
 						this.columnWatch();
+						this.setState({user : user});
 					}
 				})
 				.catch((err) => {
@@ -139,14 +138,15 @@ class User extends Component {
 		.catch(err => {
 			console.log(err);
 			browserHistory.push('/');				
-		});
+		})
+		.catch(err => console.log('BIG ERRROOR', err));
 	}
 
 	render() {
+		console.log(this.context)
 		const {messages} = this.context;
 		const user = this.state.user;
 		const movies = this.movies;
-		// console.log('RES FINAL ===>', this.movies, this.movies.length);
 
 		return (
 			<div>
@@ -157,7 +157,7 @@ class User extends Component {
 							<AppBar
 								showMenuIconButton={false}
 								title={messages.user.user}
-								/>
+							/>
 							<div className="center">
 								<img style={styles.img} src={user.img}/>
 								<List style={styles.inline}>
@@ -170,9 +170,6 @@ class User extends Component {
 						</Center>
 				}
 				</Paper>
-
-
-
 				<Paper zDepth={1}>
 					{/*!Object.keys(movie).length ?
 						<Center><p> No movie seen yet, recommand him one ! </p></Center> :
@@ -196,12 +193,16 @@ class User extends Component {
 				</Paper>
 
 
-
 				{ movies.length > 0 ?
 					<div style={styles.root}>
-						<GridList  cols={this.state.column}>
-							{ movies.map(movie => (
-									<Link key={movie.id} to={'/movie/' + movie.id}>
+						<AppBar
+							showMenuIconButton={false}
+							title={messages.user.lastSeen}
+							style={ {'textAlign' : 'center'}}
+						/>
+						<GridList cellHeight={'auto'} cols={this.state.column}>
+							{ movies.map((movie, index) => (
+									<Link key={index} to={'/movie/' + movie.id}>
 										<GridTile
 											style={movie.view}
 											title={movie.title}
@@ -219,7 +220,6 @@ class User extends Component {
 					:
 					<Center><p> No movie seen yet, recommand him one ! </p></Center>
 				}
-
 			</div>
 		);
 	}
