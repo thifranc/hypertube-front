@@ -12,6 +12,13 @@ import Center from '../util/Center';
 import 'whatwg-fetch';
 import './User.css';
 
+
+import {Link} from 'react-router';
+import IconButton from 'material-ui/IconButton';
+import {GridList, GridTile} from 'material-ui/GridList';
+import StarBorder from 'material-ui/svg-icons/toggle/star';
+
+
 const styles = {
 	loader: {
 		height: 'calc(100vh - 56px)'
@@ -23,6 +30,11 @@ const styles = {
 	},
 	inline: {
 		display: 'inline-block'
+	},
+	root: {
+		display: 'flex',
+		flexWrap: 'wrap',
+		justifyContent: 'space-around'
 	}
 };
 
@@ -31,49 +43,27 @@ class User extends Component {
 		super();
 		this.state = {
 			user: {},
-			movie: {}
+			movie: {},
+			column : 6
 		};
+		this.movies = [];
+		this.columnWatch = this.columnWatch.bind(this);
+		window.addEventListener('resize', this.columnWatch, false);
 	}
-	// componentDidMount() {
-	// 	var id = this.props.params.id;
-	// 	fetch('/api/user/' + id, {
-	// 		method: 'GET',
-	// 		headers: {
-	// 			Authorization: 'Bearer ' + this.props.token
-	// 		}
-	// 	})
-	// 	.then(res => res.json())
-	// 	.then(res => {
-	// 		if (typeof (res) !== 'undefined') {
-	// 			if (!res.data.path_img)
-	// 				res.data.path_img = "http://localhost:4242/picture/default.jpg";
-	// 			this.setState({user: res.data});
-	// 		}
-	// 	})
-	// 	.then(() => {
-	// 		if (this.state.user.lastSeen) {
-	// 			return (
-	// 				fetch('/api/v2/movie_details.json?movie_id=' + this.state.user.lastSeen + '&with_images=true', {
-	// 					method: 'GET',
-	// 					credentials: 'include',
-	// 					headers: {
-	// 						'Content-Type': 'application/json'
-	// 					}
-	// 				})
-	// 			);
-	// 		} else {
-	// 			return null;
-	// 		}
-	// 	})
-	// 	.then(res => res.json())
-	// 	.then(res => {
-	// 		this.setState({movie: res.data.movie});
-	// 	})
-	// 	.catch(err => {
-	// 		console.log(err);
-	// 		// browserHistory.push('/');				
-	// 	});
-	// }
+
+	columnWatch() {
+		const width = window.innerWidth;
+
+		if (width > 1300) {
+			this.setState({column: 6});
+		} else if (width > 1000 && width < 1300) {
+			this.setState({column: 5});
+		} else if (width > 800 && width < 1000) {
+			this.setState({column: 3});
+		} else if (width < 600) {
+			this.setState({column: 1});
+		}
+	}
 
 	componentDidMount() {
 		let user = null;
@@ -94,8 +84,57 @@ class User extends Component {
 			user = res.data;
 			if (!res.data.path_img)
 				user.path_img = "http://localhost:4242/picture/default.jpg";
-			this.setState({user : user});
-			console.log('User with movies => ', user);
+			var countFetch = 0;
+			let len = user.movie_view.length;
+
+			// let fetchAll = [];
+			// for (let i = 0; i < len; i++) {
+			// 	fetchAll.push(
+			// 		fetch('/api/yts/movie_details.json?movie_id=' + user.movie_view[i]['id_movies'] + '&with_images=true', {
+			// 			method : 'GET',
+			// 			headers : { 'Content-Type': 'application/json'}
+			// 		})
+			// 	);
+			// }
+			// Promise.all(fetchAll.map(p => p.catch(e => e)))
+			// .then(response => {
+			// 	console.log('Response => ', response);
+			// 	for (let i = 0; i < len; i++) {
+			// 		response[i].json()
+			// 		.then(response => {
+			// 			console.log('response final => ', response)
+			// 		})
+			// 	}
+			// })
+			// .then((response) => {
+			// 	console.log('Response final => ', response);
+			// })
+			// .catch((error) => {
+			// 	console.log('Error => ', error);
+			// })
+
+
+
+			for (let i = 0; i < len; i++) {
+				fetch('/api/yts/movie_details.json?movie_id=' + user.movie_view[i]['id_movies'] + '&with_images=true', {
+					method : 'GET',
+					headers : { 'Content-Type': 'application/json'}
+				})
+				.then(res => {
+					countFetch++;
+					return res.json();
+				})
+				.then((res) => {
+					this.movies.push(res.data.movie);
+					if (countFetch >= len) {
+						this.setState({user : user});
+						this.columnWatch();
+					}
+				})
+				.catch((err) => {
+					console.log('Err fetch details movie => ', err);
+				})
+			}
 		})
 		.catch(err => {
 			console.log(err);
@@ -103,11 +142,12 @@ class User extends Component {
 		});
 	}
 
-
 	render() {
 		const {messages} = this.context;
 		const user = this.state.user;
-		const movie = this.state.movie;
+		const movies = this.movies;
+		// console.log('RES FINAL ===>', this.movies, this.movies.length);
+
 		return (
 			<div>
 				<Paper zDepth={1}>
@@ -130,9 +170,13 @@ class User extends Component {
 						</Center>
 				}
 				</Paper>
+
+
+
 				<Paper zDepth={1}>
-					{!Object.keys(movie).length ?
+					{/*!Object.keys(movie).length ?
 						<Center><p> No movie seen yet, recommand him one ! </p></Center> :
+
 						<Center>
 							<div className="closeDiv center">
 								<AppBar
@@ -148,8 +192,34 @@ class User extends Component {
 								<p>{movie.description_full}</p>
 							</div>
 						</Center>
-				}
+					*/}
 				</Paper>
+
+
+
+				{ movies.length > 0 ?
+					<div style={styles.root}>
+						<GridList  cols={this.state.column}>
+							{ movies.map(movie => (
+									<Link key={movie.id} to={'/movie/' + movie.id}>
+										<GridTile
+											style={movie.view}
+											title={movie.title}
+											subtitle={movie.year}
+											actionIcon={<IconButton tooltip={movie.rating} touch={Boolean(true)} tooltipPosition="top-center"><StarBorder color="yellow"/></IconButton>}
+											actionPosition="right"
+										>
+											<img style={{width: '100%'}} src={movie.large_cover_image} />
+										</GridTile>
+									</Link>
+								))
+							}
+						</GridList>
+					</div>
+					:
+					<Center><p> No movie seen yet, recommand him one ! </p></Center>
+				}
+
 			</div>
 		);
 	}

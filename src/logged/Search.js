@@ -317,8 +317,6 @@ class Search extends Component {
 								</div>
 							</Subheader>
 
-
-
 							{this.state.movies.map(movie => (
 								<Link key={movie.id} to={'/movie/' + movie.id}>
 									<GridTile
