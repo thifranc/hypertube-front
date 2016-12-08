@@ -9,8 +9,12 @@ import Divider from 'material-ui/Divider';
 import {fullWhite, blue800 as facebookColor, lightBlue200 as twitterColor, grey800 as schoolColor} from 'material-ui/styles/colors';
 import {Link} from 'react-router';
 
+// import FacebookLogin from 'react-facebook-login'; //create button
+
 import Center from '../util/Center';
 import './visitor.css';
+
+import Oauth from './oAuth.js';
 
 class Login extends Component {
 	constructor() {
@@ -24,18 +28,14 @@ class Login extends Component {
 		this.handleLogin = this.handleLogin.bind(this);
 		this.handlePasswd = this.handlePasswd.bind(this);
 		this.handleFillChar = this.handleFillChar.bind(this);
-		this.handleFacebook = this.handleFacebook.bind(this);
-		this.handleTwitter = this.handleTwitter.bind(this);
-		this.handle42 = this.handle42.bind(this);
 	}
 	handleLogin(e) {
 		var regLowercase = new RegExp('^[a-z]*$');
 
-		if (!regLowercase.test(e.target.value)) {
+		if (!regLowercase.test(e.target.value))
 			this.setState({errLogin: true});
-		} else {
+		else
 			this.setState({errLogin: false});
-		}
 		this.setState({login: e.target.value});
 	}
 	handlePasswd() {
@@ -50,84 +50,25 @@ class Login extends Component {
 			fetch('/api/user/auth/hypertube/' + this.state.login + '/' + this.state.passwd, {
 				method: 'GET'
 			})
-				.then(res => res.json())
-				.then(res => {
-					console.log(res);
-					localStorage.setItem('token', res.data.token);
-					browserHistory.push('/');
-				})
-				.catch(err => console.log(err));
+			.then(res => res.json())
+			.then(res => {
+				console.log(res);
+				localStorage.setItem('token', res.data.token);
+			})
+			.catch(err => console.log);
 		}
-	}
-	handleFacebook() {
-		fetch('/api/user/auth/facebook', {
-			method: 'GET'
-		})
-			.then(res => res.text())
-			.then(res => {
-				console.log(res);
-//				localStorage.setItem('token', res.data.token);
-//				browserHistory.push('/');
-			})
-			.catch(err => console.log(err));
-	}
-	handleTwitter() {
-		fetch('/api/user/auth/twitter', {
-			method: 'GET'
-		})
-			.then(res => res.json())
-			.then(res => {
-				console.log(res);
-//				localStorage.setItem('token', res.data.token);
-//				browserHistory.push('/');
-			})
-			.catch(err => console.log(err));
-	}
-	handle42() {
-		fetch('/api/user/auth/42', {
-			method: 'GET'
-		})
-			.then(res => res.json())
-			.then(res => {
-				console.log(res);
-//				localStorage.setItem('token', res.data.token);
-//				browserHistory.push('/');
-			})
-			.catch(err => console.log(err));
 	}
 	handleFillChar(e) {
 		this.setState({passwd: e.target.value});
 	}
+
 	render() {
-		const {messages} = this.context;
+		const {messages, lang} = this.context;
 		return (
 			<Center className="VisitorHeight">
 				<Paper zDepth={2}>
-					<AppBar
-						showMenuIconButton={false}
-						title={messages.loginPage.log}
-						/>
-					<RaisedButton
-						className="VisitorMarge"
-						labelColor={fullWhite}
-						label="Facebook"
-						onClick={this.handleFacebook}
-						backgroundColor={facebookColor}
-						/>
-					<RaisedButton
-						className="VisitorMarge"
-						labelColor={fullWhite}
-						label="42"
-						onClick={this.handle42}
-						backgroundColor={schoolColor}
-						/>
-					<RaisedButton
-						className="VisitorMarge"
-						labelColor={fullWhite}
-						label="Twitter"
-						onClick={this.handleTwitter}
-						backgroundColor={twitterColor}
-						/>
+					<AppBar showMenuIconButton={false} title={messages.loginPage.log} />
+					<Oauth />
 					<Divider/>
 					<Center>
 						<TextField

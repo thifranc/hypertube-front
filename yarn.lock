@@ -2,6 +2,10 @@
 # yarn lockfile v1
 
 
+"@types/react@*":
+  version "0.14.54"
+  resolved "https://registry.yarnpkg.com/@types/react/-/react-0.14.54.tgz#0fb0dadad895febeb468a885d0fa2284d5bbefae"
+
 Base64@~0.2.0:
   version "0.2.1"
   resolved "https://registry.yarnpkg.com/Base64/-/Base64-0.2.1.tgz#ba3a4230708e186705065e66babdd4c35cf60028"
@@ -4957,6 +4961,16 @@ react-event-listener@^0.4.0:
 react-facebook-login@^3.4.1:
   version "3.4.1"
   resolved "https://registry.yarnpkg.com/react-facebook-login/-/react-facebook-login-3.4.1.tgz#ea8e75954877a551e9c5620c570a06d77ea00acc"
+
+react-google-login@^2.5.8:
+  version "2.5.8"
+  resolved "https://registry.yarnpkg.com/react-google-login/-/react-google-login-2.5.8.tgz#f889fc247f3d5c720c45ea4d8cb044b23e9301a9"
+  dependencies:
+    "@types/react" "*"
+
+react-instagram-login@^1.0.0:
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/react-instagram-login/-/react-instagram-login-1.0.0.tgz#2d1fc72e52af6d553a6be69038ee5bcf82313c29"
 
 react-router@^3.0.0:
   version "3.0.0"
