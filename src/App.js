@@ -38,13 +38,14 @@ function requireAuth(nextState, replace) {
 	}
 }
 
-function test(nextState, replace) {
-	if (localStorage.getItem('token')) {
-		replace({
-			pathname : '/'
-		});
-	}
-}
+// function test(nextState, replace) {
+// 	return ;
+// 	if (localStorage.getItem('token')) {
+// 		replace({
+// 			pathname : '/'
+// 		});
+// 	}
+// }
 
 class App extends Component {
 	render() {
@@ -58,7 +59,7 @@ class App extends Component {
 							<Route path="profile" component={Profile}/>
 							<Route path="movie/:id" component={Movie}/>
 						</Route>
-						<Route path="login" component={Login} onEnter= {test}/>
+						<Route path="login" component={Login} />
 						<Route path="register" component={Register}/>
 						<Route path="forget" component={Forget}/>
 						<Route path="reset/:id/:token" component={Reset}/>
