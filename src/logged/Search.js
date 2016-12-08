@@ -87,8 +87,7 @@ class Search extends Component {
 		.then(res => res.json())
 		.then(res => {
 			if (!res.data || !res.data[0])
-				return ;
-
+				return movies;
 			let myView = [];
 			
 			res.data.map((obj) => myView.push(obj.id_movies) );
@@ -117,35 +116,12 @@ class Search extends Component {
 			return this.markIsView(movies);
 		})
 		.then(res => {
-			this.setState({movies: movies});
+			this.setState({movies: res});
 			this.columnWatch();
 			window.addEventListener('scroll', this.scrollWatch, false);
 			window.addEventListener('resize', this.columnWatch, false);
 		})
 		.catch(err => console.log('originalLoad ==> ', err));
-	}
-
-	specificLoad() { // name date mark
-		let movies = null;
-		fetch('/api/yts/list_movies.json?limit=20', {
-			method: 'GET',
-			credentials: 'include',
-			headers: {
-				'Content-Type': 'application/json'
-			}
-		})
-		.then(res => res.json())
-		.then(res => {
-			movies = res.data.movies;
-			return this.markIsView(movies);
-		})
-		.then(movies => {
-			this.setState({movies: movies});
-			this.columnWatch();
-			window.addEventListener('scroll', this.scrollWatch, false);
-			window.addEventListener('resize', this.columnWatch, false);
-		})
-		.catch(err => console.log(err));
 	}
 
 	loadMore() {
@@ -194,6 +170,7 @@ class Search extends Component {
 	}
 
 	handleAJAX() {
+		console.log('REQUEST ....')
 		fetch('/api/yts/list_movies.json?genre=' + this.state.genre +
 				'&minimum_rating=' + this.state.rateMin +
 				'&query_term=' + this.state.search +
@@ -214,6 +191,7 @@ class Search extends Component {
 				});
 			})
 			.then(res => {
+				console.log('Handle : ', res)
 				this.setState({movies: res});
 				this.columnWatch();
 				window.addEventListener('scroll', this.scrollWatch, false);
@@ -232,7 +210,6 @@ class Search extends Component {
 		this.setState({yearMax: e[1]});
 	}
 	handleGetValueRate(e) {
-		console.log(e[0])
 		this.setState({rateMin: e[0]});
 		this.setState({rateMax: e[1]});
 	}
@@ -261,10 +238,10 @@ class Search extends Component {
 			'Thriller', 'War', 'Western'];
 		const sortBy = ['title', 'year', 'rating', 'peers', 'seeds', 'download_count', 'like_count', 'date_added'];
 		const {messages} = this.context;
+				/*{!this.state.movies.length ?
+					<Center style={styles.loader}><CircularProgress size={80} thickness={5}/></Center> :*/
 		return (
 			<div>
-				{!this.state.movies.length ?
-					<Center style={styles.loader}><CircularProgress size={80} thickness={5}/></Center> :
 					<div style={styles.root}>
 						<GridList cellHeight={'auto'} style={styles.gridList} cols={this.state.column}>
 							<Subheader>
@@ -297,7 +274,7 @@ class Search extends Component {
 									{messages.search.rate}
 								</p>
 								<Slider
-									min={this.state.rateMin} max={this.state.rateMax}
+									min={0} max={10}
 									range defaultValue={[this.state.rateMin, this.state.rateMax]}
 									onChange={this.handleGetValueRate}
 									onAfterChange={this.handleAJAX}
@@ -306,32 +283,35 @@ class Search extends Component {
 									{messages.search.year}
 								</p>
 								<Slider
-									min={this.state.yearMin} max={this.state.yearMax} range
-									defaultValue={[this.state.yearMin, this.state.yearMax]}
+									min={1970} max={2017}
+									range defaultValue={[this.state.yearMin, this.state.yearMax]}
 									onChange={this.handleGetValueYear}
 									onAfterChange={this.handleAJAX}
 									/>
 								</div>
 							</Subheader>
 
-							{this.state.movies.map(movie => (
-								<Link key={movie.id} to={'/movie/' + movie.id}>
-									<GridTile
-										style={movie.view}
-										title={movie.title}
-										subtitle={movie.year}
-										actionIcon={<IconButton tooltip={movie.rating} touch={Boolean(true)} tooltipPosition="top-center"><StarBorder color="yellow"/></IconButton>}
-										actionPosition="right"
-										>
-										<img
-											style={{width: '100%'}}
-											src={movie.large_cover_image}
-											onMouseEnter={this.handleMovieSeen}
-											onMouseLeave={this.handleMovieSeen}
-											/>
-									</GridTile>
-								</Link>
-							))
+							{ this.state.movies.length > 0 ?
+								this.state.movies.map(movie => (
+									<Link key={movie.id} to={'/movie/' + movie.id}>
+										<GridTile
+											style={movie.view}
+											title={movie.title}
+											subtitle={movie.year}
+											actionIcon={<IconButton tooltip={movie.rating} touch={Boolean(true)} tooltipPosition="top-center"><StarBorder color="yellow"/></IconButton>}
+											actionPosition="right"
+											>
+											<img
+												style={{width: '100%'}}
+												src={movie.large_cover_image}
+												alt="movie"
+												onMouseEnter={this.handleMovieSeen}
+												onMouseLeave={this.handleMovieSeen}
+												/>
+										</GridTile>
+									</Link>
+								))
+								: <p>No movies...</p>
 							}
 						</GridList>
 					</div>

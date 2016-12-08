@@ -62,8 +62,6 @@ class Movie extends Component {
 	render() {
 		const movie = this.state.movie;
 
-		console.log(movie)
-
 		return (
 			<div>
 				{!Object.keys(movie).length ?

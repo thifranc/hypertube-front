@@ -210,7 +210,7 @@ class User extends Component {
 											actionIcon={<IconButton tooltip={movie.rating} touch={Boolean(true)} tooltipPosition="top-center"><StarBorder color="yellow"/></IconButton>}
 											actionPosition="right"
 										>
-											<img style={{width: '100%'}} src={movie.large_cover_image} alt="picture"/>
+											<img style={{width: '100%'}} src={movie.large_cover_image} alt="cover"/>
 										</GridTile>
 									</Link>
 								))
