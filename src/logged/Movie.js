@@ -80,7 +80,7 @@ class Movie extends Component {
 					<Center style={styles.loader}><CircularProgress size={80} thickness={5}/></Center> :
 					<div className="MovieContainer">
 							<MovieInfo movie={movie}/>
-							<Torrents movie={movie}/>
+							<Torrents movie={movie} startStream={this.startStream}/>
 					</div>
 				}
 				<Disqus/>
