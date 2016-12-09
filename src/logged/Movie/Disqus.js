@@ -5,7 +5,7 @@ import AppBar from 'material-ui/AppBar';
 
 const Disqus = () => (
 	<div className="MovieDisqus">
-		<Paper zDepth={2}>
+		<Paper className="MovieDisqusEl" zDepth={2}>
 			<AppBar
 				showMenuIconButton={false}
 				title="Comments"

@@ -79,11 +79,13 @@ class Movie extends Component {
 				{!Object.keys(movie).length ?
 					<Center style={styles.loader}><CircularProgress size={80} thickness={5}/></Center> :
 					<div className="MovieContainer">
+						<div className="MovieContainerColumn">
 							<MovieInfo movie={movie}/>
 							<Torrents movie={movie} startStream={this.startStream}/>
+						</div>
+						<Disqus/>
 					</div>
 				}
-				<Disqus/>
 			</div>
 		);
 	}
