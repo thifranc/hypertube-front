@@ -1,6 +1,5 @@
 .MovieContainer {
   width: 100%;
-  min-height: calc(100vh - 56px);
   background: linear-gradient(-90deg, rgba(224, 224, 224, 1), rgba(58, 46, 46, 1));
   display: flex;
   position: relative;
@@ -26,6 +25,9 @@
 .MovieInfoElem{
   margin-right: 20px;
   display: inline-block;
+}
+.MovieDisqus {
+  width: calc(100% - 30px);
 }
 @media (max-width: 1206px) {
   .MovieContainer {
