@@ -50,8 +50,13 @@ class Login extends Component {
 			})
 			.then(res => res.json())
 			.then(res => {
-				localStorage.setItem('token', res.data.token);
-				browserHistory.push('/');				
+				console.log(res);
+				if (typeof(res.error) === "undefined") {
+					localStorage.setItem('token', res.data.token);
+					browserHistory.push('/');				
+				} else {
+					alert(res.message);
+				}
 			})
 			.catch(err => console.log);
 		}

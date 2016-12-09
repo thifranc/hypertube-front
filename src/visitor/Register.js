@@ -19,25 +19,25 @@ class Register extends Component {
 		super();
 		this.state = {
 			login: '',
-			errLogin: false,
+			errLogin: '',
 			language: 'en',
-			errLang: false,
+			errLang: '',
 			firstname: '',
-			errFirstname: false,
+			errFirstname: '',
 			name: '',
-			errName: false,
+			errName: '',
 			mail: '',
-			errMail: false,
+			errMail: '',
 			passwd: '',
-			errPasswd: false,
+			errPasswd: '',
 			preview: ''
 		};
-		this.handleLowercase = this.handleLowercase.bind(this);
+		this.handleRegexError = this.handleRegexError.bind(this);
 		this.handleFillChar = this.handleFillChar.bind(this);
-		this.handleValidForm = this.handleValidForm.bind(this);
 		this.handleChange = this.handleChange.bind(this);
 		this.handleFileChange = this.handleFileChange.bind(this);
 		this.attachFile = this.attachFile.bind(this);
+		this.ajaxCall = this.ajaxCall.bind(this);
 	}
 	handleChange(e, index, value) {
 		if (value !== 'en' &&
@@ -47,27 +47,34 @@ class Register extends Component {
 		}
 		this.setState({language: value});
 	}
-	handleLowercase(e) {
-		var regLowercase = new RegExp('^[a-z]*$');
+	handleRegexError(e) {
+		const {messages} = this.context;
+		var regex;
+		var msg;
 		var err = 'err' + e.target.id.charAt(0).toUpperCase() + e.target.id.substring(1);
 
-		this.setState({[err]: !regLowercase.test(e.target.value)});
+		//attribute regex and msg alongside id
+		if (e.target.id === 'mail') {
+			regex = new RegExp('^[0-9a-z._-]+@{1}[0-9a-z.-]{2,}[.]{1}[a-z]{2,5}$', 'i');
+			msg = messages.errors.mail;
+		} else if (e.target.id === 'passwd') {
+			regex = new RegExp('^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z]).{8,}$');
+			msg = messages.errors.passwd;
+		} else {
+			regex = new RegExp('^[a-z]+$');
+			msg = messages.errors.lowercase;
+		}
+
+
+		if (!regex.test(e.target.value)) {
+			this.setState({[err]: msg});
+		} else {
+			this.setState({[err]: ''});
+		}
 		this.handleFillChar(e);
 	}
-	handleValidForm(e) {
-		e.preventDefault();
-		var regPasswd = new RegExp('^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z]).{8,}$');
-		var regMail = new RegExp('^[0-9a-z._-]+@{1}[0-9a-z.-]{2,}[.]{1}[a-z]{2,5}$', 'i');
-
-		this.setState({
-			errLogin: !this.state.login,
-			errName: !this.state.name,
-			errFirstname: !this.state.firstname,
-			errPasswd: !regPasswd.test(this.state.passwd),
-			errMail: !regMail.test(this.state.mail)
-		}, this.ajaxCall);
-	}
 	ajaxCall() {
+		console.log('bonjour');
 		if (!this.state.errPasswd && !this.state.errMail &&
 			!this.state.errLogin && !this.state.errFirstname &&
 			!this.state.errName && !this.state.errLang) {
@@ -86,6 +93,7 @@ class Register extends Component {
 				formData.append(name, data[name]);
 			}
 			formData.append('path_img', this.state.img);
+			console.log('mdr');
 			fetch('/api/user', {
 				method: 'POST',
 				body: formData
@@ -97,7 +105,13 @@ class Register extends Component {
 					localStorage.setItem('token', res.data.token);
 					browserHistory.push('/');
 				} else {
-					alert(res.data[0].message);
+					res.data.forEach(msg => {
+						if (msg.path === 'pseudo')
+							this.setState({errLogin:msg.message});
+						if (msg.path === 'email')
+							this.setState({errMail:msg.message});
+						console.log(msg);
+					})
 				}
 			})
 			.catch(err => {
@@ -152,30 +166,30 @@ class Register extends Component {
 						className="VisitorMarge"
 						value={this.state.login}
 						id="Login"
-						onChange={this.handleLowercase}
+						onChange={this.handleRegexError}
 						floatingLabelText={messages.login}
 						hintText={messages.login}
-						errorText={this.state.errLogin && messages.errors.lowercase}
+						errorText={this.state.errLogin}
 						/>
 					<br/>
 					<TextField
 						className="VisitorMarge"
 						value={this.state.firstname}
-						onChange={this.handleLowercase}
+						onChange={this.handleRegexError}
 						id="Firstname"
 						floatingLabelText={messages.firstname}
 						hintText={messages.firstname}
-						errorText={this.state.errFirstname && messages.errors.lowercase}
+						errorText={this.state.errFirstname}
 						/>
 					<br/>
 					<TextField
 						className="VisitorMarge"
 						value={this.state.name}
 						id="Name"
-						onChange={this.handleLowercase}
+						onChange={this.handleRegexError}
 						floatingLabelText={messages.name}
 						hintText={messages.name}
-						errorText={this.state.errName && messages.errors.lowercase}
+						errorText={this.state.errName}
 						/>
 					<br/>
 					<TextField
@@ -183,9 +197,11 @@ class Register extends Component {
 						value={this.state.mail}
 						id="mail"
 						onChange={this.handleFillChar}
+						onBlur={this.handleRegexError}
+						onFocus={this.handleRegexError}
 						hintText={messages.mail}
 						floatingLabelText={messages.mail}
-						errorText={this.state.errMail && messages.errors.mail}
+						errorText={this.state.errMail}
 						/>
 					<br/>
 					<TextField
@@ -193,10 +209,12 @@ class Register extends Component {
 						value={this.state.passwd}
 						id="passwd"
 						onChange={this.handleFillChar}
+						onBlur={this.handleRegexError}
+						onFocus={this.handleRegexError}
 						hintText={messages.passwd}
 						floatingLabelText={messages.passwd}
 						type="password"
-						errorText={this.state.errPasswd && messages.errors.passwd}
+						errorText={this.state.errPasswd}
 						/>
 					<br/>
 					<SelectField
@@ -215,8 +233,12 @@ class Register extends Component {
 						<RaisedButton
 							label={messages.loginPage.register}
 							className="VisitorMarge"
-							disabled={this.state.errLogin || this.state.errName || this.state.errFirstname}
-							onClick={this.handleValidForm}
+							disabled={(this.state.errLogin
+								|| this.state.errName
+								|| this.state.errFirstname
+								|| this.state.errMail
+								|| this.state.errPasswd) ? true : false}
+							onClick={this.ajaxCall}
 							/>
 						<Link to="/login" className="VisitorMarge">Home</Link>
 					</Center>
