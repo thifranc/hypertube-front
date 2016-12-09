@@ -27,7 +27,7 @@ class Reset extends Component {
 	}
 	handleKey(e) {
 		if (e.key === "Enter")
-			this.ajaxCall();
+			this.handlePasswd();
 	}
 	handleFillChar(e) {
 		this.setState({newPasswd: e.target.value});

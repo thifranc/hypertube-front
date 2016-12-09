@@ -17,6 +17,7 @@ class Forget extends Component {
 		super();
 		this.state = {
 			open: false,
+			success:false,
 			hidden: true,
 			login: '',
 			errLogin: false,
@@ -39,7 +40,7 @@ class Forget extends Component {
 		};
 	handleKey(e) {
 		if (e.key === "Enter")
-			this.ajaxCall();
+			this.handleMail();
 	}
 	handleLogin(e) {
 		let regLowercase = new RegExp('^[a-z]*$');
@@ -58,7 +59,7 @@ class Forget extends Component {
 		}, this.ajaxCall);
 	}
 	ajaxCall() {
-		var data = {};
+	var data = {};
 		if (this.state.hidden && !this.state.errLogin && this.state.login) {
 			data = JSON.stringify({login: this.state.login});
 		} else if (!this.state.hidden && !this.state.errMail) {
@@ -75,7 +76,7 @@ class Forget extends Component {
 					if (typeof(res.error) !== "undefined") {
 						this.setState({open:true});
 					} else {
-						browserHistory.push('/login');
+						this.setState({success:true, open:true});
 					}
 
 				})
@@ -112,7 +113,7 @@ class Forget extends Component {
 			          open={this.state.open}
 			          onRequestClose={this.handleClose}
 			        >
-					User does not exist VERSUS You have been mailed
+					{this.state.success ? "You have been mailed" : "User does not exist"}
 				</Dialog>
 				<Paper zDepth={2}>
 					<AppBar
