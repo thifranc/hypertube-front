@@ -93,8 +93,12 @@ class Register extends Component {
 			.then(res => res.json())
 			.then(res => {
 				console.log(res);
-				localStorage.setItem('token', res.data.token);
-				browserHistory.push('/');
+				if (res.data && res.data.token) {
+					localStorage.setItem('token', res.data.token);
+					browserHistory.push('/');
+				} else {
+					alert(res.data[0].message);
+				}
 			})
 			.catch(err => {
 				console.log(err);
