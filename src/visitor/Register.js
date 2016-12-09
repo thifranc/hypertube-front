@@ -86,20 +86,14 @@ class Register extends Component {
 				formData.append(name, data[name]);
 			}
 			formData.append('path_img', this.state.img);
-			// console.log('looll', formData);
-			// console.log(this.state.img);
-
-			// for (var pair of formData.entries()) {
-			// 	// console.log(pair[0] + ', ' + pair[1]);
-			// }
 			fetch('/api/user', {
 				method: 'POST',
 				body: formData
 			})
 			.then(res => res.json())
 			.then(res => {
-				console.log(res.token);
-				localStorage.setItem('token', res.token);
+				console.log(res);
+				localStorage.setItem('token', res.data.token);
 				browserHistory.push('/');
 			})
 			.catch(err => {

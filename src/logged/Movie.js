@@ -28,7 +28,6 @@ class Movie extends Component {
 		this.state = {
 			movie: {}
 		};
-		this.handleNewComment = this.handleNewComment.bind(this);
 	}
 	componentDidMount() {
 		const filmId = this.props.params.id;
@@ -56,9 +55,6 @@ class Movie extends Component {
 		})
 		.catch(err => console.log(err));
 	}
-    handleNewComment(comment) {
-        console.log(comment.text);
-    }
 	render() {
 		const movie = this.state.movie;
 

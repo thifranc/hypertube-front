@@ -30,7 +30,8 @@ const Tmp = (nextState, replace) => {
 };
 
 function requireAuth(nextState, replace) {
-	if (!localStorage.getItem('token')) {
+	if (!localStorage.getItem('token') ||
+			localStorage.getItem('token') === "undefined") {
 		replace({
 			pathname: '/login',
 			state: {nextPathname: nextState.location.pathname}

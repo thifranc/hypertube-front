@@ -193,9 +193,6 @@ class Search extends Component {
 			.then(res => {
 				console.log('Handle : ', res)
 				this.setState({movies: res});
-				this.columnWatch();
-				window.addEventListener('scroll', this.scrollWatch, false);
-				window.addEventListener('resize', this.columnWatch, false);
 			})
 			.catch(err => console.log(err));
 	}
@@ -292,8 +289,8 @@ class Search extends Component {
 							</Subheader>
 
 							{ this.state.movies.length > 0 ?
-								this.state.movies.map(movie => (
-									<Link key={movie.id} to={'/movie/' + movie.id}>
+								this.state.movies.map((movie, i) => (
+									<Link key={i} to={'/movie/' + movie.id}>
 										<GridTile
 											style={movie.view}
 											title={movie.title}
