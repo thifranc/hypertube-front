@@ -4,8 +4,10 @@ import {browserHistory} from 'react-router';
 import Paper from 'material-ui/Paper';
 import TextField from 'material-ui/TextField';
 import AppBar from 'material-ui/AppBar';
-import RaisedButton from 'material-ui/RaisedButton';
 import Divider from 'material-ui/Divider';
+import RaisedButton from 'material-ui/RaisedButton';
+import FlatButton from 'material-ui/FlatButton';
+import Dialog from 'material-ui/Dialog';
 // import {fullWhite, blue800 as facebookColor, lightBlue200 as twitterColor, grey800 as schoolColor} from 'material-ui/styles/colors';
 import {Link} from 'react-router';
 
@@ -19,6 +21,7 @@ class Login extends Component {
 		super();
 		this.state = {
 			login: '',
+			open: false,
 			errLogin: false,
 			passwd: '',
 			errPasswd: false
@@ -26,6 +29,19 @@ class Login extends Component {
 		this.handleLogin = this.handleLogin.bind(this);
 		this.handlePasswd = this.handlePasswd.bind(this);
 		this.handleFillChar = this.handleFillChar.bind(this);
+		this.handleKey = this.handleKey.bind(this);
+		this.handleOpen = this.handleOpen.bind(this);
+		this.handleClose = this.handleClose.bind(this);
+	}
+  handleOpen() {
+		  this.setState({open: true});
+		};
+  handleClose() {
+		  this.setState({open: false});
+		};
+	handleKey(e) {
+		if (e.key === "Enter")
+			this.ajaxCall();
 	}
 	handleLogin(e) {
 		var regLowercase = new RegExp('^[a-z]*$');
@@ -51,11 +67,11 @@ class Login extends Component {
 			.then(res => res.json())
 			.then(res => {
 				console.log(res);
-				if (typeof(res.error) === "undefined") {
+				if (res.data && typeof(res.data.token) != "undefined") {
 					localStorage.setItem('token', res.data.token);
 					browserHistory.push('/');				
 				} else {
-					alert(res.message);
+					this.setState({open:true});
 				}
 			})
 			.catch(err => console.log);
@@ -67,8 +83,24 @@ class Login extends Component {
 
 	render() {
 		const {messages} = this.context;
+		const actions = [
+			      <FlatButton
+			        label="Cancel"
+			        primary={true}
+			        onTouchTap={this.handleClose}
+			      />
+			    ];
 		return (
 			<Center className="VisitorHeight">
+				<Dialog
+			          title="Error"
+			          actions={actions}
+			          modal={false}
+			          open={this.state.open}
+			          onRequestClose={this.handleClose}
+			        >
+					Message pour dire invalid login or password
+				</Dialog>
 				<Paper zDepth={2}>
 					<AppBar showMenuIconButton={false} title={messages.loginPage.log} />
 					<Oauth />
@@ -81,6 +113,7 @@ class Login extends Component {
 							floatingLabelText={messages.login}
 							hintText={messages.login}
 							errorText={this.state.errLogin && messages.errors.lowercase}
+							onKeyDown={this.handleKey}
 							/>
 						<br/>
 						<TextField
@@ -92,6 +125,7 @@ class Login extends Component {
 							floatingLabelText={messages.passwd}
 							type="password"
 							errorText={this.state.errPasswd && messages.errors.passwd}
+							onKeyDown={this.handleKey}
 							/>
 						<br/>
 						<Center>

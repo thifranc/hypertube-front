@@ -38,6 +38,11 @@ class Register extends Component {
 		this.handleFileChange = this.handleFileChange.bind(this);
 		this.attachFile = this.attachFile.bind(this);
 		this.ajaxCall = this.ajaxCall.bind(this);
+		this.handleKey = this.handleKey.bind(this);
+	}
+	handleKey(e) {
+		if (e.key === "Enter")
+			this.ajaxCall();
 	}
 	handleChange(e, index, value) {
 		if (value !== 'en' &&
@@ -73,7 +78,7 @@ class Register extends Component {
 		}
 		this.handleFillChar(e);
 	}
-	ajaxCall() {
+	ajaxCall(e) {
 		console.log('bonjour');
 		if (!this.state.errPasswd && !this.state.errMail &&
 			!this.state.errLogin && !this.state.errFirstname &&
@@ -140,7 +145,9 @@ class Register extends Component {
 		const classImg = 'VisitorMarge VisitorImg';
 		const {messages} = this.context;
 		return (
-			<Center className="VisitorHeight">
+			<Center
+			className="VisitorHeight"
+				>
 				<Paper zDepth={2}>
 					<AppBar
 						showMenuIconButton={false}
@@ -170,6 +177,7 @@ class Register extends Component {
 						floatingLabelText={messages.login}
 						hintText={messages.login}
 						errorText={this.state.errLogin}
+						onKeyDown={this.handleKey}
 						/>
 					<br/>
 					<TextField
@@ -180,6 +188,7 @@ class Register extends Component {
 						floatingLabelText={messages.firstname}
 						hintText={messages.firstname}
 						errorText={this.state.errFirstname}
+						onKeyDown={this.handleKey}
 						/>
 					<br/>
 					<TextField
@@ -190,6 +199,7 @@ class Register extends Component {
 						floatingLabelText={messages.name}
 						hintText={messages.name}
 						errorText={this.state.errName}
+						onKeyDown={this.handleKey}
 						/>
 					<br/>
 					<TextField
@@ -202,6 +212,7 @@ class Register extends Component {
 						hintText={messages.mail}
 						floatingLabelText={messages.mail}
 						errorText={this.state.errMail}
+						onKeyDown={this.handleKey}
 						/>
 					<br/>
 					<TextField
@@ -215,6 +226,7 @@ class Register extends Component {
 						floatingLabelText={messages.passwd}
 						type="password"
 						errorText={this.state.errPasswd}
+						onKeyDown={this.handleKey}
 						/>
 					<br/>
 					<SelectField

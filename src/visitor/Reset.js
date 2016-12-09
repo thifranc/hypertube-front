@@ -23,7 +23,11 @@ class Reset extends Component {
 		this.handleFillChar = this.handleFillChar.bind(this);
 		this.handlePasswd = this.handlePasswd.bind(this);
 		this.handleEye = this.handleEye.bind(this);
-		console.log(this);
+		this.handleKey = this.handleKey.bind(this);
+	}
+	handleKey(e) {
+		if (e.key === "Enter")
+			this.ajaxCall();
 	}
 	handleFillChar(e) {
 		this.setState({newPasswd: e.target.value});
@@ -72,6 +76,7 @@ class Reset extends Component {
 						type={this.state.showPasswd ? 'text' : 'password'}
 						floatingLabelText="New password"
 						errorText={this.state.errNewPasswd && messages.errors.passwd}
+						onKeyDown={this.handleKey}
 						/>
 					<Visibility
 						hoverColor={red800}

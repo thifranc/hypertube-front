@@ -1,10 +1,12 @@
 import React, {Component} from 'react';
-// import {browserHistory} from 'react-router';
+import {browserHistory} from 'react-router';
 
 import Paper from 'material-ui/Paper';
 import TextField from 'material-ui/TextField';
 import AppBar from 'material-ui/AppBar';
 import RaisedButton from 'material-ui/RaisedButton';
+import FlatButton from 'material-ui/FlatButton';
+import Dialog from 'material-ui/Dialog';
 import {Link} from 'react-router';
 
 import Center from '../util/Center';
@@ -14,6 +16,7 @@ class Forget extends Component {
 	constructor() {
 		super();
 		this.state = {
+			open: false,
 			hidden: true,
 			login: '',
 			errLogin: false,
@@ -24,6 +27,19 @@ class Forget extends Component {
 		this.handleLogin = this.handleLogin.bind(this);
 		this.handleMail = this.handleMail.bind(this);
 		this.handleFillChar = this.handleFillChar.bind(this);
+		this.handleKey = this.handleKey.bind(this);
+		this.handleOpen = this.handleOpen.bind(this);
+		this.handleClose = this.handleClose.bind(this);
+	}
+  handleOpen() {
+		  this.setState({open: true});
+		};
+  handleClose() {
+		  this.setState({open: false});
+		};
+	handleKey(e) {
+		if (e.key === "Enter")
+			this.ajaxCall();
 	}
 	handleLogin(e) {
 		let regLowercase = new RegExp('^[a-z]*$');
@@ -56,6 +72,12 @@ class Forget extends Component {
 				.then(res => res.json())
 				.then(res => {
 					console.log(res);
+					if (typeof(res.error) !== "undefined") {
+						this.setState({open:true});
+					} else {
+						browserHistory.push('/login');
+					}
+
 				})
 				.catch(err => {
 					console.log(err);
@@ -74,8 +96,24 @@ class Forget extends Component {
 	}
 	render() {
 		const {messages} = this.context;
+		const actions = [
+			      <FlatButton
+			        label="Cancel"
+			        primary={true}
+			        onTouchTap={this.handleClose}
+			      />
+			    ];
 		return (
 			<Center className="VisitorHeight">
+				<Dialog
+			          title="Error"
+			          actions={actions}
+			          modal={false}
+			          open={this.state.open}
+			          onRequestClose={this.handleClose}
+			        >
+					User does not exist VERSUS You have been mailed
+				</Dialog>
 				<Paper zDepth={2}>
 					<AppBar
 						showMenuIconButton={false}
@@ -95,6 +133,7 @@ class Forget extends Component {
 							hintText={messages.login}
 							floatingLabelText={messages.login}
 							errorText={this.state.errLogin && messages.errors.lowercase}
+							onKeyDown={this.handleKey}
 							/> :
 							<TextField
 								className={this.state.hidden ? 'VisitorMarge' : 'VisitorHidden'}
@@ -104,6 +143,7 @@ class Forget extends Component {
 								hintText={messages.mail}
 								floatingLabelText={messages.mail}
 								errorText={this.state.errMail && messages.errors.mail}
+								onKeyDown={this.handleKey}
 								/>
 					}
 					<br/>
