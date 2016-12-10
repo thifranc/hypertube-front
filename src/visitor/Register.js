@@ -13,6 +13,7 @@ import Divider from 'material-ui/Divider';
 
 import Center from '../util/Center';
 import './visitor.css';
+import MultiLang from './MultiLang';
 
 class Register extends Component {
 	constructor() {
@@ -152,6 +153,7 @@ class Register extends Component {
 					<AppBar
 						showMenuIconButton={false}
 						title={messages.loginPage.register}
+						iconElementRight={<MultiLang />}
 						/>
 					<input
 						name="path_img"
@@ -234,7 +236,7 @@ class Register extends Component {
 						floatingLabelText={messages.language}
 						value={this.state.language}
 						onChange={this.handleChange}
-						errorText={this.state.errLang && 'You have to choose between the available languages'}
+						errorText={this.state.errLang && messages.lang}
 						>
 						<MenuItem value="en" primaryText="English"/>
 						<MenuItem value="fr" primaryText="Francais"/>
@@ -260,11 +262,6 @@ class Register extends Component {
 	}
 }
 
-Register.contextTypes = {
-	lang: React.PropTypes.string,
-	messages: React.PropTypes.object,
-	langChange: React.PropTypes.func,
-	router: React.PropTypes.object
-};
+Register.contextTypes = MultiLang.contextTypes;
 
 export default Register;

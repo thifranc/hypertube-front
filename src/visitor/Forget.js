@@ -10,6 +10,7 @@ import Dialog from 'material-ui/Dialog';
 import {Link} from 'react-router';
 
 import Center from '../util/Center';
+import MultiLang from './MultiLang';
 import './visitor.css';
 
 class Forget extends Component {
@@ -99,7 +100,7 @@ class Forget extends Component {
 		const {messages} = this.context;
 		const actions = [
 			      <FlatButton
-			        label="Cancel"
+			        label={messages.cancel}
 			        primary={true}
 			        onTouchTap={this.handleClose}
 			      />
@@ -113,12 +114,13 @@ class Forget extends Component {
 			          open={this.state.open}
 			          onRequestClose={this.handleClose}
 			        >
-					{this.state.success ? "You have been mailed" : "User does not exist"}
+					{this.state.success ? messages.forget.success : messages.forget.fail}
 				</Dialog>
 				<Paper zDepth={2}>
 					<AppBar
 						showMenuIconButton={false}
 						title={messages.forget.forget}
+						iconElementRight={<MultiLang />}
 						/>
 					<RaisedButton
 						label={messages.forget.change}
@@ -161,11 +163,6 @@ class Forget extends Component {
 	}
 }
 
-Forget.contextTypes = {
-	lang: React.PropTypes.string,
-	messages: React.PropTypes.object,
-	langChange: React.PropTypes.func,
-	router: React.PropTypes.object
-};
+Forget.contextTypes = MultiLang.contextTypes;
 
 export default Forget;

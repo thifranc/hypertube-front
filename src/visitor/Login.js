@@ -12,9 +12,11 @@ import Dialog from 'material-ui/Dialog';
 import {Link} from 'react-router';
 
 import Center from '../util/Center';
+import MultiLang from './MultiLang';
 import './visitor.css';
 
 import Oauth from './oAuth.js';
+
 
 class Login extends Component {
 	constructor() {
@@ -82,10 +84,10 @@ class Login extends Component {
 	}
 
 	render() {
-		const {messages} = this.context;
+		const {messages, lang} = this.context;
 		const actions = [
 			      <FlatButton
-			        label="Cancel"
+			        label={messages.cancel}
 			        primary={true}
 			        onTouchTap={this.handleClose}
 			      />
@@ -99,10 +101,14 @@ class Login extends Component {
 			          open={this.state.open}
 			          onRequestClose={this.handleClose}
 			        >
-					Message pour dire invalid login or password
+				{messages.loginPage.fail}
 				</Dialog>
 				<Paper zDepth={2}>
-					<AppBar showMenuIconButton={false} title={messages.loginPage.log} />
+					<AppBar
+						showMenuIconButton={false}
+						title={messages.loginPage.log}
+						iconElementRight={<MultiLang />}
+						 />
 					<Oauth />
 					<Divider/>
 					<Center>
@@ -139,7 +145,7 @@ class Login extends Component {
 						<Divider/>
 						<Center>
 							<Link to="/register" className="VisitorMarge">{messages.loginPage.register}</Link>
-							<Link to="/forget" className="VisitorMarge">Reset password</Link>
+							<Link to="/forget" className="VisitorMarge">{messages.loginPage.reset}</Link>
 						</Center>
 					</Center>
 				</Paper>
@@ -148,11 +154,6 @@ class Login extends Component {
 	}
 }
 
-Login.contextTypes = {
-	lang: React.PropTypes.string,
-	messages: React.PropTypes.object,
-	langChange: React.PropTypes.func,
-	router: React.PropTypes.object
-};
+Login.contextTypes = MultiLang.contextTypes;
 
 export default Login;

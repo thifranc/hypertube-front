@@ -60,6 +60,7 @@ class allUsers extends Component {
 
 	render() {
 		const users = this.state.users;
+		const {messages} = this.context;
 
 		return (
 			<div>
@@ -68,8 +69,8 @@ class allUsers extends Component {
 				this.state.users.map((user, i) => (
 					<Link key={i} to={'/user/' + user.id}>
 						<GridTile
-							title={"Login: " + user.pseudo}
-							subtitle={"Firstname: " + user.firstname}
+							title={messages.login + ": " + user.pseudo}
+							subtitle={messages.firstname + ": " + user.firstname}
 							>
 							<img
 								style={{width: '100%'}}
@@ -86,5 +87,12 @@ class allUsers extends Component {
 		);
 	}
 }
+
+allUsers.contextTypes = {
+	lang: React.PropTypes.string,
+	messages: React.PropTypes.object,
+	langChange: React.PropTypes.func,
+	router: React.PropTypes.object
+};
 
 export default allUsers;

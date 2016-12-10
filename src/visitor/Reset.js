@@ -10,6 +10,7 @@ import Visibility from 'material-ui/svg-icons/action/visibility';
 import {red800} from 'material-ui/styles/colors';
 
 import Center from '../util/Center';
+import MultiLang from './MultiLang';
 import './visitor.css';
 
 class Reset extends Component {
@@ -67,6 +68,7 @@ class Reset extends Component {
 					<AppBar
 						showMenuIconButton={false}
 						title="Reset password"
+						iconElementRight={<MultiLang />}
 						/>
 					<TextField
 						className={'VisitorMarge'}
@@ -98,11 +100,6 @@ class Reset extends Component {
 	}
 }
 
-Reset.contextTypes = {
-	lang: React.PropTypes.string,
-	messages: React.PropTypes.object,
-	langChange: React.PropTypes.func,
-	router: React.PropTypes.object
-};
+Reset.contextTypes = MultiLang.contextTypes;
 
 export default Reset;
