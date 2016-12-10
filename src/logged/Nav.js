@@ -9,6 +9,7 @@ import Paper from 'material-ui/Paper';
 const account = <FontIcon className="material-icons">account_circle</FontIcon>;
 const search = <FontIcon className="material-icons">search</FontIcon>;
 const exit = <FontIcon className="material-icons">exit_to_app</FontIcon>;
+const people = <FontIcon className="material-icons">people</FontIcon>;
 
 class Nav extends Component {
 	constructor() {
@@ -37,8 +38,10 @@ class Nav extends Component {
 		if (index === 1) {
 			browserHistory.push('/');
 		} else if (index === 2) {
-			browserHistory.push('/profile');
+			browserHistory.push('/allUsers');
 		} else if (index === 3) {
+			browserHistory.push('/profile');
+		} else if (index === 4) {
 			localStorage.clear();
 			browserHistory.push('/login');
 		}
@@ -52,8 +55,9 @@ class Nav extends Component {
 					<BottomNavigation selectedIndex={this.state.selectedIndex}>
 						<div/>
 						<BottomNavigationItem label={messages.nav.search} icon={search} onTouchTap={() => this.handleSelectNav(1)}/>
-						<BottomNavigationItem label={messages.nav.profil} icon={account} onTouchTap={() => this.handleSelectNav(2)}/>
-						<BottomNavigationItem label={messages.nav.logout} icon={exit} onTouchTap={() => this.handleSelectNav(3)}/>
+						<BottomNavigationItem label="Users" icon={people} onTouchTap={() => this.handleSelectNav(2)}/>
+						<BottomNavigationItem label={messages.nav.profil} icon={account} onTouchTap={() => this.handleSelectNav(3)}/>
+						<BottomNavigationItem label={messages.nav.logout} icon={exit} onTouchTap={() => this.handleSelectNav(4)}/>
 						<div/>
 						<div style={{flex: 'none'}}>
 							<SelectField value={lang} onChange={this.handleSelectLang} style={{width: '150px', marginRight: '20px'}}>

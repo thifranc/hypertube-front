@@ -18,8 +18,24 @@ class allUsers extends Component {
 	constructor() {
 		super();
 		this.state = {
-			users: {}
+			users: {},
+			column : 6
 		};
+		this.columnWatch = this.columnWatch.bind(this);
+		window.addEventListener('resize', this.columnWatch, false);
+	}
+	columnWatch() {
+		const width = window.innerWidth;
+
+		if (width > 1300) {
+			this.setState({column: 6});
+		} else if (width > 1000 && width < 1300) {
+			this.setState({column: 5});
+		} else if (width > 800 && width < 1000) {
+			this.setState({column: 3});
+		} else if (width < 600) {
+			this.setState({column: 1});
+		}
 	}
 	componentDidMount() {
 		fetch('/api/user', {
@@ -38,22 +54,26 @@ class allUsers extends Component {
 		.catch(err => console.log(err));
 
 	}
+	componentWillUnmount() {
+		window.removeEventListener('resize', this.columnWatch, false);
+	}
+
 	render() {
 		const users = this.state.users;
 
 		return (
 			<div>
-			<GridList cellHeight={'auto'} cols={3}>
+			<GridList cellHeight={'auto'} cols={this.state.column}>
 			{ this.state.users.length > 0 ?
 				this.state.users.map((user, i) => (
 					<Link key={i} to={'/user/' + user.id}>
 						<GridTile
-							title={user.pseudo}
-							subtitle={user.firstname}
+							title={"Login: " + user.pseudo}
+							subtitle={"Firstname: " + user.firstname}
 							>
 							<img
 								style={{width: '100%'}}
-								src={user.path_img ? user.path_img : "default.jpg"}
+								src={user.path_img ? user.path_img : "http://localhost:4242/picture/default.jpg"}
 								alt="user"
 								/>
 						</GridTile>
