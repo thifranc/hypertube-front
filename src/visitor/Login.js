@@ -17,7 +17,6 @@ import './visitor.css';
 
 import Oauth from './oAuth.js';
 
-
 class Login extends Component {
 	constructor() {
 		super();
@@ -35,23 +34,23 @@ class Login extends Component {
 		this.handleOpen = this.handleOpen.bind(this);
 		this.handleClose = this.handleClose.bind(this);
 	}
-  handleOpen() {
+	handleOpen() {
 		  this.setState({open: true});
-		};
-  handleClose() {
+	}
+	handleClose() {
 		  this.setState({open: false});
-		};
+	}
 	handleKey(e) {
-		if (e.key === "Enter")
-			this.ajaxCall();
+		if (e.key === 'Enter')
+			{this.ajaxCall();}
 	}
 	handleLogin(e) {
 		var regLowercase = new RegExp('^[a-z]*$');
 
 		if (!regLowercase.test(e.target.value))
-			this.setState({errLogin: true});
+			{this.setState({errLogin: true});}
 		else
-			this.setState({errLogin: false});
+			{this.setState({errLogin: false});}
 		this.setState({login: e.target.value});
 	}
 	handlePasswd() {
@@ -69,11 +68,11 @@ class Login extends Component {
 			.then(res => res.json())
 			.then(res => {
 				console.log(res);
-				if (res.data && typeof(res.data.token) != "undefined") {
+				if (res.data && typeof (res.data.token) != 'undefined') {
 					localStorage.setItem('token', res.data.token);
-					browserHistory.push('/');				
+					browserHistory.push('/');
 				} else {
-					this.setState({open:true});
+					this.setState({open: true});
 				}
 			})
 			.catch(err => console.log);
@@ -87,29 +86,29 @@ class Login extends Component {
 		const {messages, lang} = this.context;
 		const actions = [
 			      <FlatButton
-			        label={messages.cancel}
-			        primary={true}
-			        onTouchTap={this.handleClose}
-			      />
+				label={messages.cancel}
+				primary
+				onTouchTap={this.handleClose}
+				/>
 			    ];
 		return (
 			<Center className="VisitorHeight">
 				<Dialog
-			          title="Error"
-			          actions={actions}
-			          modal={false}
-			          open={this.state.open}
-			          onRequestClose={this.handleClose}
-			        >
-				{messages.loginPage.fail}
+					title="Error"
+					actions={actions}
+					modal={false}
+					open={this.state.open}
+					onRequestClose={this.handleClose}
+					>
+					{messages.loginPage.fail}
 				</Dialog>
 				<Paper zDepth={2}>
 					<AppBar
 						showMenuIconButton={false}
 						title={messages.loginPage.log}
-						iconElementRight={<MultiLang />}
-						 />
-					<Oauth />
+						iconElementRight={<MultiLang/>}
+						/>
+					<Oauth/>
 					<Divider/>
 					<Center>
 						<TextField

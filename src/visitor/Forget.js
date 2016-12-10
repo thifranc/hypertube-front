@@ -18,7 +18,7 @@ class Forget extends Component {
 		super();
 		this.state = {
 			open: false,
-			success:false,
+			success: false,
 			hidden: true,
 			login: '',
 			errLogin: false,
@@ -33,15 +33,15 @@ class Forget extends Component {
 		this.handleOpen = this.handleOpen.bind(this);
 		this.handleClose = this.handleClose.bind(this);
 	}
-  handleOpen() {
+	handleOpen() {
 		  this.setState({open: true});
-		};
-  handleClose() {
+	}
+	handleClose() {
 		  this.setState({open: false});
-		};
+	}
 	handleKey(e) {
-		if (e.key === "Enter")
-			this.handleMail();
+		if (e.key === 'Enter')
+			{this.handleMail();}
 	}
 	handleLogin(e) {
 		let regLowercase = new RegExp('^[a-z]*$');
@@ -60,7 +60,7 @@ class Forget extends Component {
 		}, this.ajaxCall);
 	}
 	ajaxCall() {
-	var data = {};
+		var data = {};
 		if (this.state.hidden && !this.state.errLogin && this.state.login) {
 			data = JSON.stringify({login: this.state.login});
 		} else if (!this.state.hidden && !this.state.errMail) {
@@ -74,12 +74,11 @@ class Forget extends Component {
 				.then(res => res.json())
 				.then(res => {
 					console.log(res);
-					if (typeof(res.error) !== "undefined") {
-						this.setState({open:true});
+					if (typeof (res.error) !== 'undefined') {
+						this.setState({open: true});
 					} else {
-						this.setState({success:true, open:true});
+						this.setState({success: true, open: true});
 					}
-
 				})
 				.catch(err => {
 					console.log(err);
@@ -100,27 +99,27 @@ class Forget extends Component {
 		const {messages} = this.context;
 		const actions = [
 			      <FlatButton
-			        label={messages.cancel}
-			        primary={true}
-			        onTouchTap={this.handleClose}
-			      />
+				label={messages.cancel}
+				primary
+				onTouchTap={this.handleClose}
+				/>
 			    ];
 		return (
 			<Center className="VisitorHeight">
 				<Dialog
-			          title="Error"
-			          actions={actions}
-			          modal={false}
-			          open={this.state.open}
-			          onRequestClose={this.handleClose}
-			        >
+					title="Error"
+					actions={actions}
+					modal={false}
+					open={this.state.open}
+					onRequestClose={this.handleClose}
+					>
 					{this.state.success ? messages.forget.success : messages.forget.fail}
 				</Dialog>
 				<Paper zDepth={2}>
 					<AppBar
 						showMenuIconButton={false}
 						title={messages.forget.forget}
-						iconElementRight={<MultiLang />}
+						iconElementRight={<MultiLang/>}
 						/>
 					<RaisedButton
 						label={messages.forget.change}

@@ -48,7 +48,7 @@ class Profile extends Component {
 				firstname: res.data[0].firstname,
 				mail: res.data[0].email,
 				language: res.data[0].lang,
-				preview: res.data[0].path_img ? res.data[0].path_img : "http://localhost:4242/picture/default.jpg"
+				preview: res.data[0].path_img ? res.data[0].path_img : 'http://localhost:4242/picture/default.jpg'
 			});
 		})
 		.catch(err => console.log(err));

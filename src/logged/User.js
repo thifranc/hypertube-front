@@ -12,12 +12,10 @@ import Center from '../util/Center';
 import 'whatwg-fetch';
 import './User.css';
 
-
 import {Link} from 'react-router';
 import IconButton from 'material-ui/IconButton';
 import {GridList, GridTile} from 'material-ui/GridList';
 import StarBorder from 'material-ui/svg-icons/toggle/star';
-
 
 const styles = {
 	loader: {
@@ -44,7 +42,7 @@ class User extends Component {
 		this.state = {
 			user: {},
 			movies: [],
-			column : 6
+			column: 6
 		};
 		this.movies = [];
 		this.columnWatch = this.columnWatch.bind(this);
@@ -77,18 +75,18 @@ class User extends Component {
 		})
 		.then(res => {
 			if (res.status !== 200)
-				return Promise.reject('Bad user');
+				{return Promise.reject('Bad user');}
 			return res.json();
 		})
 		.then(res => {
 			user = res.data;
 			if (!res.data.path_img)
-				user.path_img = "http://localhost:4242/picture/default.jpg";
+				{user.path_img = 'http://localhost:4242/picture/default.jpg';}
 			var countFetch = 0;
 			let len = user.movie_view.length;
 			if (len === 0) {
-				this.setState({user : user});
-				return ;
+				this.setState({user: user});
+				return;
 			}
 			this.movies = new Array(len).fill(len);
 
@@ -115,35 +113,35 @@ class User extends Component {
 			// })
 
 			for (let i = 0; i < len; i++) {
-				fetch('/api/yts/movie_details.json?movie_id=' + user.movie_view[i]['id_movies'] + '&with_images=true', {
-					method : 'GET',
-					headers : { 'Content-Type': 'application/json'}
+				fetch('/api/yts/movie_details.json?movie_id=' + user.movie_view[i].id_movies + '&with_images=true', {
+					method: 'GET',
+					headers: {'Content-Type': 'application/json'}
 				})
 				.then(res => {
 					countFetch++;
 					return res.json();
 				})
-				.then((res) => {
+				.then(res => {
 					this.movies.splice(i, 1, res.data.movie);
 					if (countFetch >= len) {
 						this.columnWatch();
-						this.setState({user : user});
+						this.setState({user: user});
 					}
 				})
-				.catch((err) => {
+				.catch(err => {
 					console.log('Err fetch details movie => ', err);
-				})
+				});
 			}
 		})
 		.catch(err => {
 			console.log(err);
-			browserHistory.push('/');				
+			browserHistory.push('/');
 		})
 		.catch(err => console.log('BIG ERRROOR', err));
 	}
 
 	render() {
-		console.log(this.context)
+		console.log(this.context);
 		const {messages} = this.context;
 		const user = this.state.user;
 		const movies = this.movies;
@@ -157,7 +155,7 @@ class User extends Component {
 							<AppBar
 								showMenuIconButton={false}
 								title={messages.user.user}
-							/>
+								/>
 							<div className="center">
 								<img style={styles.img} src={user.img} alt="user"/>
 								<List style={styles.inline}>
@@ -171,7 +169,7 @@ class User extends Component {
 				}
 				</Paper>
 				<Paper zDepth={1}>
-					{/*!Object.keys(movie).length ?
+					{/*! Object.keys(movie).length ?
 						<Center><p> No movie seen yet, recommand him one ! </p></Center> :
 
 						<Center>
@@ -192,27 +190,26 @@ class User extends Component {
 					*/}
 				</Paper>
 
-
 				{ movies.length > 0 ?
 					<div style={styles.root}>
 						<AppBar
 							showMenuIconButton={false}
 							title={messages.user.lastSeen}
-							style={ {'textAlign' : 'center'}}
-						/>
+							style={{textAlign: 'center'}}
+							/>
 						<GridList cellHeight={'auto'} cols={this.state.column}>
 							{ movies.map((movie, index) => (
-									<Link key={index} to={'/movie/' + movie.id}>
-										<GridTile
-											style={movie.view}
-											title={movie.title}
-											subtitle={movie.year}
-											actionIcon={<IconButton tooltip={movie.rating} touch={Boolean(true)} tooltipPosition="top-center"><StarBorder color="yellow"/></IconButton>}
-											actionPosition="right"
+								<Link key={index} to={'/movie/' + movie.id}>
+									<GridTile
+										style={movie.view}
+										title={movie.title}
+										subtitle={movie.year}
+										actionIcon={<IconButton tooltip={movie.rating} touch={Boolean(true)} tooltipPosition="top-center"><StarBorder color="yellow"/></IconButton>}
+										actionPosition="right"
 										>
-											<img style={{width: '100%'}} src={movie.large_cover_image} alt="cover"/>
-										</GridTile>
-									</Link>
+										<img style={{width: '100%'}} src={movie.large_cover_image} alt="cover"/>
+									</GridTile>
+								</Link>
 								))
 							}
 						</GridList>

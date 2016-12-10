@@ -42,8 +42,8 @@ class Register extends Component {
 		this.handleKey = this.handleKey.bind(this);
 	}
 	handleKey(e) {
-		if (e.key === "Enter")
-			this.ajaxCall();
+		if (e.key === 'Enter')
+			{this.ajaxCall();}
 	}
 	handleChange(e, index, value) {
 		if (value !== 'en' &&
@@ -59,7 +59,7 @@ class Register extends Component {
 		var msg;
 		var err = 'err' + e.target.id.charAt(0).toUpperCase() + e.target.id.substring(1);
 
-		//attribute regex and msg alongside id
+		// attribute regex and msg alongside id
 		if (e.target.id === 'mail') {
 			regex = new RegExp('^[0-9a-z._-]+@{1}[0-9a-z.-]{2,}[.]{1}[a-z]{2,5}$', 'i');
 			msg = messages.errors.mail;
@@ -70,7 +70,6 @@ class Register extends Component {
 			regex = new RegExp('^[a-z]+$');
 			msg = messages.errors.lowercase;
 		}
-
 
 		if (!regex.test(e.target.value)) {
 			this.setState({[err]: msg});
@@ -113,11 +112,11 @@ class Register extends Component {
 				} else {
 					res.data.forEach(msg => {
 						if (msg.path === 'pseudo')
-							this.setState({errLogin:msg.message});
+							{this.setState({errLogin: msg.message});}
 						if (msg.path === 'email')
-							this.setState({errMail:msg.message});
+							{this.setState({errMail: msg.message});}
 						console.log(msg);
-					})
+					});
 				}
 			})
 			.catch(err => {
@@ -147,13 +146,13 @@ class Register extends Component {
 		const {messages} = this.context;
 		return (
 			<Center
-			className="VisitorHeight"
+				className="VisitorHeight"
 				>
 				<Paper zDepth={2}>
 					<AppBar
 						showMenuIconButton={false}
 						title={messages.loginPage.register}
-						iconElementRight={<MultiLang />}
+						iconElementRight={<MultiLang/>}
 						/>
 					<input
 						name="path_img"

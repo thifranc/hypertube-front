@@ -27,12 +27,12 @@ const muiTheme = getMuiTheme({
 });
 
 const Tmp = (nextState, replace) => {
-	replace({'pathname' : '/' });
+	replace({pathname: '/'});
 };
 
 function requireAuth(nextState, replace) {
 	if (!localStorage.getItem('token') ||
-			localStorage.getItem('token') === "undefined") {
+			localStorage.getItem('token') === 'undefined') {
 		replace({
 			pathname: '/login',
 			state: {nextPathname: nextState.location.pathname}
@@ -62,7 +62,7 @@ class App extends Component {
 							<Route path="profile" component={Profile}/>
 							<Route path="movie/:id" component={Movie}/>
 						</Route>
-						<Route path="login" component={Login} />
+						<Route path="login" component={Login}/>
 						<Route path="register" component={Register}/>
 						<Route path="forget" component={Forget}/>
 						<Route path="reset/:id/:token" component={Reset}/>

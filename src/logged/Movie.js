@@ -51,7 +51,7 @@ class Movie extends Component {
 			headers: {
 				Authorization: 'Bearer ' + this.props.token
 			},
-			body : data
+			body: data
 		})
 		.catch(err => console.log(err));
 	}
@@ -117,9 +117,6 @@ class Movie extends Component {
 									</Table>
 								</div>
 
-
-
-
 							</Paper>
 							<br/>
 							<Paper zDepth={2}>
@@ -130,7 +127,8 @@ class Movie extends Component {
 								<div className="MovieComments">
 									<ReactDisqus
 										shortname="localhost-4r6pb8tmz4"
-										identifier="123" />
+										identifier="123"
+										/>
 								</div>
 							</Paper>
 						</div>

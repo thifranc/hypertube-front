@@ -77,8 +77,8 @@ class Search extends Component {
 
 	markIsView(movies) {
 		return fetch('/api/video/view', {
-			method : 'GET',
-			credentials : 'include',
+			method: 'GET',
+			credentials: 'include',
 			headers: {
 				Authorization: 'Bearer ' + this.props.token,
 				'Content-Type': 'application/json'
@@ -87,13 +87,13 @@ class Search extends Component {
 		.then(res => res.json())
 		.then(res => {
 			if (!res.data || !res.data[0])
-				return movies;
+				{return movies;}
 			let myView = [];
-			
-			res.data.map((obj) => myView.push(obj.id_movies) );
+
+			res.data.map(obj => myView.push(obj.id_movies));
 			for (var i = movies.length - 1; i >= 0; i--) {
 				if (myView.includes(movies[i].id))
-					movies[i].view = styles.isView;
+					{movies[i].view = styles.isView;}
 			}
 			return movies;
 		})
@@ -170,7 +170,7 @@ class Search extends Component {
 	}
 
 	handleAJAX() {
-		console.log('REQUEST ....')
+		console.log('REQUEST ....');
 		fetch('/api/yts/list_movies.json?genre=' + this.state.genre +
 				'&minimum_rating=' + this.state.rateMin +
 				'&query_term=' + this.state.search +
@@ -191,7 +191,7 @@ class Search extends Component {
 				});
 			})
 			.then(res => {
-				console.log('Handle : ', res)
+				console.log('Handle : ', res);
 				this.setState({movies: res});
 			})
 			.catch(err => console.log(err));
@@ -235,38 +235,38 @@ class Search extends Component {
 			'Thriller', 'War', 'Western'];
 		const sortBy = ['title', 'year', 'rating', 'peers', 'seeds', 'download_count', 'like_count', 'date_added'];
 		const {messages} = this.context;
-				/*{!this.state.movies.length ?
-					<Center style={styles.loader}><CircularProgress size={80} thickness={5}/></Center> :*/
+				/* {!this.state.movies.length ?
+					<Center style={styles.loader}><CircularProgress size={80} thickness={5}/></Center> : */
 		return (
 			<div>
-					<div style={styles.root}>
-						<GridList cellHeight={'auto'} style={styles.gridList} cols={this.state.column}>
-							<Subheader>
-								<SelectField
-									id="genre"
-									floatingLabelText={messages.search.genre}
-									value={this.state.genre}
-									onChange={this.handleSelectGenre}
+				<div style={styles.root}>
+					<GridList cellHeight={'auto'} style={styles.gridList} cols={this.state.column}>
+						<Subheader>
+							<SelectField
+								id="genre"
+								floatingLabelText={messages.search.genre}
+								value={this.state.genre}
+								onChange={this.handleSelectGenre}
 								>
 								{genre.map(el => <MenuItem key={el} value={el} primaryText={el}/>)}
-								</SelectField>
-								<SelectField
-									id="sortBy"
-									floatingLabelText={messages.search.sortBy}
-									value={this.state.sortBy}
-									onChange={this.handleSelectSortBy}
-									>
-									{sortBy.map(el => <MenuItem key={el} value={el} primaryText={el}/>)}
-								</SelectField>
-								<TextField
-									value={this.state.search}
-									onChange={this.handleLowercase}
-									id="Search"
-									floatingLabelText={messages.search.search}
-									hintText={messages.search.search}
-									errorText={this.state.errSearch && messages.errors.lowercase}
-									/>
-								<div style={styles.sliders}>
+							</SelectField>
+							<SelectField
+								id="sortBy"
+								floatingLabelText={messages.search.sortBy}
+								value={this.state.sortBy}
+								onChange={this.handleSelectSortBy}
+								>
+								{sortBy.map(el => <MenuItem key={el} value={el} primaryText={el}/>)}
+							</SelectField>
+							<TextField
+								value={this.state.search}
+								onChange={this.handleLowercase}
+								id="Search"
+								floatingLabelText={messages.search.search}
+								hintText={messages.search.search}
+								errorText={this.state.errSearch && messages.errors.lowercase}
+								/>
+							<div style={styles.sliders}>
 								<p>
 									{messages.search.rate}
 								</p>
@@ -285,10 +285,10 @@ class Search extends Component {
 									onChange={this.handleGetValueYear}
 									onAfterChange={this.handleAJAX}
 									/>
-								</div>
-							</Subheader>
+							</div>
+						</Subheader>
 
-							{ this.state.movies.length > 0 ?
+						{ this.state.movies.length > 0 ?
 								this.state.movies.map((movie, i) => (
 									<Link key={i} to={'/movie/' + movie.id}>
 										<GridTile
@@ -310,8 +310,8 @@ class Search extends Component {
 								))
 								: <p>No movies...</p>
 							}
-						</GridList>
-					</div>
+					</GridList>
+				</div>
 				}
 			</div>
 		);

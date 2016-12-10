@@ -19,7 +19,7 @@ class allUsers extends Component {
 		super();
 		this.state = {
 			users: {},
-			column : 6
+			column: 6
 		};
 		this.columnWatch = this.columnWatch.bind(this);
 		window.addEventListener('resize', this.columnWatch, false);
@@ -52,7 +52,6 @@ class allUsers extends Component {
 			this.setState({users: res.data});
 		})
 		.catch(err => console.log(err));
-
 	}
 	componentWillUnmount() {
 		window.removeEventListener('resize', this.columnWatch, false);
@@ -64,17 +63,17 @@ class allUsers extends Component {
 
 		return (
 			<div>
-			<GridList cellHeight={'auto'} cols={this.state.column}>
-			{ this.state.users.length > 0 ?
+				<GridList cellHeight={'auto'} cols={this.state.column}>
+					{ this.state.users.length > 0 ?
 				this.state.users.map((user, i) => (
 					<Link key={i} to={'/user/' + user.id}>
 						<GridTile
-							title={messages.login + ": " + user.pseudo}
-							subtitle={messages.firstname + ": " + user.firstname}
+							title={messages.login + ': ' + user.pseudo}
+							subtitle={messages.firstname + ': ' + user.firstname}
 							>
 							<img
 								style={{width: '100%'}}
-								src={user.path_img ? user.path_img : "http://localhost:4242/picture/default.jpg"}
+								src={user.path_img ? user.path_img : 'http://localhost:4242/picture/default.jpg'}
 								alt="user"
 								/>
 						</GridTile>
@@ -82,7 +81,7 @@ class allUsers extends Component {
 				))
 				: <p>No users...</p>
 			}
-			</GridList>
+				</GridList>
 			</div>
 		);
 	}

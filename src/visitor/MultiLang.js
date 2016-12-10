@@ -14,13 +14,13 @@ class MultiLang extends Component {
 	render() {
 		const {messages, lang} = this.context;
 		return (
-		<div style={{flex: 'none', marginLeft:'15px'}}>
-			<SelectField value={lang} onChange={this.handleSelectLang} style={{width: '150px', marginRight: '20px'}}>
-				<MenuItem value={'en'} primaryText="English"/>
-				<MenuItem value={'fr'} primaryText="Français"/>
-				<MenuItem value={'es'} primaryText="Castellano"/>
-			</SelectField>
-		</div>
+			<div style={{flex: 'none', marginLeft: '15px'}}>
+				<SelectField value={lang} onChange={this.handleSelectLang} style={{width: '150px', marginRight: '20px'}}>
+					<MenuItem value={'en'} primaryText="English"/>
+					<MenuItem value={'fr'} primaryText="Français"/>
+					<MenuItem value={'es'} primaryText="Castellano"/>
+				</SelectField>
+			</div>
 		);
 	}
 }

@@ -27,8 +27,8 @@ class Reset extends Component {
 		this.handleKey = this.handleKey.bind(this);
 	}
 	handleKey(e) {
-		if (e.key === "Enter")
-			this.handlePasswd();
+		if (e.key === 'Enter')
+			{this.handlePasswd();}
 	}
 	handleFillChar(e) {
 		this.setState({newPasswd: e.target.value});
@@ -68,7 +68,7 @@ class Reset extends Component {
 					<AppBar
 						showMenuIconButton={false}
 						title="Reset password"
-						iconElementRight={<MultiLang />}
+						iconElementRight={<MultiLang/>}
 						/>
 					<TextField
 						className={'VisitorMarge'}
