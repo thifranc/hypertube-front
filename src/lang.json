@@ -23,12 +23,16 @@
 		},
 		"loginPage" : {
 			"log": "Log in",
-			"register": "Register"
+			"register": "Register",
+			"reset": "Reset password",
+			"fail": "Invalid login or password"
 		},
 		"forget" : {
 			"forget":"Forgot password",
 			"change":"Change",
-			"mailMe":"Mail me"
+			"mailMe":"Mail me",
+			"success":"You have been mailed",
+			"fail":"User does not exist"
 		},
 		"login": "Login",
 		"language": "Language",
@@ -36,7 +40,9 @@
 		"firstname": "Firstname",
 		"name": "Name",
 		"home": "Home",
-		"mail": "Mail"
+		"mail": "Mail",
+		"cancel": "Cancel",
+		"lang": "You have to choose between the available languages"
 	},
 	"fr": {
 		"nav" : {
@@ -62,12 +68,16 @@
 		},
 		"loginPage" : {
 			"log":"Se connecter",
-			"register":"Creer un compte"
+			"register":"Creer un compte",
+			"reset": "Mot de pass oublié",
+			"fail": "Pseudo ou mot de passe incorrect"
 		},
 		"forget" : {
 			"forget":"Mot de passe oublié",
 			"change":"Changer",
-			"mailMe":"Envoyer courriel"
+			"mailMe":"Envoyer courriel",
+			"success":"Courriel envoyé",
+			"fail":"L'utilisateur n'a pas pu etre trouvé"
 		},
 		"login": "Pseudo",
 		"language": "Langage",
@@ -75,7 +85,9 @@
 		"firstname": "Prénom",
 		"name": "Nom",
 		"home": "Accueil",
-		"mail": "Courriel"
+		"mail": "Courriel",
+		"cancel": "Fermer",
+		"lang": "Vous devez choisir entre les langues proposées"
 	},
 	"es": {
 		"nav" : {
@@ -101,20 +113,26 @@
 		},
 		"loginPage" : {
 			"log":"Entrar",
-			"register":"Registrarme"
+			"register":"Registrarme",
+			"reset": "Contraseña olvidada",
+			"fail": "Nombre de usuario o contraseña falso"
 		},
 		"forget" : {
 			"forget":"Contraseña olvida",
 			"change":"Cambiar",
-			"mailMe":"Enviarme correo"
+			"mailMe":"Enviarme correo",
+			"success":"Correo mandado",
+			"fail":"El usuario no existe"
 		},
-		"login": "Nombre de usuario",
+		"login": "Usuario",
 		"language": "Lenguaje",
 		"passwd": "Contraseña",
 		"lowercaseError": "Solamente minúsculas letras",
 		"firstname": "Nombre",
 		"name": "Apellido",
 		"home": "Accueil",
-		"mail": "Correo electrónico"
+		"mail": "Correo electrónico",
+		"cancel": "Cerrar",
+		"lang": "Hay que elegir entre los languajes disponibles"
 	}
 }
