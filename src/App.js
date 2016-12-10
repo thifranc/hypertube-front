@@ -12,7 +12,7 @@ import Login from './visitor/Login';
 import Reset from './visitor/Reset';
 
 import Logged from './logged/Logged';
-import Search from './logged/Search';
+import Search from './logged/search';
 import Profile from './logged/Profile';
 import Movie from './logged/Movie';
 import User from './logged/User';

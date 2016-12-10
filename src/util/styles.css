@@ -1,0 +1,27 @@
+#slider {
+	margin-top: 5px;
+	margin-bottom: 20px;
+}
+
+.slider {
+	width: 30%;
+	display: inline-block;
+}
+
+.isView {
+	opacity: 0.6;
+}
+
+.spaceSliders {
+	margin-left: 50px;
+}
+
+.root {
+	display: 'flex';
+	flex-wrap: 'wrap';
+	justify-content: 'space-around';
+}
+
+.loader {
+	height: calc(100vh - 56px);
+}
