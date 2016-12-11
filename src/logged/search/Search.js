@@ -22,6 +22,7 @@ class Search extends Component {
 			years : {min : 1970, max : new Date().getFullYear()}
 		};
 		this.page = 1;
+		this.isMount = true;
 		this.orderBy = 'desc';
 		
 		this.getMovies = this.getMovies.bind(this);
@@ -44,6 +45,7 @@ class Search extends Component {
 	}
 
 	componentWillUnmount() {
+		this.isMount = false;
 		window.removeEventListener('scroll', this.scrollWatch, false);
 		window.removeEventListener('resize', this.columnWatch, false);
 	}
@@ -95,7 +97,7 @@ class Search extends Component {
 		.then(res => this.markIsView(res))
 		.then(res => {
 			res = (who === 'scroll') ? this.state.movies.concat(res) : res;
-			this.setState({movies : res, onLoad : false});
+			this.isMount && this.setState({movies : res, onLoad : false});
 		})
 		.catch(err => {
 			console.log('ERROR => ', err) //delete catch en production

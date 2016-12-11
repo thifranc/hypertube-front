@@ -18,7 +18,7 @@ class Movies extends Component {
 						</IconButton>
 					}
 					actionPosition="right"
-					style={this.props.movie.view}
+					className={this.props.movie.view}
 					title={this.props.movie.title}
 					subtitle={this.props.movie.year}
 				>
