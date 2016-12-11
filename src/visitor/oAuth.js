@@ -1,11 +1,9 @@
+import '../util/styles.css';
 import React, {Component} from 'react';
 import {browserHistory} from 'react-router';
 
-// import Paper from 'material-ui/Paper';
-// import RaisedButton from 'material-ui/RaisedButton';
-
 import GoogleLogin from 'react-google-login';
-import FacebookLogin from 'react-facebook-login'; // create button
+import FacebookLogin from 'react-facebook-login';
 import InstagramLogin from 'react-instagram-login';
 import Login42 from './42.js';
 
@@ -15,12 +13,9 @@ class Oauth extends Component {
 		this.fail42 = this.fail42.bind(this);
 		this.cb42 = this.cb42.bind(this);
 		this.resGoogle = this.resGoogle.bind(this);
-		this.resInstagram = this.resInstagram.bind(this);
 		this.resFacebook = this.resFacebook.bind(this);
 	}
-	resInstagram(res) {
-		  console.log('instagram said ', res);
-	}
+
 	cb42(resApi) {
 		resApi.json()
 		.then(res => {
@@ -87,7 +82,7 @@ class Oauth extends Component {
 		console.log('FAIL42 ==>', response);
 		browserHistory.push('/');
 	}
-
+	
 	render() {
 		return (
 			<div>
@@ -95,7 +90,7 @@ class Oauth extends Component {
 					textButton="Facebook"
 					appId="592965297562891"
 					callback={this.resFacebook}
-					// cssClass = "my-facebook-button-class"
+					cssClass='btn-oauth fb'
 					fields="locale,last_name,first_name,name,email,picture"
 					/>
 				<GoogleLogin
@@ -103,21 +98,17 @@ class Oauth extends Component {
 					buttonText="Google"
 					onSuccess={this.resGoogle}
 					onFailure={this.resGoogle}
+					className='btn-oauth google'
 					scope="https://www.googleapis.com/auth/plus.login"
 					/>
 				<Login42
 					clientId="886dc1e1e56b5d8615b0ef4c566d857f85721e769e1c45d3c03c3b67abd8cbbf"
 					onFailure={this.fail42}
+					className='btn-oauth q42'
 					route="/api/user/42"
 					cb={this.cb42}
 					redirectUri="http://localhost:3000/login"
 					/>
-				<InstagramLogin
-					clientId="3cf112fd1d344cd2af5015a4a35ac755"
-					buttonText="Instagram"
-					onSuccess={this.resInstagram}
-					onFailure={this.resInstagram}
-					/>,
 			</div>
 		);
 	}

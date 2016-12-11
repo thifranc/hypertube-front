@@ -19,7 +19,7 @@ function getQueryVariable(variable) {
 class Login42 extends Component {
   static propTypes = {
     scope: PropTypes.string,
-    cssClass: PropTypes.string,
+    className: PropTypes.string,
     buttonText: PropTypes.string,
     cb: PropTypes.func.isRequired,
     children: React.PropTypes.node,
@@ -81,9 +81,9 @@ class Login42 extends Component {
       border: '1px solid transparent',
       fontFamily: '"proxima-nova", "Helvetica Neue", Arial, Helvetica, sans-serif',
     };
-    const { cssClass, buttonText, children } = this.props;
+    const { className, buttonText, children } = this.props;
     return (
-      <button className={cssClass} onClick={this.onBtnClick} style={cssClass ? {} : defaultStyle}>
+      <button className={className} onClick={this.onBtnClick} style={className ? {} : defaultStyle}>
         { children ? children : buttonText }
       </button>
     );
