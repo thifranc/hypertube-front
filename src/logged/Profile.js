@@ -51,8 +51,8 @@ class Profile extends Component {
 			console.log('get me ', res);
 			this.setState({
 				login: res.data.pseudo,
-				name: res.data.name,
-				firstname: res.data.firstname,
+				name: res.data.name.toLowerCase(),
+				firstname: res.data.firstname.toLowerCase(),
 				mail: res.data.email,
 				language: res.data.lang,
 				preview: res.data.path_img ? '/picture/'+res.data.path_img : 'http://localhost:4242/picture/default.jpg'
@@ -127,15 +127,18 @@ class Profile extends Component {
 			.then(res => res.json())
 			.then(res => {
 				console.log('retour de ajaxcall', res);
-				/*
-					res.data.forEach(msg => {
-						if (msg.path === 'pseudo')
-							{this.setState({errLogin: msg.message});}
-						if (msg.path === 'email')
-							{this.setState({errMail: msg.message});}
-						console.log(msg);
-					});
-				*/
+				res.data.forEach(msg => {
+					if (msg.path === 'pseudo')
+						{this.setState({errLogin: msg.message});}
+					if (msg.path === 'email')
+						{this.setState({errMail: msg.message});}
+					if (msg.path === 'password')
+						{this.setState({errPasswd: msg.message});}
+					if (msg.path === 'name')
+						{this.setState({errName: msg.message});}
+					if (msg.path === 'firstname')
+						{this.setState({errFirstname: msg.message});}
+				});
 			})
 			.catch(err => {
 				console.log(err);
