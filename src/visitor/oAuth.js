@@ -10,8 +10,8 @@ import Login42 from './42.js';
 class Oauth extends Component {
 	constructor() {
 		super();
-		this.fail42 = this.fail42.bind(this);
 		this.cb42 = this.cb42.bind(this);
+		this.fail42 = this.fail42.bind(this);
 		this.resGoogle = this.resGoogle.bind(this);
 		this.resFacebook = this.resFacebook.bind(this);
 	}
@@ -20,7 +20,7 @@ class Oauth extends Component {
 		resApi.json()
 		.then(res => {
 			if (res.data && res.data.token) {
-				localStorage.setItem('token', res.token);
+				localStorage.setItem('token', res.data.token);
 				browserHistory.push('/');
 			}
 		})
@@ -45,7 +45,7 @@ class Oauth extends Component {
 		.then(res => res.json())
 		.then(res => {
 			if (res.data && res.data.token) {
-				localStorage.setItem('token', res.token);
+				localStorage.setItem('token', res.data.token);
 				browserHistory.push('/');
 			}
 		})
@@ -69,7 +69,7 @@ class Oauth extends Component {
 		.then(res => res.json())
 		.then(res => {
 			if (res.data && res.data.token) {
-				localStorage.setItem('token', res.token);
+				localStorage.setItem('token', res.data.token);
 				browserHistory.push('/');
 			}
 		})
