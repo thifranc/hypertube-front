@@ -70,11 +70,9 @@ class Nav extends Component {
 		const {messages, lang} = this.context;
 		const page = this.selectPathFromName();
 		
-		console.log('nav !')
-
 		return (
 			<div>
-				<Paper zDepth={1}>
+				<Paper zDepth={1} >
 					<BottomNavigation selectedIndex={page}>
 						<div/>
 						<BottomNavigationItem label={messages.nav.search} icon={search} onTouchTap={() => this.handleSelectNav(1)}/>
