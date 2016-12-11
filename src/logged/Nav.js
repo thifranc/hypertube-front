@@ -57,7 +57,8 @@ class Nav extends Component {
 	selectPathFromName () {
 		if (this.path === '/')
 			return 1;
-		else if (this.path === '/allUsers')
+		else if (this.path === '/allUsers'
+      || this.path.search('^/user/') !== -1)
 			return 2;
 		else if (this.path === '/profile')
 			return 3;
@@ -75,7 +76,7 @@ class Nav extends Component {
 					<BottomNavigation selectedIndex={page}>
 						<div/>
 						<BottomNavigationItem label={messages.nav.search} icon={search} onTouchTap={() => this.handleSelectNav(1)}/>
-						<BottomNavigationItem label="Users" icon={people} onTouchTap={() => this.handleSelectNav(2)}/>
+						<BottomNavigationItem label={messages.user.user} icon={people} onTouchTap={() => this.handleSelectNav(2)}/>
 						<BottomNavigationItem label={messages.nav.profil} icon={account} onTouchTap={() => this.handleSelectNav(3)}/>
 						<BottomNavigationItem label={messages.nav.logout} icon={exit} onTouchTap={() => this.handleSelectNav(4)}/>
 						<div/>
