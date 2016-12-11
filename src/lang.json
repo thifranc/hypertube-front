@@ -5,6 +5,9 @@
 			"profil": "Profile",
 			"logout": "Logout"
 		},
+		"profile" : {
+			"success": "Your profile has been successfully updated !"
+		},
 		"user" : {
 			"user": "User",
 			"lastSeen": "Last movie seen"
@@ -82,6 +85,9 @@
 			"profil": "Profil",
 			"logout": "Déconnexion "
 		},
+		"profile" : {
+			"success": "Votre profil a été mis å jour avec succes !"
+		},
 		"user" : {
 			"user": "Utilisateur",
 			"lastSeen": "Dernier film vu"
@@ -158,6 +164,9 @@
 			"search": "Buscar",
 			"profil": "Perfil",
 			"logout": "Salir"
+		},
+		"profile" : {
+			"success": "Su perfil ha sido actualizado con éxito!"
 		},
 		"user" : {
 			"user": "Usuario",

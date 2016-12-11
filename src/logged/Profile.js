@@ -5,6 +5,8 @@ import Paper from 'material-ui/Paper';
 import TextField from 'material-ui/TextField';
 import AppBar from 'material-ui/AppBar';
 import RaisedButton from 'material-ui/RaisedButton';
+import FlatButton from 'material-ui/FlatButton';
+import Dialog from 'material-ui/Dialog';
 import {Link} from 'react-router';
 
 import SelectField from 'material-ui/SelectField';
@@ -30,6 +32,7 @@ class Profile extends Component {
 			passwd: '',
 			errPasswd: '',
 			img: '',
+			open: false,
 			preview: ''
 		};
 		this.handleRegexError = this.handleRegexError.bind(this);
@@ -38,6 +41,10 @@ class Profile extends Component {
 		this.attachFile = this.attachFile.bind(this);
 		this.ajaxCall = this.ajaxCall.bind(this);
 		this.handleKey = this.handleKey.bind(this);
+		this.handleClose = this.handleClose.bind(this);
+	}
+	handleClose() {
+		  this.setState({open: false});
 	}
 	componentDidMount() {
 		fetch('/api/user/me', {
@@ -59,14 +66,6 @@ class Profile extends Component {
 			});
 		})
 		.catch(err => console.log(err));
-	}
-	handleChange(e, index, value) {
-			if (value !== 'en' &&
-				value !== 'fr' &&
-				value !== 'es') {
-				this.setState({errLang: true});
-			}
-			this.setState({language: value});
 	}
 	handleKey(e) {
 		if (e.key === 'Enter')
@@ -127,18 +126,22 @@ class Profile extends Component {
 			.then(res => res.json())
 			.then(res => {
 				console.log('retour de ajaxcall', res);
-				res.data.forEach(msg => {
-					if (msg.path === 'pseudo')
-						{this.setState({errLogin: msg.message});}
-					if (msg.path === 'email')
-						{this.setState({errMail: msg.message});}
-					if (msg.path === 'password')
-						{this.setState({errPasswd: msg.message});}
-					if (msg.path === 'name')
-						{this.setState({errName: msg.message});}
-					if (msg.path === 'firstname')
-						{this.setState({errFirstname: msg.message});}
-				});
+				if (res.statusCode === 200) {
+		  			this.setState({open: true});
+				} else {
+					res.data.forEach(msg => {
+						if (msg.path === 'pseudo')
+							{this.setState({errLogin: msg.message});}
+						if (msg.path === 'email')
+							{this.setState({errMail: msg.message});}
+						if (msg.path === 'password')
+							{this.setState({errPasswd: msg.message});}
+						if (msg.path === 'name')
+							{this.setState({errName: msg.message});}
+						if (msg.path === 'firstname')
+							{this.setState({errFirstname: msg.message});}
+					});
+				}
 			})
 			.catch(err => {
 				console.log(err);
@@ -162,10 +165,26 @@ class Profile extends Component {
 	render() {
 		const classImg = 'VisitorMarge VisitorImg';
 		const {messages} = this.context;
+		const actions = [
+			      <FlatButton
+				label={messages.cancel}
+				primary
+				onTouchTap={this.handleClose}
+				/>
+			    ];
 		return (
 			<Center
 				className="VisitorHeight"
 				>
+				<Dialog
+					title="Error"
+					actions={actions}
+					modal={false}
+					open={this.state.open}
+					onRequestClose={this.handleClose}
+					>
+					{messages.profile.success}
+				</Dialog>
 				<Paper zDepth={2}>
 					<AppBar
 						showMenuIconButton={false}
