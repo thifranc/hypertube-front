@@ -63,6 +63,10 @@ class User extends Component {
 		}
 	}
 
+	componentWillUnmount() {
+		window.removeEventListener('resize', this.columnWatch, false);
+	}
+
 	componentDidMount() {
 		let user = null;
 		var id = this.props.params.id;
@@ -88,28 +92,6 @@ class User extends Component {
 				return;
 			}
 			this.movies = new Array(len).fill(len);
-
-			// let fetchAll = [];
-			// for (let i = 0; i < len; i++) {
-			// 	fetchAll.push(
-			// 		fetch('/api/yts/movie_details.json?movie_id=' + user.movie_view[i]['id_movies'] + '&with_images=true', {
-			// 			method : 'GET',
-			// 			headers : { 'Content-Type': 'application/json'}
-			// 		})
-			// 	);
-			// }
-
-			// Promise.all(fetchAll.map(p => p.catch(e => e)))
-			// .then((response) => {
-			// 	let jsonify = [];
-
-			// 	for (let i = 0; i < len; i++)
-			// 		jsonify.push(response[i].json());
-			// 	return Promise.all(jsonify);
-			// })
-			// .then((response) => {
-			// 	console.log('Response => ', response)
-			// })
 
 			for (let i = 0; i < len; i++) {
 				fetch('/api/yts/movie_details.json?movie_id=' + user.movie_view[i].id_movies + '&with_images=true', {
@@ -140,7 +122,6 @@ class User extends Component {
 	}
 
 	render() {
-		console.log(this.context);
 		const {messages} = this.context;
 		const user = this.state.user;
 		const movies = this.movies;
