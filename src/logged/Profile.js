@@ -50,12 +50,12 @@ class Profile extends Component {
 		.then(res => {
 			console.log('get me ', res);
 			this.setState({
-				login: res.data[0].pseudo,
-				name: res.data[0].name,
-				firstname: res.data[0].firstname,
-				mail: res.data[0].email,
-				language: res.data[0].lang,
-				preview: res.data[0].path_img ? '/picture/'+res.data[0].path_img : 'http://localhost:4242/picture/default.jpg'
+				login: res.data.pseudo,
+				name: res.data.name,
+				firstname: res.data.firstname,
+				mail: res.data.email,
+				language: res.data.lang,
+				preview: res.data.path_img ? '/picture/'+res.data.path_img : 'http://localhost:4242/picture/default.jpg'
 			});
 		})
 		.catch(err => console.log(err));
