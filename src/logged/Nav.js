@@ -12,14 +12,17 @@ const exit = <FontIcon className="material-icons">exit_to_app</FontIcon>;
 const people = <FontIcon className="material-icons">people</FontIcon>;
 
 class Nav extends Component {
-	constructor() {
-		super();
+	constructor(props) {
+		super(props);
 		this.state = {
 			selectedIndex: 1
 		};
 
-		this.handleSelectLang = this.handleSelectLang.bind(this);
+		this.path = this.props.path;
+
 		this.handleSelectNav = this.handleSelectNav.bind(this);
+		this.handleSelectLang = this.handleSelectLang.bind(this);
+		this.selectPathFromName = this.selectPathFromName.bind(this);
 	}
 	componentDidMount() {
 		const pathname = this.context.router.getCurrentLocation().pathname;
@@ -30,6 +33,10 @@ class Nav extends Component {
 			this.setState({selectedIndex: 2});
 		}
 	}
+	componentWillUpdate(nextProps, nextState) {
+		this.path = nextProps.path
+	}
+
 	handleSelectLang(event, index, value) {
 		this.context.langChange(value);
 	}
@@ -47,12 +54,25 @@ class Nav extends Component {
 		}
 	}
 
+	selectPathFromName () {
+		if (this.path === '/')
+			return 1;
+		else if (this.path === '/allUsers')
+			return 2;
+		else if (this.path === '/profile')
+			return 3;
+		else if (this.path === '/login')
+			return 4;
+	}
+
 	render() {
 		const {messages, lang} = this.context;
+		const page = this.selectPathFromName();
+		
 		return (
 			<div>
 				<Paper zDepth={1}>
-					<BottomNavigation selectedIndex={this.state.selectedIndex}>
+					<BottomNavigation selectedIndex={page}>
 						<div/>
 						<BottomNavigationItem label={messages.nav.search} icon={search} onTouchTap={() => this.handleSelectNav(1)}/>
 						<BottomNavigationItem label="Users" icon={people} onTouchTap={() => this.handleSelectNav(2)}/>

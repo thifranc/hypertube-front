@@ -10,10 +10,11 @@ class Logged extends Component {
 			token: localStorage.getItem('token')
 		};
 	}
+
 	render() {
 		return (
 			<div className="LoggedBlock">
-				<Nav/>
+				<Nav path={this.props.location.pathname}/>
 				{React.cloneElement(this.props.children, {token: this.state.token})}
 			</div>
 		);
