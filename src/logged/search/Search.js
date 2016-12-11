@@ -30,6 +30,7 @@ class Search extends Component {
 		this.handleYears = this.handleYears.bind(this);
 		this.handleGenre = this.handleGenre.bind(this);
 		this.handleSearch = this.handleSearch.bind(this);
+		this.handleKey = this.handleKey.bind(this);
 
 		this.markIsView = this.markIsView.bind(this);
 		this.columnWatch = this.columnWatch.bind(this);
@@ -100,7 +101,11 @@ class Search extends Component {
 			console.log('ERROR => ', err) //delete catch en production
 		});
 	}
-
+	handleKey(e) {
+		if (e.key === 'Enter') {
+			this.handleSearch(e);
+		}
+	}
 	handleGenre(event, index, value) {
 		this.page = 1;
 		this.setState({genre : value, onLoad : true}, this.getMovies);
@@ -168,6 +173,7 @@ class Search extends Component {
 							handleGenre={this.handleGenre}
 							handleSearch={this.handleSearch}
 							handleRate={this.handleRate}
+							handleKey={this.handleKey}
 							handleYears={this.handleYears}
 							handleRange={this.getMovies}
 						/> 

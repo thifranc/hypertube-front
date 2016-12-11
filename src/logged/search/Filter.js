@@ -29,6 +29,7 @@ class Filter extends Component {
 					id="search"
 					style={{marginLeft: '20px'}}
 					onBlur={this.props.handleSearch}
+					onKeyDown={this.props.handleKey}
 					hintText={messages.search.search}
 					floatingLabelText={messages.search.search}
 				/>
