@@ -1,37 +1,50 @@
 import React, {Component} from 'react';
+import {browserHistory} from 'react-router';
 
 import Paper from 'material-ui/Paper';
 import TextField from 'material-ui/TextField';
 import AppBar from 'material-ui/AppBar';
 import RaisedButton from 'material-ui/RaisedButton';
+import FlatButton from 'material-ui/FlatButton';
+import Dialog from 'material-ui/Dialog';
+import {Link} from 'react-router';
 
+import SelectField from 'material-ui/SelectField';
+import MenuItem from 'material-ui/MenuItem';
 import Divider from 'material-ui/Divider';
 
 import Center from '../util/Center';
-import '../visitor/visitor.css';
 
 class Profile extends Component {
 	constructor() {
 		super();
 		this.state = {
 			login: '',
-			errLogin: false,
+			errLogin: '',
 			language: 'en',
-			errLang: false,
+			errLang: '',
 			firstname: '',
-			errFirstname: false,
+			errFirstname: '',
 			name: '',
-			errName: false,
+			errName: '',
 			mail: '',
-			errMail: false,
+			errMail: '',
+			passwd: '',
+			errPasswd: '',
+			img: '',
+			open: false,
 			preview: ''
 		};
-		this.handleLowercase = this.handleLowercase.bind(this);
+		this.handleRegexError = this.handleRegexError.bind(this);
 		this.handleFillChar = this.handleFillChar.bind(this);
-		this.handleValidForm = this.handleValidForm.bind(this);
-		this.handleChange = this.handleChange.bind(this);
 		this.handleFileChange = this.handleFileChange.bind(this);
 		this.attachFile = this.attachFile.bind(this);
+		this.ajaxCall = this.ajaxCall.bind(this);
+		this.handleKey = this.handleKey.bind(this);
+		this.handleClose = this.handleClose.bind(this);
+	}
+	handleClose() {
+		  this.setState({open: false});
 	}
 	componentDidMount() {
 		fetch('/api/user/me', {
@@ -42,54 +55,97 @@ class Profile extends Component {
 		})
 		.then(res => res.json())
 		.then(res => {
+			console.log('get me ', res);
 			this.setState({
-				login: res.data[0].pseudo,
-				name: res.data[0].name,
-				firstname: res.data[0].firstname,
-				mail: res.data[0].email,
-				language: res.data[0].lang,
-				preview: res.data[0].path_img ? res.data[0].path_img : 'http://localhost:4242/picture/default.jpg'
+				login: res.data.pseudo,
+				name: res.data.name.toLowerCase(),
+				firstname: res.data.firstname.toLowerCase(),
+				mail: res.data.email,
+				language: res.data.lang,
+				preview: res.data.path_img ? '/picture/'+res.data.path_img : 'http://localhost:4242/picture/default.jpg'
 			});
 		})
 		.catch(err => console.log(err));
 	}
-	handleChange(e, index, value) {
-		if (value !== 'en' &&
-			value !== 'fr' &&
-			value !== 'es') {
-			this.setState({errLang: true});
-		}
-		this.setState({language: value});
+	handleKey(e) {
+		if (e.key === 'Enter')
+			{this.ajaxCall();}
 	}
-	handleLowercase(e) {
-		var regLowercase = new RegExp('^[a-z]*$');
+	handleRegexError(e) {
+		const {messages} = this.context;
+		var regex;
+		var msg;
 		var err = 'err' + e.target.id.charAt(0).toUpperCase() + e.target.id.substring(1);
 
-		this.setState({[err]: !regLowercase.test(e.target.value)});
-		if (!regLowercase.test(e.target.value)) {
-			this.setState({[err]: true});
+		// attribute regex and msg alongside id
+		if (e.target.id === 'mail') {
+			regex = new RegExp('^[0-9a-z._-]+@{1}[0-9a-z.-]{2,}[.]{1}[a-z]{2,5}$', 'i');
+			msg = messages.errors.mail;
+		} else if (e.target.id === 'passwd') {
+			regex = new RegExp('^((?=.*[0-9])(?=.*[a-z])(?=.*[A-Z]).{8,}|)$');
+			msg = messages.errors.passwd;
 		} else {
-			this.setState({[err]: false});
+			regex = new RegExp('^[a-z]+$');
+			msg = messages.errors.lowercase;
+		}
+
+		if (!regex.test(e.target.value)) {
+			this.setState({[err]: msg});
+		} else {
+			this.setState({[err]: ''});
 		}
 		this.handleFillChar(e);
 	}
-	handleValidForm(e) {
-		e.preventDefault();
-		var regMail = new RegExp('^[0-9a-z._-]+@{1}[0-9a-z.-]{2,}[.]{1}[a-z]{2,5}$', 'i');
-
-		this.setState({
-			errLogin: !this.state.login,
-			errName: !this.state.name,
-			errFirstname: !this.state.firstname,
-			errMail: !regMail.test(this.state.mail)
-		}, this.ajaxCall);
-	}
-	ajaxCall() {
-		if (!this.state.errMail &&
+	ajaxCall(e) {
+		if (!this.state.errPasswd && !this.state.errMail &&
 			!this.state.errLogin && !this.state.errFirstname &&
 			!this.state.errName && !this.state.errLang) {
-			console.log('all valid');
-			// insert AJAX call here
+			var data = {
+				name: this.state.name,
+				firstname: this.state.firstname,
+				password: this.state.passwd,
+				email: this.state.mail,
+				lang: this.context.lang
+			};
+
+			var formData = new FormData();
+
+			for (var name in data) {
+				formData.append(name, data[name]);
+			}
+			console.log('reayd to fetch');
+			formData.append('path_img', this.state.img);
+			console.log(this.props.token);
+			fetch('/api/user/me', {
+				method: 'PUT',
+				body: formData,
+				headers: {
+					Authorization: 'Bearer ' + this.props.token
+				}
+			})
+			.then(res => res.json())
+			.then(res => {
+				console.log('retour de ajaxcall', res);
+				if (res.statusCode === 200) {
+		  			this.setState({open: true});
+				} else {
+					res.data.forEach(msg => {
+						if (msg.path === 'pseudo')
+							{this.setState({errLogin: msg.message});}
+						if (msg.path === 'email')
+							{this.setState({errMail: msg.message});}
+						if (msg.path === 'password')
+							{this.setState({errPasswd: msg.message});}
+						if (msg.path === 'name')
+							{this.setState({errName: msg.message});}
+						if (msg.path === 'firstname')
+							{this.setState({errFirstname: msg.message});}
+					});
+				}
+			})
+			.catch(err => {
+				console.log(err);
+			});
 		}
 	}
 	handleFillChar(e) {
@@ -99,24 +155,43 @@ class Profile extends Component {
 		this.setState({preview: e.target.result});
 	}
 	handleFileChange(event) {
-		console.log(event);
 		if (event.target.files && event.target.files[0]) {
 			var reader = new FileReader();
 			reader.onload = this.attachFile;
 			reader.readAsDataURL(event.target.files[0]);
+			this.setState({img: event.target.files[0]});
 		}
 	}
 	render() {
-		const {messages} = this.context;
 		const classImg = 'VisitorMarge VisitorImg';
+		const {messages} = this.context;
+		const actions = [
+			      <FlatButton
+				label={messages.cancel}
+				primary
+				onTouchTap={this.handleClose}
+				/>
+			    ];
 		return (
-			<Center className="VisitorHeight">
+			<Center
+				className="VisitorHeight"
+				>
+				<Dialog
+					title="Error"
+					actions={actions}
+					modal={false}
+					open={this.state.open}
+					onRequestClose={this.handleClose}
+					>
+					{messages.profile.success}
+				</Dialog>
 				<Paper zDepth={2}>
 					<AppBar
 						showMenuIconButton={false}
-						title={messages.nav.profil}
+						title={messages.loginPage.register}
 						/>
 					<input
+						name="path_img"
 						accept=".png,.gif,.jpg,.jpeg"
 						className="VisitorMarge"
 						type="file"
@@ -132,33 +207,37 @@ class Profile extends Component {
 					</Center>
 					<Divider/>
 					<TextField
+						disabled={true}
 						className="VisitorMarge"
 						value={this.state.login}
 						id="Login"
-						onChange={this.handleLowercase}
+						onChange={this.handleRegexError}
 						floatingLabelText={messages.login}
 						hintText={messages.login}
-						errorText={this.state.errLogin && messages.errors.lowercase}
+						errorText={this.state.errLogin}
+						onKeyDown={this.handleKey}
 						/>
 					<br/>
 					<TextField
 						className="VisitorMarge"
 						value={this.state.firstname}
-						onChange={this.handleLowercase}
+						onChange={this.handleRegexError}
 						id="Firstname"
 						floatingLabelText={messages.firstname}
 						hintText={messages.firstname}
-						errorText={this.state.errFirstname && messages.errors.lowercase}
+						errorText={this.state.errFirstname}
+						onKeyDown={this.handleKey}
 						/>
 					<br/>
 					<TextField
 						className="VisitorMarge"
 						value={this.state.name}
 						id="Name"
-						onChange={this.handleLowercase}
+						onChange={this.handleRegexError}
 						floatingLabelText={messages.name}
 						hintText={messages.name}
-						errorText={this.state.errName && messages.errors.lowercase}
+						errorText={this.state.errName}
+						onKeyDown={this.handleKey}
 						/>
 					<br/>
 					<TextField
@@ -166,18 +245,40 @@ class Profile extends Component {
 						value={this.state.mail}
 						id="mail"
 						onChange={this.handleFillChar}
+						onBlur={this.handleRegexError}
+						onFocus={this.handleRegexError}
 						hintText={messages.mail}
 						floatingLabelText={messages.mail}
-						errorText={this.state.errMail && messages.errors.mail}
+						errorText={this.state.errMail}
+						onKeyDown={this.handleKey}
+						/>
+					<br/>
+					<TextField
+						className="VisitorMarge"
+						value={this.state.passwd}
+						id="passwd"
+						onChange={this.handleFillChar}
+						onBlur={this.handleRegexError}
+						onFocus={this.handleRegexError}
+						hintText={messages.profile.passwd}
+						floatingLabelText={messages.profile.passwd}
+						type="password"
+						errorText={this.state.errPasswd}
+						onKeyDown={this.handleKey}
 						/>
 					<br/>
 					<Center>
 						<RaisedButton
-							label="Save changes"
+							label={messages.loginPage.register}
 							className="VisitorMarge"
-							disabled={this.state.errLogin || this.state.errName || this.state.errFirstname}
-							onClick={this.handleValidForm}
+							disabled={(this.state.errLogin
+								|| this.state.errName
+								|| this.state.errFirstname
+								|| this.state.errMail
+								|| this.state.errPasswd) ? true : false}
+							onClick={this.ajaxCall}
 							/>
+						<Link to="/login" className="VisitorMarge">Home</Link>
 					</Center>
 				</Paper>
 			</Center>

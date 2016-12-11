@@ -35,23 +35,15 @@ class Register extends Component {
 		};
 		this.handleRegexError = this.handleRegexError.bind(this);
 		this.handleFillChar = this.handleFillChar.bind(this);
-		this.handleChange = this.handleChange.bind(this);
 		this.handleFileChange = this.handleFileChange.bind(this);
 		this.attachFile = this.attachFile.bind(this);
 		this.ajaxCall = this.ajaxCall.bind(this);
 		this.handleKey = this.handleKey.bind(this);
 	}
 	handleKey(e) {
-		if (e.key === 'Enter')
-			{this.ajaxCall();}
-	}
-	handleChange(e, index, value) {
-		if (value !== 'en' &&
-			value !== 'fr' &&
-			value !== 'es') {
-			this.setState({errLang: true});
+		if (e.key === 'Enter') {
+			this.ajaxCall();
 		}
-		this.setState({language: value});
 	}
 	handleRegexError(e) {
 		const {messages} = this.context;
@@ -80,6 +72,7 @@ class Register extends Component {
 	}
 	ajaxCall(e) {
 		console.log('bonjour');
+		console.log(this.context.lang);
 		if (!this.state.errPasswd && !this.state.errMail &&
 			!this.state.errLogin && !this.state.errFirstname &&
 			!this.state.errName && !this.state.errLang) {
@@ -89,7 +82,7 @@ class Register extends Component {
 				pseudo: this.state.login,
 				password: this.state.passwd,
 				email: this.state.mail,
-				lang: this.state.language
+				lang: this.context.lang
 			};
 
 			var formData = new FormData();
@@ -115,6 +108,12 @@ class Register extends Component {
 							{this.setState({errLogin: msg.message});}
 						if (msg.path === 'email')
 							{this.setState({errMail: msg.message});}
+						if (msg.path === 'password')
+							{this.setState({errPasswd: msg.message});}
+						if (msg.path === 'name')
+							{this.setState({errName: msg.message});}
+						if (msg.path === 'firstname')
+							{this.setState({errFirstname: msg.message});}
 						console.log(msg);
 					});
 				}
@@ -229,18 +228,6 @@ class Register extends Component {
 						errorText={this.state.errPasswd}
 						onKeyDown={this.handleKey}
 						/>
-					<br/>
-					<SelectField
-						className="VisitorMarge"
-						floatingLabelText={messages.language}
-						value={this.state.language}
-						onChange={this.handleChange}
-						errorText={this.state.errLang && messages.lang}
-						>
-						<MenuItem value="en" primaryText="English"/>
-						<MenuItem value="fr" primaryText="Francais"/>
-						<MenuItem value="es" primaryText="Castellano"/>
-					</SelectField>
 					<br/>
 					<Center>
 						<RaisedButton
