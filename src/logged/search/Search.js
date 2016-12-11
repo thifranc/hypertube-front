@@ -82,7 +82,8 @@ class Search extends Component {
 		})
 		.then(res => res.json())
 		.then(res => {
-			if (res.data.movie_count === 0) {
+			// if (res.data.movie_count === 0) {
+			if (!res.data.movies) {
 				this.setState(who !== 'scroll' ? {movies : [], onLoad : false} : {movies : this.state.movies, onLoad : false});
 				return Promise.reject('No more...');
 			}
