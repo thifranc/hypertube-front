@@ -73,7 +73,7 @@ class allUsers extends Component {
 							>
 							<img
 								style={{width: '100%'}}
-								src={user.path_img ? user.path_img : 'http://localhost:4242/picture/default.jpg'}
+								src={user.path_img ? '/picture/'+user.path_img : 'http://localhost:4242/picture/default.jpg'}
 								alt="user"
 								/>
 						</GridTile>
