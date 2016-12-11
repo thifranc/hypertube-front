@@ -6,7 +6,8 @@
 			"logout": "Logout"
 		},
 		"profile" : {
-			"success": "Your profile has been successfully updated !"
+			"success": "Your profile has been successfully updated !",
+			"passwd": "Fill to update your password"
 		},
 		"user" : {
 			"user": "User",
@@ -86,7 +87,8 @@
 			"logout": "Déconnexion "
 		},
 		"profile" : {
-			"success": "Votre profil a été mis å jour avec succes !"
+			"success": "Votre profil a été mis å jour avec succes !",
+			"passwd": "Sert a modifier le mot de passe"
 		},
 		"user" : {
 			"user": "Utilisateur",
@@ -166,7 +168,8 @@
 			"logout": "Salir"
 		},
 		"profile" : {
-			"success": "Su perfil ha sido actualizado con éxito!"
+			"success": "Su perfil ha sido actualizado con éxito!",
+			"passwd": "LLenar para modifiar contraseña"
 		},
 		"user" : {
 			"user": "Usuario",

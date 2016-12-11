@@ -82,7 +82,7 @@ class Profile extends Component {
 			regex = new RegExp('^[0-9a-z._-]+@{1}[0-9a-z.-]{2,}[.]{1}[a-z]{2,5}$', 'i');
 			msg = messages.errors.mail;
 		} else if (e.target.id === 'passwd') {
-			regex = new RegExp('^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z]).{8,}$');
+			regex = new RegExp('^((?=.*[0-9])(?=.*[a-z])(?=.*[A-Z]).{8,}|)$');
 			msg = messages.errors.passwd;
 		} else {
 			regex = new RegExp('^[a-z]+$');
@@ -260,8 +260,8 @@ class Profile extends Component {
 						onChange={this.handleFillChar}
 						onBlur={this.handleRegexError}
 						onFocus={this.handleRegexError}
-						hintText={messages.passwd}
-						floatingLabelText={messages.passwd}
+						hintText={messages.profile.passwd}
+						floatingLabelText={messages.profile.passwd}
 						type="password"
 						errorText={this.state.errPasswd}
 						onKeyDown={this.handleKey}
