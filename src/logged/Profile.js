@@ -188,7 +188,7 @@ class Profile extends Component {
 				<Paper zDepth={2}>
 					<AppBar
 						showMenuIconButton={false}
-						title={messages.loginPage.register}
+						title={messages.profile.update}
 						/>
 					<input
 						name="path_img"
@@ -269,7 +269,7 @@ class Profile extends Component {
 					<br/>
 					<Center>
 						<RaisedButton
-							label={messages.loginPage.register}
+							label={messages.profile.update}
 							className="VisitorMarge"
 							disabled={(this.state.errLogin
 								|| this.state.errName

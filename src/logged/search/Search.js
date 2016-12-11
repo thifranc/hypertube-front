@@ -103,7 +103,7 @@ class Search extends Component {
 	}
 	handleKey(e) {
 		if (e.key === 'Enter') {
-			this.handleSearch(e);
+			e.target.blur();
 		}
 	}
 	handleGenre(event, index, value) {

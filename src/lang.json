@@ -7,7 +7,8 @@
 		},
 		"profile" : {
 			"success": "Your profile has been successfully updated !",
-			"passwd": "Fill to update your password"
+			"passwd": "Fill to update your password",
+			"update": "Update"
 		},
 		"user" : {
 			"user": "User",
@@ -88,7 +89,8 @@
 		},
 		"profile" : {
 			"success": "Votre profil a été mis å jour avec succes !",
-			"passwd": "Sert a modifier le mot de passe"
+			"passwd": "Sert a modifier le mot de passe",
+			"update": "Mettre a jour"
 		},
 		"user" : {
 			"user": "Utilisateur",
@@ -169,7 +171,8 @@
 		},
 		"profile" : {
 			"success": "Su perfil ha sido actualizado con éxito!",
-			"passwd": "LLenar para modifiar contraseña"
+			"passwd": "LLenar para modifiar contraseña",
+			"update": "Actualizar"
 		},
 		"user" : {
 			"user": "Usuario",
