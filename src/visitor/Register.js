@@ -41,8 +41,9 @@ class Register extends Component {
 		this.handleKey = this.handleKey.bind(this);
 	}
 	handleKey(e) {
-		if (e.key === 'Enter')
-			{this.ajaxCall();}
+		if (e.key === 'Enter') {
+			this.ajaxCall();
+		}
 	}
 	handleRegexError(e) {
 		const {messages} = this.context;
@@ -107,6 +108,12 @@ class Register extends Component {
 							{this.setState({errLogin: msg.message});}
 						if (msg.path === 'email')
 							{this.setState({errMail: msg.message});}
+						if (msg.path === 'password')
+							{this.setState({errPasswd: msg.message});}
+						if (msg.path === 'name')
+							{this.setState({errName: msg.message});}
+						if (msg.path === 'firstname')
+							{this.setState({errFirstname: msg.message});}
 						console.log(msg);
 					});
 				}

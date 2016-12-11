@@ -29,6 +29,7 @@ class Profile extends Component {
 			errMail: '',
 			passwd: '',
 			errPasswd: '',
+			img: '',
 			preview: ''
 		};
 		this.handleRegexError = this.handleRegexError.bind(this);
@@ -54,7 +55,7 @@ class Profile extends Component {
 				firstname: res.data[0].firstname,
 				mail: res.data[0].email,
 				language: res.data[0].lang,
-				preview: res.data[0].path_img ? res.data[0].path_img : 'http://localhost:4242/picture/default.jpg'
+				preview: res.data[0].path_img ? '/picture/'+res.data[0].path_img : 'http://localhost:4242/picture/default.jpg'
 			});
 		})
 		.catch(err => console.log(err));
@@ -113,11 +114,15 @@ class Profile extends Component {
 			for (var name in data) {
 				formData.append(name, data[name]);
 			}
+			console.log('reayd to fetch');
 			formData.append('path_img', this.state.img);
+			console.log(this.props.token);
 			fetch('/api/user/me', {
 				method: 'PUT',
-				Authorization: 'Bearer ' + this.props.token,
-				body: formData
+				body: formData,
+				headers: {
+					Authorization: 'Bearer ' + this.props.token
+				}
 			})
 			.then(res => res.json())
 			.then(res => {
@@ -180,6 +185,7 @@ class Profile extends Component {
 					</Center>
 					<Divider/>
 					<TextField
+						disabled={true}
 						className="VisitorMarge"
 						value={this.state.login}
 						id="Login"
