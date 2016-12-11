@@ -22,8 +22,8 @@ const styles = {
 		height: 'calc(100vh - 56px)'
 	},
 	img: {
-		height: '20%',
-		width: '20%',
+		height: 200,
+		width: 200,
 		display: 'inline-block'
 	},
 	inline: {
@@ -80,8 +80,7 @@ class User extends Component {
 		})
 		.then(res => {
 			user = res.data;
-			if (!res.data.path_img)
-				{user.path_img = 'http://localhost:4242/picture/default.jpg';}
+			user.path_img = res.data.path_img ? '/picture/'+res.data.path_img : 'http://localhost:4242/picture/default.jpg';
 			var countFetch = 0;
 			let len = user.movie_view.length;
 			if (len === 0) {
@@ -152,44 +151,27 @@ class User extends Component {
 					{!Object.keys(user).length ?
 						<Center style={styles.loader}><CircularProgress size={80} thickness={5}/></Center> :
 						<Center>
+						<div style={styles.root}>
 							<AppBar
 								showMenuIconButton={false}
 								title={messages.user.user}
 								/>
-							<div className="center">
-								<img style={styles.img} src={user.img} alt="user"/>
-								<List style={styles.inline}>
-									<ListItem primaryText={user.pseudo}/>
-									<ListItem primaryText={user.name}/>
-									<ListItem primaryText={user.firstname}/>
-									<ListItem primaryText={user.email}/>
-								</List>
+							<div className="center" style={{flex:1, flexDirection:"row"}}>
+								<div style={{flex:2}}>
+									<img style={styles.img} src={user.path_img} alt="user"/>
+								</div>
+								<div style={{flex:1}}>
+									<List style={styles.inline}>
+										<ListItem primaryText={messages.login} secondaryText={user.pseudo}/>
+										<ListItem primaryText={messages.name} secondaryText={user.name}/>
+										<ListItem primaryText={messages.firstname} secondaryText={user.firstname}/>
+									</List>
+								</div>
 							</div>
+						</div>
 						</Center>
 				}
 				</Paper>
-				<Paper zDepth={1}>
-					{/*! Object.keys(movie).length ?
-						<Center><p> No movie seen yet, recommand him one ! </p></Center> :
-
-						<Center>
-							<div className="closeDiv center">
-								<AppBar
-									showMenuIconButton={false}
-									title={messages.user.lastSeen}
-									/>
-								<img className="imgDiv" src={movie.large_cover_image}/>
-								<h1>{movie.title}</h1>
-								<List style={{display: 'inline-block'}}>
-									<ListItem primaryText={movie.rating} leftIcon={<ActionGrade/>}/>
-									<ListItem primaryText={movie.year} leftIcon={<Date/>}/>
-								</List>
-								<p>{movie.description_full}</p>
-							</div>
-						</Center>
-					*/}
-				</Paper>
-
 				{ movies.length > 0 ?
 					<div style={styles.root}>
 						<AppBar
