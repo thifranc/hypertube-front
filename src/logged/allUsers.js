@@ -1,18 +1,7 @@
 import React, {Component} from 'react';
-import CircularProgress from 'material-ui/CircularProgress';
-import AppBar from 'material-ui/AppBar';
 import {GridList, GridTile} from 'material-ui/GridList';
 import {Link} from 'react-router';
-
-import Center from '../util/Center';
-
 import 'whatwg-fetch';
-
-const styles = {
-	loader: {
-		height: 'calc(100vh - 56px)'
-	}
-};
 
 class allUsers extends Component {
 	constructor() {

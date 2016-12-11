@@ -70,6 +70,8 @@ class Nav extends Component {
 		const {messages, lang} = this.context;
 		const page = this.selectPathFromName();
 		
+		console.log('nav !')
+
 		return (
 			<div>
 				<Paper zDepth={1}>

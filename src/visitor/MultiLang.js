@@ -12,7 +12,7 @@ class MultiLang extends Component {
 		this.context.langChange(value);
 	}
 	render() {
-		const {messages, lang} = this.context;
+		const {lang} = this.context;
 		return (
 			<div style={{flex: 'none', marginLeft: '15px'}}>
 				<SelectField value={lang} onChange={this.handleSelectLang} style={{width: '150px', marginRight: '20px'}}>

@@ -40,15 +40,6 @@ function requireAuth(nextState, replace) {
 	}
 }
 
-// function test(nextState, replace) {
-// 	return ;
-// 	if (localStorage.getItem('token')) {
-// 		replace({
-// 			pathname : '/'
-// 		});
-// 	}
-// }
-
 class App extends Component {
 	render() {
 		return (
@@ -57,7 +48,7 @@ class App extends Component {
 					<Router history={browserHistory}>
 						<Route path="/" component={Logged} onEnter={requireAuth}>
 							<IndexRoute component={Search}/>
-							<Route path="user/:id" component={User}/>
+							<Route path="/user/:id" component={User}/>
 							<Route path="allUsers" component={allUsers}/>
 							<Route path="profile" component={Profile}/>
 							<Route path="movie/:id" component={Movie}/>
