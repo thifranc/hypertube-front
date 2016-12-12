@@ -53,11 +53,12 @@ class User extends Component {
 	columnWatch() {
 		const width = window.innerWidth;
 
-		if (width > 1300) {
+		console.log(this.movies.length);
+		if (width > 1300 && this.movies.length > 6) {
 			this.setState({column: 6});
-		} else if (width > 1000 && width < 1300) {
+		} else if (width > 1000 && this.movies.length > 5) {
 			this.setState({column: 5});
-		} else if (width > 800 && width < 1000) {
+		} else if ((width > 800 && this.movies.length > 3)) {
 			this.setState({column: 3});
 		} else if (width < 600) {
 			this.setState({column: 1});
@@ -129,31 +130,28 @@ class User extends Component {
 
 		return (
 			<div className='root background'>
-				<Paper zDepth={1}>
-					{!Object.keys(user).length ?
-						<Center style={styles.loader}><CircularProgress size={80} thickness={5}/></Center> :
-						<Center>
-						<div style={styles.root}>
-							<AppBar
-								showMenuIconButton={false}
-								title={messages.user.user}
-								/>
-							<div className="center" style={{flex:1, flexDirection:"row"}}>
-								<div style={{flex:2}}>
-									<img style={styles.img} src={user.path_img} alt="user"/>
-								</div>
-								<div style={{flex:1}}>
-									<List style={styles.inline}>
-										<ListItem primaryText={messages.login} secondaryText={user.pseudo}/>
-										<ListItem primaryText={messages.name} secondaryText={user.name}/>
-										<ListItem primaryText={messages.firstname} secondaryText={user.firstname}/>
-									</List>
-								</div>
+				{!Object.keys(user).length ?
+					<Center style={styles.loader}><CircularProgress size={80} thickness={5}/></Center> :
+					<div style={styles.root}>
+						<AppBar
+							style={{textAlign: 'center'}}
+							showMenuIconButton={false}
+							title={messages.user.user}
+							/>
+						<div className="center" style={{display:'flex', flex:1, flexDirection:"row", justifyContent:"center"}}>
+							<div style={{flex:2}}>
+								<img src={user.path_img} alt="user"/>
+							</div>
+							<div style={{flex:1, textAlign:"left"}}>
+								<List style={styles.inline}>
+									<ListItem primaryText={messages.login} secondaryText={user.pseudo}/>
+									<ListItem primaryText={messages.name} secondaryText={user.name}/>
+									<ListItem primaryText={messages.firstname} secondaryText={user.firstname}/>
+								</List>
 							</div>
 						</div>
-						</Center>
+					</div>
 				}
-				</Paper>
 				{ movies.length > 0 ?
 					<div style={styles.root}>
 						<AppBar

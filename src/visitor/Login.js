@@ -23,11 +23,8 @@ class Login extends Component {
 		this.state = {
 			login: '',
 			open: false,
-			errLogin: false,
-			passwd: '',
-			errPasswd: false
+			passwd: ''
 		};
-		this.handleLogin = this.handleLogin.bind(this);
 		this.handlePasswd = this.handlePasswd.bind(this);
 		this.handleFillChar = this.handleFillChar.bind(this);
 		this.handleKey = this.handleKey.bind(this);
@@ -41,27 +38,23 @@ class Login extends Component {
 		  this.setState({open: false});
 	}
 	handleKey(e) {
-		if (e.key === 'Enter')
-			{this.ajaxCall();}
-	}
-	handleLogin(e) {
-		var regLowercase = new RegExp('^[a-z]*$');
-
-		if (!regLowercase.test(e.target.value))
-			{this.setState({errLogin: true});}
-		else
-			{this.setState({errLogin: false});}
-		this.setState({login: e.target.value});
+		if (e.key === 'Enter') {
+			this.handlePasswd();
+		}
 	}
 	handlePasswd() {
 		var regPasswd = new RegExp('^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z]).{8,}$');
+		var regLowercase = new RegExp('^[a-z]*$');
 
-		this.setState({
-			errPasswd: !regPasswd.test(this.state.passwd)
-		}, this.ajaxCall);
+		if (!regLowercase.test(this.state.login) ||
+			!regPasswd.test(this.state.passwd)) {
+				this.setState({open: true});
+			} else {
+				this.ajaxCall();
+			}
 	}
 	ajaxCall() {
-		if (!this.state.errPasswd && !this.state.errLogin) {
+		if (this.state.passwd && this.state.login) {
 			fetch('/api/user/auth/hypertube/' + this.state.login + '/' + this.state.passwd, {
 				method: 'GET'
 			})
@@ -79,7 +72,7 @@ class Login extends Component {
 		}
 	}
 	handleFillChar(e) {
-		this.setState({passwd: e.target.value});
+		this.setState({[e.target.id]: e.target.value});
 	}
 
 	render() {
@@ -113,23 +106,22 @@ class Login extends Component {
 					<Center>
 						<TextField
 							className="VisitorMarge"
+							id="login"
 							value={this.state.login}
-							onChange={this.handleLogin}
+							onChange={this.handleFillChar}
 							floatingLabelText={messages.login}
 							hintText={messages.login}
-							errorText={this.state.errLogin && messages.errors.lowercase}
 							onKeyDown={this.handleKey}
 							/>
 						<br/>
 						<TextField
 							className="VisitorMarge"
-							value={this.state.passwd}
 							id="passwd"
+							value={this.state.passwd}
 							onChange={this.handleFillChar}
 							hintText={messages.passwd}
 							floatingLabelText={messages.passwd}
 							type="password"
-							errorText={this.state.errPasswd && messages.errors.passwd}
 							onKeyDown={this.handleKey}
 							/>
 						<br/>
@@ -137,7 +129,6 @@ class Login extends Component {
 							<RaisedButton
 								label={messages.loginPage.log}
 								className="VisitorMarge"
-								disabled={this.state.errLogin}
 								onClick={this.handlePasswd}
 								/>
 						</Center>

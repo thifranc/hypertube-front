@@ -208,7 +208,6 @@ class Register extends Component {
 						id="mail"
 						onChange={this.handleFillChar}
 						onBlur={this.handleRegexError}
-						onFocus={this.handleRegexError}
 						hintText={messages.mail}
 						floatingLabelText={messages.mail}
 						errorText={this.state.errMail}
@@ -221,7 +220,6 @@ class Register extends Component {
 						id="passwd"
 						onChange={this.handleFillChar}
 						onBlur={this.handleRegexError}
-						onFocus={this.handleRegexError}
 						hintText={messages.passwd}
 						floatingLabelText={messages.passwd}
 						type="password"
