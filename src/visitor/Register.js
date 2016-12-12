@@ -5,6 +5,8 @@ import Paper from 'material-ui/Paper';
 import TextField from 'material-ui/TextField';
 import AppBar from 'material-ui/AppBar';
 import RaisedButton from 'material-ui/RaisedButton';
+import FlatButton from 'material-ui/FlatButton';
+import Dialog from 'material-ui/Dialog';
 import {Link} from 'react-router';
 
 import SelectField from 'material-ui/SelectField';
@@ -31,6 +33,7 @@ class Register extends Component {
 			errMail: '',
 			passwd: '',
 			errPasswd: '',
+			open: false,
 			preview: ''
 		};
 		this.handleRegexError = this.handleRegexError.bind(this);
@@ -39,6 +42,10 @@ class Register extends Component {
 		this.attachFile = this.attachFile.bind(this);
 		this.ajaxCall = this.ajaxCall.bind(this);
 		this.handleKey = this.handleKey.bind(this);
+		this.handleClose = this.handleClose.bind(this);
+	}
+	handleClose() {
+		  this.setState({open: false});
 	}
 	handleKey(e) {
 		if (e.key === 'Enter') {
@@ -99,6 +106,7 @@ class Register extends Component {
 					localStorage.setItem('token', res.data.token);
 					browserHistory.push('/');
 				} else {
+				console.log(res);
 					res.data.forEach(msg => {
 						if (msg.path === 'pseudo')
 							{this.setState({errLogin: msg.message});}
@@ -110,6 +118,9 @@ class Register extends Component {
 							{this.setState({errName: msg.message});}
 						if (msg.path === 'firstname')
 							{this.setState({errFirstname: msg.message});}
+						if (msg.path === 'image') {
+							this.setState({open:true});
+						}
 					});
 				}
 			})
@@ -135,10 +146,26 @@ class Register extends Component {
 	render() {
 		const classImg = 'VisitorMarge VisitorImg';
 		const {messages} = this.context;
+		const actions = [
+			      <FlatButton
+				label="OK"
+				primary
+				onTouchTap={this.handleClose}
+				/>
+			    ];
 		return (
 			<Center
 				className="VisitorHeight"
 				>
+				<Dialog
+					title={messages.error}
+					actions={actions}
+					modal={false}
+					open={this.state.open}
+					onRequestClose={this.handleClose}
+					>
+					{messages.profile.image}
+				</Dialog>
 				<Paper zDepth={2}>
 					<AppBar
 						showMenuIconButton={false}

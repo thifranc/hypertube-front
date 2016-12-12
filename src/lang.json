@@ -8,7 +8,7 @@
 		"profile" : {
 			"success": "Your profile has been successfully updated !",
 			"passwd": "Fill to update your password",
-			"image": "This image can't be uploaded",
+			"image": "The uploaded file must be an image png/jpeg",
 			"update": "Update"
 		},
 		"user" : {
@@ -93,7 +93,7 @@
 		"profile" : {
 			"success": "Votre profil a été mis å jour avec succes !",
 			"passwd": "Sert a modifier le mot de passe",
-			"image": "Cette image ne peut etre téléchargée",
+			"image": "L'image doit etre au format png/jpeg",
 			"update": "Mettre a jour"
 		},
 		"user" : {
@@ -178,7 +178,7 @@
 		"profile" : {
 			"success": "Su perfil ha sido actualizado con éxito!",
 			"passwd": "LLenar para modifiar contraseña",
-			"image": "Esta foto ne puede se cargar",
+			"image": "La foto debe ser un png o jpeg",
 			"update": "Actualizar"
 		},
 		"user" : {
