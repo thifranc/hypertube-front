@@ -1,4 +1,4 @@
-import '../../util/styles.css';
+import '../util/styles.css';
 import React, {Component} from 'react';
 import {GridList, GridTile} from 'material-ui/GridList';
 import {Link} from 'react-router';

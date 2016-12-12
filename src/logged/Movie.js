@@ -1,4 +1,4 @@
-import '../../util/styles.css';
+import '../util/styles.css';
 import React, {Component} from 'react';
 import Paper from 'material-ui/Paper';
 import CircularProgress from 'material-ui/CircularProgress';

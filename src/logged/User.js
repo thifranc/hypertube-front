@@ -1,4 +1,4 @@
-import '../../util/styles.css';
+import '../util/styles.css';
 import React, {Component} from 'react';
 import {browserHistory} from 'react-router';
 import CircularProgress from 'material-ui/CircularProgress';
