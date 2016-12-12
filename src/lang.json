@@ -40,6 +40,10 @@
 			"success":"You have been mailed",
 			"fail":"User does not exist"
 		},
+		"reset" : {
+			"success":"Your has been reset successfully",
+			"fail":"Your account could not be reached"
+		},
 		"sortBy" : {
 			"title" : "Title",
 			"year" : "Year",
@@ -125,6 +129,10 @@
 			"success":"Courriel envoyé",
 			"fail":"L'utilisateur n'a pas pu etre trouvé"
 		},
+		"reset" : {
+			"success":"Vous avez un nouveau mot de passe !",
+			"fail":"Votre compte n'a pas été trouvé"
+		},
 		"sortBy" : {
 			"title" : "Titre",
 			"year" : "Annee",
@@ -209,6 +217,10 @@
 			"mailMe":"Enviarme correo",
 			"success":"Correo mandado",
 			"fail":"El usuario no existe"
+		},
+		"reset" : {
+			"success":"Tiene una nueva contraseña !",
+			"fail":"Su perfil no puede se encontrar"
 		},
 		"sortBy" : {
 			"title" : "Título",

@@ -5,6 +5,8 @@ import Paper from 'material-ui/Paper';
 import TextField from 'material-ui/TextField';
 import AppBar from 'material-ui/AppBar';
 import RaisedButton from 'material-ui/RaisedButton';
+import FlatButton from 'material-ui/FlatButton';
+import Dialog from 'material-ui/Dialog';
 import {Link} from 'react-router';
 import Visibility from 'material-ui/svg-icons/action/visibility';
 import {red800} from 'material-ui/styles/colors';
@@ -17,6 +19,9 @@ class Reset extends Component {
 	constructor() {
 		super();
 		this.state = {
+			open: false,
+			modalRep:'',
+			modalMsg:'',
 			newPasswd: '',
 			showPasswd: false,
 			errNewPasswd: false
@@ -25,6 +30,10 @@ class Reset extends Component {
 		this.handlePasswd = this.handlePasswd.bind(this);
 		this.handleEye = this.handleEye.bind(this);
 		this.handleKey = this.handleKey.bind(this);
+		this.handleClose = this.handleClose.bind(this);
+	}
+	handleClose() {
+		  this.setState({open: false});
 	}
 	handleKey(e) {
 		if (e.key === 'Enter')
@@ -34,6 +43,7 @@ class Reset extends Component {
 		this.setState({newPasswd: e.target.value});
 	}
 	ajaxCall() {
+		const {messages} = this.context;
 		if (!this.state.errNewPasswd) {
 			var data = JSON.stringify({
 				id: this.props.params.id,
@@ -45,7 +55,18 @@ class Reset extends Component {
 				body: data
 			})
 				.then(res => res.json())
-				.then(res => console.log(res))
+				.then(res => {
+					if (res.statusCode === 200) {
+						this.setState({open: true, modalRep:messages.success, 
+						modalMsg:messages.reset.success
+						});
+					} else {
+						this.setState({
+							open: true, modalRep:messages.error,
+							modalMsg:messages.reset.fail
+						});
+					}
+				})
 				.catch(err => console.log(err));
 		}
 	}
@@ -62,8 +83,24 @@ class Reset extends Component {
 	}
 	render() {
 		const {messages} = this.context;
+		const actions = [
+			      <FlatButton
+				label="OK"
+				primary
+				onTouchTap={this.handleClose}
+				/>
+			    ];
 		return (
 			<Center className="VisitorHeight">
+				<Dialog
+					title={this.state.modalRep}
+					actions={actions}
+					modal={false}
+					open={this.state.open}
+					onRequestClose={this.handleClose}
+					>
+					{this.state.modalMsg}
+				</Dialog>
 				<Paper zDepth={2}>
 					<AppBar
 						showMenuIconButton={false}
