@@ -8,6 +8,7 @@
 		"profile" : {
 			"success": "Your profile has been successfully updated !",
 			"passwd": "Fill to update your password",
+			"image": "This image can't be uploaded",
 			"update": "Update"
 		},
 		"user" : {
@@ -77,6 +78,8 @@
 		"firstname": "Firstname",
 		"name": "Name",
 		"home": "Home",
+		"error": "Error",
+		"success": "Success",
 		"mail": "Mail",
 		"cancel": "Cancel",
 		"lang": "You have to choose between the available languages"
@@ -90,6 +93,7 @@
 		"profile" : {
 			"success": "Votre profil a été mis å jour avec succes !",
 			"passwd": "Sert a modifier le mot de passe",
+			"image": "Cette image ne peut etre téléchargée",
 			"update": "Mettre a jour"
 		},
 		"user" : {
@@ -159,6 +163,8 @@
 		"firstname": "Prénom",
 		"name": "Nom",
 		"home": "Accueil",
+		"error": "Erreur",
+		"success": "Réussite",
 		"mail": "Courriel",
 		"cancel": "Fermer",
 		"lang": "Vous devez choisir entre les langues proposées"
@@ -172,6 +178,7 @@
 		"profile" : {
 			"success": "Su perfil ha sido actualizado con éxito!",
 			"passwd": "LLenar para modifiar contraseña",
+			"image": "Esta foto ne puede se cargar",
 			"update": "Actualizar"
 		},
 		"user" : {
@@ -241,7 +248,9 @@
 		"lowercaseError": "Solamente minúsculas letras",
 		"firstname": "Nombre",
 		"name": "Apellido",
-		"home": "Accueil",
+		"home": "Recepción",
+		"error": "Error",
+		"success": "Exito",
 		"mail": "Correo electrónico",
 		"cancel": "Cerrar",
 		"lang": "Hay que elegir entre los languajes disponibles"

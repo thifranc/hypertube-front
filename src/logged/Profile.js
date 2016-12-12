@@ -34,6 +34,8 @@ class Profile extends Component {
 			errPasswd: '',
 			img: '',
 			open: false,
+			modalRep:'',
+			modalMsg:'',
 			preview: ''
 		};
 		this.handleRegexError = this.handleRegexError.bind(this);
@@ -98,6 +100,7 @@ class Profile extends Component {
 		this.handleFillChar(e);
 	}
 	ajaxCall(e) {
+		const {messages} = this.context;
 		if (!this.state.errPasswd && !this.state.errMail &&
 			!this.state.errLogin && !this.state.errFirstname &&
 			!this.state.errName && !this.state.errLang) {
@@ -128,8 +131,10 @@ class Profile extends Component {
 			.then(res => {
 				console.log('retour de ajaxcall', res);
 				if (res.statusCode === 200) {
-		  			this.setState({open: true});
-				} else {
+		  			this.setState({open: true, modalRep:messages.success, 
+					modalMsg:messages.profile.success
+					});
+				} else { //rep serveur : res.data === array only
 					res.data.forEach(msg => {
 						if (msg.path === 'pseudo')
 							{this.setState({errLogin: msg.message});}
@@ -141,6 +146,12 @@ class Profile extends Component {
 							{this.setState({errName: msg.message});}
 						if (msg.path === 'firstname')
 							{this.setState({errFirstname: msg.message});}
+						if (msg.path === 'image') {
+							this.setState({
+								open: true, modalRep:messages.error,
+								modalMsg:messages.profile.image
+							});
+						}
 					});
 				}
 			})
@@ -168,7 +179,7 @@ class Profile extends Component {
 		const {messages} = this.context;
 		const actions = [
 			      <FlatButton
-				label={messages.cancel}
+				label="OK"
 				primary
 				onTouchTap={this.handleClose}
 				/>
@@ -178,13 +189,13 @@ class Profile extends Component {
 				className="background VisitorHeight"
 				>
 				<Dialog
-					title="Error"
+					title={this.state.modalRep}
 					actions={actions}
 					modal={false}
 					open={this.state.open}
 					onRequestClose={this.handleClose}
 					>
-					{messages.profile.success}
+					{this.state.modalMsg}
 				</Dialog>
 				<Paper zDepth={2}>
 					<AppBar
