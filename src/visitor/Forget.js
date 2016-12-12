@@ -23,6 +23,8 @@ class Forget extends Component {
 			login: '',
 			errLogin: false,
 			mail: '',
+			modalRep:'',
+			modalMsg:'',
 			errMail: false
 		};
 		this.handleSwap = this.handleSwap.bind(this);
@@ -30,11 +32,7 @@ class Forget extends Component {
 		this.handleMail = this.handleMail.bind(this);
 		this.handleFillChar = this.handleFillChar.bind(this);
 		this.handleKey = this.handleKey.bind(this);
-		this.handleOpen = this.handleOpen.bind(this);
 		this.handleClose = this.handleClose.bind(this);
-	}
-	handleOpen() {
-		  this.setState({open: true});
 	}
 	handleClose() {
 		  this.setState({open: false});
@@ -61,6 +59,7 @@ class Forget extends Component {
 	}
 	ajaxCall() {
 		var data = {};
+		const {messages} = this.context;
 		if (this.state.hidden && !this.state.errLogin && this.state.login) {
 			data = JSON.stringify({login: this.state.login});
 		} else if (!this.state.hidden && !this.state.errMail) {
@@ -74,10 +73,15 @@ class Forget extends Component {
 				.then(res => res.json())
 				.then(res => {
 					console.log(res);
-					if (typeof (res.error) !== 'undefined') {
-						this.setState({open: true});
+					if (res.statusCode === 200) {
+						this.setState({open: true, modalRep:messages.success, 
+						modalMsg:messages.forget.success
+						});
 					} else {
-						this.setState({success: true, open: true});
+						this.setState({
+							open: true, modalRep:messages.error,
+							modalMsg:messages.forget.fail
+						});
 					}
 				})
 				.catch(err => {
@@ -99,7 +103,7 @@ class Forget extends Component {
 		const {messages} = this.context;
 		const actions = [
 			      <FlatButton
-				label={messages.cancel}
+				label="OK"
 				primary
 				onTouchTap={this.handleClose}
 				/>
@@ -107,13 +111,13 @@ class Forget extends Component {
 		return (
 			<Center className="VisitorHeight">
 				<Dialog
-					title="Error"
+					title={this.state.modalRep}
 					actions={actions}
 					modal={false}
 					open={this.state.open}
 					onRequestClose={this.handleClose}
 					>
-					{this.state.success ? messages.forget.success : messages.forget.fail}
+					{this.state.modalMsg}
 				</Dialog>
 				<Paper zDepth={2}>
 					<AppBar

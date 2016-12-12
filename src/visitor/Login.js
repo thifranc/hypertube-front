@@ -79,7 +79,7 @@ class Login extends Component {
 		const {messages, lang} = this.context;
 		const actions = [
 			      <FlatButton
-				label={messages.cancel}
+				label="OK"
 				primary
 				onTouchTap={this.handleClose}
 				/>
