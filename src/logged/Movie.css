@@ -8,7 +8,6 @@
 .MovieMainColumn {
   padding: 15px;
   max-width: 60%;
-  min-width: 400px;
 }
 .MovieSecColumn {
   max-width: 40%;
@@ -19,7 +18,6 @@
 .MovieComments{
   padding: 15px;
   max-width: 100%;
-  min-width: 400px;
 }
 .MovieInfo {
   padding: 15px;

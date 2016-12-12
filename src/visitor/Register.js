@@ -71,8 +71,6 @@ class Register extends Component {
 		this.handleFillChar(e);
 	}
 	ajaxCall(e) {
-		console.log('bonjour');
-		console.log(this.context.lang);
 		if (!this.state.errPasswd && !this.state.errMail &&
 			!this.state.errLogin && !this.state.errFirstname &&
 			!this.state.errName && !this.state.errLang) {
@@ -91,14 +89,12 @@ class Register extends Component {
 				formData.append(name, data[name]);
 			}
 			formData.append('path_img', this.state.img);
-			console.log('mdr');
 			fetch('/api/user', {
 				method: 'POST',
 				body: formData
 			})
 			.then(res => res.json())
 			.then(res => {
-				console.log(res);
 				if (res.data && res.data.token) {
 					localStorage.setItem('token', res.data.token);
 					browserHistory.push('/');
@@ -114,7 +110,6 @@ class Register extends Component {
 							{this.setState({errName: msg.message});}
 						if (msg.path === 'firstname')
 							{this.setState({errFirstname: msg.message});}
-						console.log(msg);
 					});
 				}
 			})
@@ -130,13 +125,10 @@ class Register extends Component {
 		this.setState({preview: e.target.result});
 	}
 	handleFileChange(event) {
-		console.log('bonjour maman');
-		console.log(event.target.files[0]);
 		if (event.target.files && event.target.files[0]) {
 			var reader = new FileReader();
 			reader.onload = this.attachFile;
 			reader.readAsDataURL(event.target.files[0]);
-			console.log(this.state.preview);
 			this.setState({img: event.target.files[0]});
 		}
 	}
