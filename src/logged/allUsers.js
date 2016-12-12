@@ -1,3 +1,4 @@
+import '../../util/styles.css';
 import React, {Component} from 'react';
 import {GridList, GridTile} from 'material-ui/GridList';
 import {Link} from 'react-router';
@@ -51,7 +52,7 @@ class allUsers extends Component {
 		const {messages} = this.context;
 
 		return (
-			<div>
+			<div className='background'>
 				<GridList cellHeight={'auto'} cols={this.state.column}>
 					{ this.state.users.length > 0 ?
 				this.state.users.map((user, i) => (

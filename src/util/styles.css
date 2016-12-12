@@ -16,6 +16,11 @@
 	margin-left: 50px;
 }
 
+.background {
+  z-index:-1;
+  position:relative;
+}
+
 .root {
 	display: 'flex';
 	flex-wrap: 'wrap';

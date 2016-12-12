@@ -1,3 +1,4 @@
+import '../../util/styles.css';
 import React, {Component} from 'react';
 import {browserHistory} from 'react-router';
 
@@ -174,7 +175,7 @@ class Profile extends Component {
 			    ];
 		return (
 			<Center
-				className="VisitorHeight"
+				className="background VisitorHeight"
 				>
 				<Dialog
 					title="Error"

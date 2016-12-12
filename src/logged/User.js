@@ -1,3 +1,4 @@
+import '../../util/styles.css';
 import React, {Component} from 'react';
 import {browserHistory} from 'react-router';
 import CircularProgress from 'material-ui/CircularProgress';
@@ -127,7 +128,7 @@ class User extends Component {
 		const movies = this.movies;
 
 		return (
-			<div>
+			<div className='root background'>
 				<Paper zDepth={1}>
 					{!Object.keys(user).length ?
 						<Center style={styles.loader}><CircularProgress size={80} thickness={5}/></Center> :

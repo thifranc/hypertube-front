@@ -1,3 +1,4 @@
+import '../../util/styles.css';
 import React, {Component} from 'react';
 import Paper from 'material-ui/Paper';
 import CircularProgress from 'material-ui/CircularProgress';
@@ -59,7 +60,7 @@ class Movie extends Component {
 		const movie = this.state.movie;
 
 		return (
-			<div>
+			<div className='background'>
 				{!Object.keys(movie).length ?
 					<Center style={styles.loader}><CircularProgress size={80} thickness={5}/></Center> :
 					<div className="MovieContainer">

@@ -163,7 +163,7 @@ class Search extends Component {
 				display.push(this.state.movies.map((movie, i) => (<Movies key={i} movie={movie} id={i}/>)));
 		}
 		return (
-			<div className='root'>
+			<div className='root background'>
 				<GridList cellHeight={'auto'} cols={this.state.column}>
 					<Subheader>
 						<Filter
