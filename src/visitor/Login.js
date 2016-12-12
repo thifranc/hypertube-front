@@ -55,8 +55,13 @@ class Login extends Component {
 	}
 	ajaxCall() {
 		if (this.state.passwd && this.state.login) {
-			fetch('/api/user/auth/hypertube/' + this.state.login + '/' + this.state.passwd, {
-				method: 'GET'
+			
+			var formData = new FormData();
+			formData.append('login', this.state.login);
+			formData.append('password', this.state.passwd);
+			fetch('/api/user/auth/hypertube', {
+				method: 'POST',
+				body: formData
 			})
 			.then(res => res.json())
 			.then(res => {
