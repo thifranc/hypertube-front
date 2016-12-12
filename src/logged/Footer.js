@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 
-import Center from './util/Center.js';
+import Center from '../util/Center.js';
 
 class Footer extends Component {
 
