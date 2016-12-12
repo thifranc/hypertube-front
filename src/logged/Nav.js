@@ -71,7 +71,7 @@ class Nav extends Component {
 		const page = this.selectPathFromName();
 		
 		return (
-			<div style={{zIndex:"10"}}>
+			<div>
 				<Paper zDepth={1} >
 					<BottomNavigation selectedIndex={page}>
 						<div/>

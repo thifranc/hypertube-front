@@ -164,7 +164,7 @@ class Search extends Component {
 		}
 		return (
 			<div className='root background'>
-				<GridList cellHeight={'auto'} cols={this.state.column}>
+				<GridList style={{margin: 0}} cellHeight={'auto'} cols={this.state.column}>
 					<Subheader>
 						<Filter
 							genre={this.state.genre}

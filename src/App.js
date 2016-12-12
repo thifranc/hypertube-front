@@ -65,7 +65,7 @@ class App extends Component {
 			<MuiThemeProvider muiTheme={muiTheme}>
 				<LangProvider>
 					<Router history={browserHistory}>
-						<Route path="/" component={Logged} onEnter={requireAuth}>
+						<Route path="/" component={Logged}>
 							<IndexRoute component={Search}/>
 							<Route path="/user/:id" component={User}/>
 							<Route path="allUsers" component={allUsers}/>

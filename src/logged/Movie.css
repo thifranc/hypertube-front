@@ -1,7 +1,9 @@
 .MovieContainer {
   width: 100%;
-  min-height: calc(100vh - 56px);
   background: linear-gradient(-90deg, rgba(224, 224, 224, 1), rgba(58, 46, 46, 1));
+  min-height: calc(100vh - 56px);
+}
+.MovieContainerColumn {
   display: flex;
   position: relative;
 }
@@ -30,9 +32,17 @@
   margin-right: 20px;
   display: inline-block;
 }
+.MovieDisqus {
+  width: 100%;
+  position: relative;
+}
+.MovieDisqusEl {
+  width: 100%;
+}
+
 @media (max-width: 1206px) {
   .MovieContainer {
-    flex-direction: column;
+  width: 100%;
   }
   .MovieMainColumn {
     width: calc(100% - 30px);

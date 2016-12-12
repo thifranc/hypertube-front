@@ -1,18 +1,11 @@
 import '../util/styles.css';
 import React, {Component} from 'react';
-import Paper from 'material-ui/Paper';
 import CircularProgress from 'material-ui/CircularProgress';
-import AppBar from 'material-ui/AppBar';
-import StarBorder from 'material-ui/svg-icons/toggle/star';
-import Cross from 'material-ui/svg-icons/navigation/close';
-import Tick from 'material-ui/svg-icons/action/done';
-import Play from 'material-ui/svg-icons/av/play-arrow';
-import IconButton from 'material-ui/IconButton';
-import {Table, TableBody, TableHeader, TableHeaderColumn, TableRow, TableRowColumn} from 'material-ui/Table';
-import Carousel from 'nuka-carousel';
-
 import Center from '../util/Center';
-import ReactDisqus from 'react-disqus';
+import Modal from './Movie/Modal';
+import MovieInfo from './Movie/MovieInfo';
+import Torrents from './Movie/Torrents';
+import Disqus from './Movie/Disqus';
 
 import 'whatwg-fetch';
 import './Movie.css';
@@ -27,8 +20,19 @@ class Movie extends Component {
 	constructor() {
 		super();
 		this.state = {
-			movie: {}
+			movie: {},
+			open: false,
+			stream: {},
+			provider: '',
+			subtitles: [],
+			id: ''
 		};
+		this.handleOpen = this.handleOpen.bind(this);
+		this.handleClose = this.handleClose.bind(this);
+		this.startStream = this.startStream.bind(this);
+		this.closeStream = this.closeStream.bind(this);
+		this.getSubtitles = this.getSubtitles.bind(this);
+		this.unload = null;
 	}
 	componentDidMount() {
 		const filmId = this.props.params.id;
@@ -55,84 +59,91 @@ class Movie extends Component {
 			body: data
 		})
 		.catch(err => console.log(err));
+		/*
+			.then(res => res.json())
+			.then(res => {
+				console.log(res);
+				this.setState({movie: res.data.movie}, () => {
+					this.getSubtitles(this.state.movie.imdb_code);
+				});
+			})
+			.catch(err => console.log(err));
+		*/
+	}
+	handleOpen() {
+		this.setState({open: true});
+	}
+	handleClose() {
+		this.setState({open: false});
+	}
+	startStream(provider, id) {
+		if (provider === 'extratorrent') {
+			id = encodeURIComponent(id);
+		}
+		this.unload = () => this.closeStream(provider, id);
+		window.addEventListener('beforeunload', this.unload, false);
+		this.handleOpen();
+		this.setState({provider: provider, id: id});
+		fetch(`/api/video/${provider}/${id}`, {
+			method: 'POST',
+			credentials: 'include',
+			headers: {
+				'Content-Type': 'application/json'
+			}
+		})
+			.then(res => res.json())
+			.then(res => {
+				console.log('CREATE', res);
+				this.setState({stream: res.data});
+			})
+			.catch(err => console.log(err));
+	}
+	closeStream(provider, id) {
+		window.removeEventListener('beforeunload', this.unload);
+		this.handleClose();
+		fetch(`/api/video/${provider}/${id}`, {
+			method: 'DELETE',
+			credentials: 'include',
+			headers: {
+				'Content-Type': 'application/json'
+			}
+		})
+			.then(res => res.json())
+			.then(res => {
+				console.log('DELETE', res);
+				this.setState({stream: {}});
+			})
+			.catch(err => console.log(err));
+	}
+	getSubtitles(imdbId) {
+			fetch(`/api/video/subtitles/${imdbId}`, {
+			method: 'GET',
+			credentials: 'include',
+			headers: {
+				'Content-Type': 'application/json'
+			}
+		})
+			.then(res => res.json())
+			.then(res => {
+				console.log(res.data.subtitles);
+				this.setState({subtitles: res.data.subtitles});
+			})
+			.catch(err => console.log(err));
 	}
 	render() {
 		const movie = this.state.movie;
 
 		return (
-			<div className='background'>
+			<div>
+				<Modal close={this.closeStream} provider={this.state.provider} subtitles={this.state.subtitles} id={this.state.id} stream={this.state.stream} open={this.state.open}/>
 				{!Object.keys(movie).length ?
 					<Center style={styles.loader}><CircularProgress size={80} thickness={5}/></Center> :
 					<div className="MovieContainer">
-						<div className="MovieMainColumn">
-							<Paper zDepth={2}>
-								<div className="MovieMedia">
-									<Carousel wrapAround={Boolean(true)} autoplay={Boolean(true)}>
-										<img src={movie.large_screenshot_image1} alt="movie large sceenshot 1" onLoad={() => {window.dispatchEvent(new Event('resize'));}}/>
-										<img src={movie.large_screenshot_image2} alt="movie large sceenshot 2" onLoad={() => {window.dispatchEvent(new Event('resize'));}}/>
-										<img src={movie.large_screenshot_image3} alt="movie large sceenshot 3" onLoad={() => {window.dispatchEvent(new Event('resize'));}}/>
-									</Carousel>
-								</div>
-								<div className="MovieInfo">
-									<h1>{movie.title}</h1>
-									<ul className="MovieInfoElemBlock">
-										<li className="MovieInfoElem">{movie.year}</li>
-										<li className="MovieInfoElem">{movie.mpa_rating}</li>
-										<li className="MovieInfoElem"><IconButton tooltip={movie.rating} touch={Boolean(true)} tooltipPosition="bottom-center"><StarBorder color="#f3e95a"/></IconButton></li>
-									</ul>
-									<p>{movie.description_full}</p>
-								</div>
-							</Paper>
+						<div className="MovieContainerColumn">
+							<MovieInfo movie={movie}/>
+							<Torrents movie={movie} startStream={this.startStream}/>
 						</div>
-						<div className="MovieSecColumn">
-							<Paper zDepth={2}>
-
-								<div className="MovieTorrentBlock">
-									<AppBar
-										showMenuIconButton={false}
-										title="Torrents"
-										/>
-									<Table>
-										<TableHeader displaySelectAll={Boolean(false)} adjustForCheckbox={Boolean(false)}>
-											<TableRow selectable={false}>
-												<TableHeaderColumn>Peers</TableHeaderColumn>
-												<TableHeaderColumn>Seeds</TableHeaderColumn>
-												<TableHeaderColumn>Tracker</TableHeaderColumn>
-												<TableHeaderColumn>Quality</TableHeaderColumn>
-												<TableHeaderColumn>Loaded</TableHeaderColumn>
-												<TableHeaderColumn>Play</TableHeaderColumn>
-											</TableRow>
-										</TableHeader>
-										<TableBody displayRowCheckbox={Boolean(false)}>
-											{movie.torrents.map((torrent, index) => (
-												<TableRow key={index}>
-													<TableRowColumn>{torrent.peers}</TableRowColumn>
-													<TableRowColumn>{torrent.seeds}</TableRowColumn>
-													<TableRowColumn>Yts</TableRowColumn>
-													<TableRowColumn>{torrent.quality}</TableRowColumn>
-													<TableRowColumn><Cross color="red"/><Tick color="green"/></TableRowColumn>
-													<TableRowColumn><IconButton><Play/></IconButton></TableRowColumn>
-												</TableRow>
-										))}
-										</TableBody>
-									</Table>
-								</div>
-
-							</Paper>
-							<br/>
-							<Paper zDepth={2}>
-								<AppBar
-									showMenuIconButton={false}
-									title="Comments"
-									/>
-								<div className="MovieComments">
-									<ReactDisqus
-										shortname="localhost-4r6pb8tmz4"
-										identifier="123"
-										/>
-								</div>
-							</Paper>
-						</div>
+						<Disqus/>
 					</div>
 				}
 			</div>

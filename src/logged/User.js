@@ -159,7 +159,7 @@ class User extends Component {
 							title={messages.user.lastSeen}
 							style={{textAlign: 'center'}}
 							/>
-						<GridList cellHeight={'auto'} cols={this.state.column}>
+						<GridList style={{margin: 0}} cellHeight={'auto'} cols={this.state.column}>
 							{ movies.map((movie, index) => (
 								<Link key={index} to={'/movie/' + movie.id}>
 									<GridTile
