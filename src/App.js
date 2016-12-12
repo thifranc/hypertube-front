@@ -31,13 +31,32 @@ const Tmp = (nextState, replace) => {
 };
 
 function requireAuth(nextState, replace) {
-	if (!localStorage.getItem('token') ||
-			localStorage.getItem('token') === 'undefined') {
-		replace({
+	let redirect = function() {
+		return replace({
 			pathname: '/login',
 			state: {nextPathname: nextState.location.pathname}
 		});
 	}
+
+	if (localStorage.getItem('token')) {
+		fetch('/api/' + localStorage.getItem('token'), {
+			method : 'GET',
+			headers: {
+				'Content-Type': 'application/json',
+				Authorization: 'Bearer ' + localStorage.getItem('token')
+			}
+		})
+		.then(res => res.json())
+		.then(res => {
+			if (res.error)
+				redirect();
+			else
+				localStorage.setItem('token', res.data.token);
+		})
+		.catch(err => console.log('ERROR token : ', err));
+	}
+	else
+		redirect();
 }
 
 class App extends Component {
