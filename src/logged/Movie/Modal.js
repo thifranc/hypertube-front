@@ -16,6 +16,7 @@ const Modal = (props) => {
 		marginBottom: '24px'
 	};
 
+	console.log(props);
 	return (
 		<Dialog autoDetectWindowHeight={Boolean(false)} modal={true} contentStyle={modalStyle} open={props.open}>
 			<Center>
@@ -33,7 +34,7 @@ const Modal = (props) => {
 					<CircularProgress size={80} thickness={5}/>
 				</Center> :
 				<Center>
-					<Video port={props.stream.port}/>
+					<Video port={props.stream.port} subtitles={props.subtitles}/>
 				</Center>
 			}
 		</Dialog>

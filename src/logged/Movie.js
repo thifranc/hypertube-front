@@ -23,12 +23,15 @@ class Movie extends Component {
 			open: false,
 			stream: {},
 			provider: '',
+			subtitles: [],
 			id: ''
 		};
 		this.handleOpen = this.handleOpen.bind(this);
 		this.handleClose = this.handleClose.bind(this);
 		this.startStream = this.startStream.bind(this);
 		this.closeStream = this.closeStream.bind(this);
+		this.getSubtitles = this.getSubtitles.bind(this);
+		this.unload = null;
 	}
 	componentDidMount() {
 		const filmId = this.props.params.id;
@@ -42,7 +45,9 @@ class Movie extends Component {
 			.then(res => res.json())
 			.then(res => {
 				console.log(res);
-				this.setState({movie: res.data.movie});
+				this.setState({movie: res.data.movie}, () => {
+					this.getSubtitles(this.state.movie.imdb_code);
+				});
 			})
 			.catch(err => console.log(err));
 	}
@@ -56,6 +61,8 @@ class Movie extends Component {
 		if (provider === 'extratorrent') {
 			id = encodeURIComponent(id);
 		}
+		this.unload = () => this.closeStream(provider, id);
+		window.addEventListener('beforeunload', this.unload, false);
 		this.handleOpen();
 		this.setState({provider: provider, id: id});
 		fetch(`/api/video/${provider}/${id}`, {
@@ -67,13 +74,13 @@ class Movie extends Component {
 		})
 			.then(res => res.json())
 			.then(res => {
-				console.log(res);
+				console.log('CREATE', res);
 				this.setState({stream: res.data});
 			})
 			.catch(err => console.log(err));
 	}
 	closeStream(provider, id) {
-		console.log(provider, id);
+		window.removeEventListener('beforeunload', this.unload);
 		this.handleClose();
 		fetch(`/api/video/${provider}/${id}`, {
 			method: 'DELETE',
@@ -84,8 +91,23 @@ class Movie extends Component {
 		})
 			.then(res => res.json())
 			.then(res => {
-				console.log(res);
+				console.log('DELETE', res);
 				this.setState({stream: {}});
+			})
+			.catch(err => console.log(err));
+	}
+	getSubtitles(imdbId) {
+			fetch(`/api/video/subtitles/${imdbId}`, {
+			method: 'GET',
+			credentials: 'include',
+			headers: {
+				'Content-Type': 'application/json'
+			}
+		})
+			.then(res => res.json())
+			.then(res => {
+				console.log(res.data.subtitles);
+				this.setState({subtitles: res.data.subtitles});
 			})
 			.catch(err => console.log(err));
 	}
@@ -93,7 +115,7 @@ class Movie extends Component {
 		const movie = this.state.movie;
 		return (
 			<div>
-				<Modal close={this.closeStream} provider={this.state.provider} id={this.state.id} stream={this.state.stream} open={this.state.open}/>
+				<Modal close={this.closeStream} provider={this.state.provider} subtitles={this.state.subtitles} id={this.state.id} stream={this.state.stream} open={this.state.open}/>
 				{!Object.keys(movie).length ?
 					<Center style={styles.loader}><CircularProgress size={80} thickness={5}/></Center> :
 					<div className="MovieContainer">
