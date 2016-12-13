@@ -142,9 +142,9 @@ class Search extends Component {
 			this.setState({column: 4});
 		else if (width > 1000 && width < 1300)
 			this.setState({column: 3});
-		else if (width > 800 && width < 1000)
+		else if (width > 700 && width < 1000)
 			this.setState({column: 2});
-		else if (width < 600)
+		else
 			this.setState({column: 1});
 	}
 	
