@@ -8,6 +8,7 @@ import Play from 'material-ui/svg-icons/av/play-arrow';
 const Torrents = (props) => {
 	const movie = props.movie;
 
+	console.log(movie);
 	return (
 		<div className="MovieSecColumn">
 			<Paper zDepth={2}>
@@ -34,7 +35,7 @@ const Torrents = (props) => {
 									<TableRowColumn>{torrent.seeds}</TableRowColumn>
 									<TableRowColumn>{torrent.hash ? "yts" : "extratorrent"}</TableRowColumn>
 									<TableRowColumn>{torrent.size}</TableRowColumn>
-									<TableRowColumn><IconButton onClick={(e) => props.startStream(torrent.hash ? "yts" : "extratorrent", torrent.hash || torrent.torrent_link)}><Play/></IconButton></TableRowColumn>
+									<TableRowColumn><IconButton onClick={(e) => props.startStream(torrent.hash ? "yts" : "extratorrent", torrent.hash || torrent.torrent_link, props.movie.id)}><Play/></IconButton></TableRowColumn>
 								</TableRow>
 						))}
 						</TableBody>

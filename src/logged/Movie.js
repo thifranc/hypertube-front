@@ -67,7 +67,8 @@ class Movie extends Component {
 	handleClose() {
 		this.setState({open: false});
 	}
-	startStream(provider, id) {
+	startStream(provider, id, movieId) {
+		console.log('movieId', movieId);
 		if (provider === 'extratorrent') {
 			id = encodeURIComponent(id);
 		}
@@ -75,7 +76,7 @@ class Movie extends Component {
 		window.addEventListener('beforeunload', this.unload, false);
 		this.handleOpen();
 		this.setState({provider: provider, id: id});
-		fetch(`/api/video/${provider}/${id}`, {
+		fetch(`/api/video/${provider}/${id}/${movieId}`, {
 			method: 'POST',
 			credentials: 'include',
 			headers: {
