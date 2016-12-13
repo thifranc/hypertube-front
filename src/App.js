@@ -30,13 +30,8 @@ const Tmp = (nextState, replace) => {
 	replace({pathname: '/'});
 };
 
-function requireAuth(nextState, replace) {
-	let redirect = function() {
-		return replace({
-			pathname: '/login',
-			state: {nextPathname: nextState.location.pathname}
-		});
-	}
+function requireAuth(nextState, replace, cb) {
+	console.log('onEnter...')
 
 	if (localStorage.getItem('token')) {
 		fetch('/api/' + localStorage.getItem('token'), {
@@ -48,15 +43,20 @@ function requireAuth(nextState, replace) {
 		})
 		.then(res => res.json())
 		.then(res => {
-			if (res.error)
-				redirect();
+			if (res.error) {
+				replace('/login');
+
+			}
 			else
 				localStorage.setItem('token', res.data.token);
+			cb();
 		})
 		.catch(err => console.log('ERROR token : ', err));
 	}
-	else
-		redirect();
+	else {
+		replace('/login');
+		cb();
+	}
 }
 
 class App extends Component {
@@ -66,11 +66,11 @@ class App extends Component {
 				<LangProvider>
 					<Router history={browserHistory}>
 						<Route path="/" component={Logged}>
-							<IndexRoute component={Search}/>
-							<Route path="/user/:id" component={User}/>
-							<Route path="allUsers" component={allUsers}/>
-							<Route path="profile" component={Profile}/>
-							<Route path="movie/:id" component={Movie}/>
+							<IndexRoute component={Search} onEnter={requireAuth}/>
+							<Route path="/user/:id" component={User} onEnter={requireAuth}/>
+							<Route path="allUsers" component={allUsers} onEnter={requireAuth}/>
+							<Route path="profile" component={Profile} onEnter={requireAuth}/>
+							<Route path="movie/:id" component={Movie} onEnter={requireAuth}/>
 						</Route>
 						<Route path="login" component={Login}/>
 						<Route path="register" component={Register}/>

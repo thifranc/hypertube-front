@@ -1,3 +1,6 @@
+// import * from '../../util/checkToken';
+
+
 import '../../util/styles.css';
 import Center from '../../util/Center';
 import React, {Component} from 'react';
@@ -21,6 +24,7 @@ class Search extends Component {
 			rate : {min : 0, max : 10},
 			years : {min : 1970, max : new Date().getFullYear()}
 		};
+
 		this.page = 1;
 		this.isMount = true;
 		this.orderBy = 'desc';
@@ -38,10 +42,13 @@ class Search extends Component {
 		this.scrollWatch = this.scrollWatch.bind(this);
 	}	
 
-	componentDidMount() {
-		this.getMovies();
+	componentDidUpdate(prevProps, prevState) {
 		window.addEventListener('scroll', this.scrollWatch, false);
+	}
+
+	componentDidMount() {
 		window.addEventListener('resize', this.columnWatch, false);
+		this.getMovies();
 	}
 
 	componentWillUnmount() {
@@ -85,7 +92,6 @@ class Search extends Component {
 		})
 		.then(res => res.json())
 		.then(res => {
-			// if (res.data.movie_count === 0) {
 			if (!res.data.movies) {
 				this.setState(who !== 'scroll' ? {movies : [], onLoad : false} : {movies : this.state.movies, onLoad : false});
 				return Promise.reject('No more...');
@@ -144,6 +150,7 @@ class Search extends Component {
 	scrollWatch() {
 		if (!this.state.onLoad && (window.innerHeight + window.scrollY) >= document.body.offsetHeight) {
 			let that = this;
+			window.removeEventListener('scroll', this.scrollWatch, false);
 			window.requestAnimationFrame(function() {
 				that.page++;
 				that.getMovies('scroll');
