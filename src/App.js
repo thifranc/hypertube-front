@@ -31,8 +31,6 @@ const Tmp = (nextState, replace) => {
 };
 
 function requireAuth(nextState, replace, cb) {
-	console.log('onEnter...')
-
 	if (localStorage.getItem('token')) {
 		fetch('/api/' + localStorage.getItem('token'), {
 			method : 'GET',
@@ -45,7 +43,6 @@ function requireAuth(nextState, replace, cb) {
 		.then(res => {
 			if (res.error) {
 				replace('/login');
-
 			}
 			else
 				localStorage.setItem('token', res.data.token);

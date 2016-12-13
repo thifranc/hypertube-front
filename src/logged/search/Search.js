@@ -47,6 +47,7 @@ class Search extends Component {
 	}
 
 	componentDidMount() {
+		this.columnWatch();
 		window.addEventListener('resize', this.columnWatch, false);
 		this.getMovies();
 	}

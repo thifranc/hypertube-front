@@ -58,14 +58,18 @@ class Profile extends Component {
 		})
 		.then(res => res.json())
 		.then(res => {
-			console.log('get me ', res);
+			let path;
+			(res.data.provider !== 'hypertube') ?
+				path = res.data.path_img :
+				(res.data.path_img === null) ?
+					path = 'http://localhost:4242/picture/default.jpg' : path = '/picture/' + res.data.path_img;
 			this.setState({
 				login: res.data.pseudo,
 				name: res.data.name.toLowerCase(),
 				firstname: res.data.firstname.toLowerCase(),
 				mail: res.data.email,
 				language: res.data.lang,
-				preview: res.data.path_img ? '/picture/'+res.data.path_img : 'http://localhost:4242/picture/default.jpg'
+				preview: path
 			});
 		})
 		.catch(err => console.log(err));

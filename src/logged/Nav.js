@@ -1,10 +1,17 @@
 import React, {Component} from 'react';
+import AppBar from 'material-ui/AppBar';
 import {browserHistory} from 'react-router';
 import SelectField from 'material-ui/SelectField';
 import MenuItem from 'material-ui/MenuItem';
 import FontIcon from 'material-ui/FontIcon';
 import {BottomNavigation, BottomNavigationItem} from 'material-ui/BottomNavigation';
 import Paper from 'material-ui/Paper';
+
+import Drawer from 'material-ui/Drawer';
+import Menu from 'material-ui/svg-icons/navigation/menu';
+import IconButton from 'material-ui/IconButton';
+
+// import MobileTearSheet from '../../../MobileTearSheet';
 
 const account = <FontIcon className="material-icons">account_circle</FontIcon>;
 const search = <FontIcon className="material-icons">search</FontIcon>;
@@ -15,14 +22,21 @@ class Nav extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			selectedIndex: 1
+			open : false,
+			selectedIndex: 1,
+			isHamburger : (window.innerWidth <= 560) ? true : false
 		};
 
-		this.path = this.props.path;
+		console.log('state : ', this.state.isHamburger)
 
+		this.path = this.props.path;
+		this.drawBar = this.drawBar.bind(this);
 		this.handleSelectNav = this.handleSelectNav.bind(this);
 		this.handleSelectLang = this.handleSelectLang.bind(this);
 		this.selectPathFromName = this.selectPathFromName.bind(this);
+
+		this.watchResize = this.watchResize.bind(this);
+
 	}
 	componentDidMount() {
 		const pathname = this.context.router.getCurrentLocation().pathname;
@@ -32,9 +46,28 @@ class Nav extends Component {
 		} else if (pathname === '/profile') {
 			this.setState({selectedIndex: 2});
 		}
+		this.watchResize();
+		window.addEventListener('resize', this.watchResize, false);
 	}
+
+	componentWillUnmount() {
+		window.removeEventListener('resize', this.watchResize, false);
+	}
+
 	componentWillUpdate(nextProps, nextState) {
 		this.path = nextProps.path
+	}
+
+	watchResize() {
+		const width = window.innerWidth;
+		if (window.innerWidth <= 560) {
+			if (!this.state.isHamburger) {
+				this.setState({isHamburger : true})
+			}
+		}
+		else {
+			this.setState({isHamburger : false, open : false})
+		}
 	}
 
 	handleSelectLang(event, index, value) {
@@ -42,6 +75,10 @@ class Nav extends Component {
 	}
 	handleSelectNav(index) {
 		this.setState({selectedIndex: index});
+		if (this.state.open) {
+			this.setState({open : false});
+
+		}
 		if (index === 1) {
 			browserHistory.push('/');
 		} else if (index === 2) {
@@ -66,19 +103,26 @@ class Nav extends Component {
 			return 4;
 	}
 
+	drawBar() {
+		this.setState(prevState => {
+			return {open: !prevState.open};
+		});
+	}
+
 	render() {
+		let navBar;
 		const {messages, lang} = this.context;
 		const page = this.selectPathFromName();
-		
-		return (
-			<div>
+
+		if (!this.state.isHamburger) {
+			navBar = (
 				<Paper zDepth={1} >
 					<BottomNavigation selectedIndex={page}>
 						<div/>
-						<BottomNavigationItem label={messages.nav.search} icon={search} onTouchTap={() => this.handleSelectNav(1)}/>
-						<BottomNavigationItem label={messages.user.user} icon={people} onTouchTap={() => this.handleSelectNav(2)}/>
-						<BottomNavigationItem label={messages.nav.profil} icon={account} onTouchTap={() => this.handleSelectNav(3)}/>
-						<BottomNavigationItem label={messages.nav.logout} icon={exit} onTouchTap={() => this.handleSelectNav(4)}/>
+							<BottomNavigationItem label={messages.nav.search} icon={search} onTouchTap={() => this.handleSelectNav(1)}/>
+							<BottomNavigationItem label={messages.user.user} icon={people} onTouchTap={() => this.handleSelectNav(2)}/>
+							<BottomNavigationItem label={messages.nav.profil} icon={account} onTouchTap={() => this.handleSelectNav(3)}/>
+							<BottomNavigationItem label={messages.nav.logout} icon={exit} onTouchTap={() => this.handleSelectNav(4)}/>
 						<div/>
 						<div style={{flex: 'none'}}>
 							<SelectField value={lang} onChange={this.handleSelectLang} style={{width: '150px', marginRight: '20px'}}>
@@ -89,6 +133,37 @@ class Nav extends Component {
 						</div>
 					</BottomNavigation>
 				</Paper>
+			);
+		}
+		else {
+			if (this.state.open) {
+				navBar = (
+				<div>
+					<AppBar title="Hypertube" showMenuIconButton={false} iconElementRight={<IconButton><Menu /></IconButton>} onRightIconButtonTouchTap={this.drawBar} />
+					<Drawer width={95} open={this.state.open}>
+						<MenuItem><BottomNavigationItem style={{marginLeft : '-16px'}} label={messages.nav.search} icon={search} onTouchTap={() => this.handleSelectNav(1)}/></MenuItem>
+						<MenuItem><BottomNavigationItem style={{marginLeft : '-16px'}} label={messages.user.user} icon={people} onTouchTap={() => this.handleSelectNav(2)}/></MenuItem>
+						<MenuItem><BottomNavigationItem style={{marginLeft : '-16px'}} label={messages.nav.profil} icon={account} onTouchTap={() => this.handleSelectNav(3)}/></MenuItem>
+						<MenuItem><BottomNavigationItem style={{marginLeft : '-16px'}} label={messages.nav.logout} icon={exit} onTouchTap={() => this.handleSelectNav(4)}/></MenuItem>
+						<MenuItem>
+							<SelectField value={lang} onChange={this.handleSelectLang} style={{width: '50px'}}>
+								<MenuItem value={'en'} primaryText="En"/>
+								<MenuItem value={'fr'} primaryText="Fr"/>
+								<MenuItem value={'es'} primaryText="Es"/>
+							</SelectField>
+						</MenuItem>
+	        		</Drawer>
+	        	</div>
+				);
+			}
+			else
+				navBar = (<AppBar title="Hypertube" showMenuIconButton={false} iconElementRight={<IconButton><Menu /></IconButton>} onRightIconButtonTouchTap={this.drawBar} />)
+		}
+
+		return (
+			<div>
+				{navBar}
+
 			</div>
 		);
 	}

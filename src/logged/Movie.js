@@ -49,17 +49,6 @@ class Movie extends Component {
 			this.setState({movie: res.data.movie});
 		})
 		.catch(err => console.log(err));
-
-		var data = new FormData();
-		data.append('id', filmId);
-		fetch('/api/video/view', {
-			method: 'POST',
-			headers: {
-				Authorization: 'Bearer ' + this.props.token
-			},
-			body: data
-		})
-		.catch(err => console.log(err));
 	}
 	handleOpen() {
 		this.setState({open: true});
@@ -68,7 +57,18 @@ class Movie extends Component {
 		this.setState({open: false});
 	}
 	startStream(provider, id, movieId) {
-		console.log('movieId', movieId);
+		var data = new FormData();
+		data.append('id', movieId);
+		fetch('/api/video/view', {
+			method: 'POST',
+			headers: {
+				Authorization: 'Bearer ' + this.props.token
+			},
+			body: data
+		})
+		.catch(err => console.log(err));
+
+
 		if (provider === 'extratorrent') {
 			id = encodeURIComponent(id);
 		}
