@@ -134,7 +134,7 @@ class Movie extends Component {
 		const movie = this.state.movie;
 
 		return (
-			<div>
+			<div style={{marginTop: '58px', marginBottom: '39px'}}>
 				<Modal close={this.closeStream} provider={this.state.provider} subtitles={this.state.subtitles} id={this.state.id} stream={this.state.stream} open={this.state.open}/>
 				{!Object.keys(movie).length ?
 					<Center style={styles.loader}><CircularProgress size={80} thickness={5}/></Center> :
