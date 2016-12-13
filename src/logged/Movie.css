@@ -5,6 +5,7 @@
 }
 .MovieContainerColumn {
   display: flex;
+  flex-direction: row;
   position: relative;
 }
 .MovieMainColumn {
@@ -42,7 +43,10 @@
 
 @media (max-width: 1206px) {
   .MovieContainer {
-  width: 100%;
+    width: 100%;
+  }
+  .MovieContainerColumn {
+    flex-direction: column;
   }
   .MovieMainColumn {
     width: calc(100% - 30px);

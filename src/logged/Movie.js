@@ -68,7 +68,6 @@ class Movie extends Component {
 		})
 		.catch(err => console.log(err));
 
-
 		if (provider === 'extratorrent') {
 			id = encodeURIComponent(id);
 		}
