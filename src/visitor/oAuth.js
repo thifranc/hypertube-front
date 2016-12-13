@@ -21,7 +21,7 @@ class Oauth extends Component {
 		.then(res => {
 			if (res.data && res.data.token) {
 				localStorage.setItem('token', res.data.token);
-				browserHistory.push('/');
+				window.location.href = '/';
 			}
 		})
 		.catch(err => {
