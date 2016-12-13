@@ -45,9 +45,8 @@ class Movie extends Component {
 		})
 		.then(res => res.json())
 		.then(res => {
-			this.setState({movie: res.data.movie}, () => {
-				this.getSubtitles(this.state.movie.imdb_code);
-			});
+			this.getSubtitles(res.data.movie.imdb_code);
+			this.setState({movie: res.data.movie});
 		})
 		.catch(err => console.log(err));
 
@@ -85,7 +84,6 @@ class Movie extends Component {
 		})
 			.then(res => res.json())
 			.then(res => {
-				console.log('CREATE', res);
 				this.setState({stream: res.data});
 			})
 			.catch(err => console.log(err));
@@ -102,13 +100,11 @@ class Movie extends Component {
 		})
 			.then(res => res.json())
 			.then(res => {
-				console.log('DELETE', res);
 				this.setState({stream: {}});
 			})
 			.catch(err => console.log(err));
 	}
 	getSubtitles(imdbId) {
-		console.log(imdbId);
 			fetch(`/api/video/subtitles/${imdbId}`, {
 			method: 'GET',
 			credentials: 'include',
