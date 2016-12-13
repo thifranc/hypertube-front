@@ -186,7 +186,6 @@ class Profile extends Component {
 			    ];
 		return (
 			<Center
-				className="background VisitorHeight"
 				>
 				<Dialog
 					title={this.state.modalRep}
@@ -197,7 +196,9 @@ class Profile extends Component {
 					>
 					{this.state.modalMsg}
 				</Dialog>
-				<Paper zDepth={2}>
+				<Paper zDepth={2}
+						className="background"
+				>
 					<AppBar
 						showMenuIconButton={false}
 						title={messages.profile.update}
