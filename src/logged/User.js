@@ -62,6 +62,8 @@ class User extends Component {
 			this.setState({column: 3});
 		} else if (width < 600) {
 			this.setState({column: 1});
+		} else {
+			this.setState({column: this.movies.length});
 		}
 	}
 
