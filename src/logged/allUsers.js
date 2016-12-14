@@ -65,7 +65,7 @@ class allUsers extends Component {
 							subtitle={messages.firstname + ': ' + user.firstname}
 							>
 							<img
-								style={{width: '100%'}}
+								style={{width: '100%', height:'100%', maxWidth:'500px', maxHeight:'500px'}}
 								src = {(user.provider !== 'hypertube') ?
 							user.path_img :
 							(user.path_img === null) ?

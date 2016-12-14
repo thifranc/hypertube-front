@@ -8,7 +8,6 @@ import AppBar from 'material-ui/AppBar';
 import RaisedButton from 'material-ui/RaisedButton';
 import FlatButton from 'material-ui/FlatButton';
 import Dialog from 'material-ui/Dialog';
-import {Link} from 'react-router';
 
 import SelectField from 'material-ui/SelectField';
 import MenuItem from 'material-ui/MenuItem';
@@ -292,7 +291,6 @@ class Profile extends Component {
 								|| this.state.errPasswd) ? true : false}
 							onClick={this.ajaxCall}
 							/>
-						<Link to="/login" className="VisitorMarge">Home</Link>
 					</Center>
 				</Paper>
 			</Center>
