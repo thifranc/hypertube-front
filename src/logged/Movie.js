@@ -7,7 +7,7 @@ import MovieInfo from './Movie/MovieInfo';
 import Torrents from './Movie/Torrents';
 import Disqus from './Movie/Disqus';
 import io from 'socket.io-client';
-const socket = io('http://localhost:4242');
+const socket = io(`http://192.168.99.100:4242`);
 
 import 'whatwg-fetch';
 import './Movie.css';

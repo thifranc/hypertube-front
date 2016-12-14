@@ -16,7 +16,7 @@
       "no-negated-condition": 0
     }
   },
-  "proxy": "http://localhost:4242",
+  "proxy": "http://192.168.99.100:4242",
   "devDependencies": {
     "eslint-config-xo-react": "^0.10.0",
     "eslint-plugin-react": "^6.7.1",

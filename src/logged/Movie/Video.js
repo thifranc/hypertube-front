@@ -4,7 +4,7 @@ const Video = (props) => {
 		width: '100%',
 	};
 
-	const url = `http://${window.location.hostname}:`;
+	const url = `http://192.168.99.100:`;
 	return (
 		<video style={videoStyle} src={url + props.port} autoPlay controls>
 			{props.subtitles.map(sub => (<track key={sub.lang} label={sub.lang} kind="subtitles" srcLang="en" src={url + '4242/subtitles/' + sub.path}/>))}
