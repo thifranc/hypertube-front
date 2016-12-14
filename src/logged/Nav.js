@@ -27,8 +27,6 @@ class Nav extends Component {
 			isHamburger : (window.innerWidth <= 560) ? true : false
 		};
 
-		console.log('state : ', this.state.isHamburger)
-
 		this.path = this.props.path;
 		this.drawBar = this.drawBar.bind(this);
 		this.handleSelectNav = this.handleSelectNav.bind(this);

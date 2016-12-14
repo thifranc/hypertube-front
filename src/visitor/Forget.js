@@ -72,7 +72,6 @@ class Forget extends Component {
 			})
 				.then(res => res.json())
 				.then(res => {
-					console.log(res);
 					if (res.statusCode === 200) {
 						this.setState({open: true, modalRep:messages.success, 
 						modalMsg:messages.forget.success

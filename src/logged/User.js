@@ -23,8 +23,7 @@ const styles = {
 		height: 'calc(100vh - 56px)'
 	},
 	img: {
-		height: 200,
-		width: 200,
+		width: '80%',
 		display: 'inline-block'
 	},
 	inline: {
@@ -53,7 +52,6 @@ class User extends Component {
 	columnWatch() {
 		const width = window.innerWidth;
 
-		console.log(this.movies.length);
 		if (width > 1300 && this.movies.length > 6) {
 			this.setState({column: 6});
 		} else if (width > 1000 && this.movies.length > 5) {
@@ -129,8 +127,7 @@ class User extends Component {
 		.catch(err => {
 			console.log(err);
 			browserHistory.push('/');
-		})
-		.catch(err => console.log('BIG ERRROOR', err));
+		});
 	}
 
 	render() {
@@ -150,7 +147,7 @@ class User extends Component {
 							/>
 						<div className="center" style={{display:'flex', flex:1, flexDirection:"row", justifyContent:"center"}}>
 							<div style={{flex:2}}>
-								<img src={user.path_img} alt="user"/>
+								<img style={styles.img} src={user.path_img} alt="user"/>
 							</div>
 							<div style={{flex:1, textAlign:"left"}}>
 								<List style={styles.inline}>

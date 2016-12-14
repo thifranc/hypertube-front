@@ -121,9 +121,7 @@ class Profile extends Component {
 			for (var name in data) {
 				formData.append(name, data[name]);
 			}
-			console.log('reayd to fetch');
 			formData.append('path_img', this.state.img);
-			console.log(this.props.token);
 			fetch('/api/user/me', {
 				method: 'PUT',
 				body: formData,
@@ -133,7 +131,6 @@ class Profile extends Component {
 			})
 			.then(res => res.json())
 			.then(res => {
-				console.log('retour de ajaxcall', res);
 				if (res.statusCode === 200) {
 		  			this.setState({open: true, modalRep:messages.success, 
 					modalMsg:messages.profile.success

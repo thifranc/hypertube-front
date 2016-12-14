@@ -65,7 +65,6 @@ class Login extends Component {
 			})
 			.then(res => res.json())
 			.then(res => {
-				console.log(res);
 				if (res.data && typeof (res.data.token) != 'undefined') {
 					localStorage.setItem('token', res.data.token);
 					browserHistory.push('/');

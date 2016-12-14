@@ -106,7 +106,6 @@ class Register extends Component {
 					localStorage.setItem('token', res.data.token);
 					browserHistory.push('/');
 				} else {
-				console.log(res);
 					res.data.forEach(msg => {
 						if (msg.path === 'pseudo')
 							{this.setState({errLogin: msg.message});}

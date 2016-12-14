@@ -114,8 +114,6 @@ class Movie extends Component {
 		})
 			.then(res => res.json())
 			.then(res => {
-				console.log(res);
-				console.log(res.data.subtitles);
 				this.setState({subtitles: res.data.subtitles});
 			})
 			.catch(err => console.log(err));

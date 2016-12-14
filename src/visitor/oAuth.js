@@ -79,7 +79,6 @@ class Oauth extends Component {
 	}
 
 	fail42(response) {
-		console.log('FAIL42 ==>', response);
 		browserHistory.push('/');
 	}
 	
