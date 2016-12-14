@@ -278,7 +278,7 @@ class Profile extends Component {
 						onFocus={this.handleRegexError}
 						hintText={messages.profile.passwd}
 						floatingLabelText={messages.profile.passwd}
-						style={this.state.provider === "hypertube" ? {display:"inline"} : {display:"none"}}
+						style={this.state.provider === "hypertube" ? {display:"block"} : {display:"none"}}
 						type="password"
 						errorText={this.state.errPasswd}
 						onKeyDown={this.handleKey}
