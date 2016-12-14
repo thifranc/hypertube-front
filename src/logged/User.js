@@ -23,7 +23,7 @@ const styles = {
 		height: 'calc(100vh - 56px)'
 	},
 	img: {
-		width: '80%',
+		maxWidth:'80%',
 		display: 'inline-block'
 	},
 	inline: {
