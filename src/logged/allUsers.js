@@ -38,7 +38,6 @@ class allUsers extends Component {
 		})
 		.then(res => res.json())
 		.then(res => {
-			console.log(res);
 			this.setState({users: res.data});
 		})
 		.catch(err => console.log(err));
