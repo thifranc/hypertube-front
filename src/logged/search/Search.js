@@ -107,7 +107,7 @@ class Search extends Component {
 			this.isMount && this.setState({movies : res, onLoad : false});
 		})
 		.catch(err => {
-			console.log('ERROR => ', err) //delete catch en production
+			// console.log('ERROR => ', err) //delete catch en production
 		});
 	}
 	handleKey(e) {
