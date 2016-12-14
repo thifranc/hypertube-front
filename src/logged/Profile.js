@@ -35,6 +35,7 @@ class Profile extends Component {
 			open: false,
 			modalRep:'',
 			modalMsg:'',
+			provider:'',
 			preview: ''
 		};
 		this.handleRegexError = this.handleRegexError.bind(this);
@@ -68,6 +69,7 @@ class Profile extends Component {
 				firstname: res.data.firstname.toLowerCase(),
 				mail: res.data.email,
 				language: res.data.lang,
+				provider: res.data.provider,
 				preview: path
 			});
 		})
@@ -204,6 +206,7 @@ class Profile extends Component {
 						title={messages.profile.update}
 						/>
 					<input
+						style={this.state.provider === "hypertube" ? {display:"inline"} : {display:"none"}}
 						name="path_img"
 						accept=".png,.gif,.jpg,.jpeg"
 						className="VisitorMarge"
@@ -275,6 +278,7 @@ class Profile extends Component {
 						onFocus={this.handleRegexError}
 						hintText={messages.profile.passwd}
 						floatingLabelText={messages.profile.passwd}
+						style={this.state.provider === "hypertube" ? {display:"block"} : {display:"none"}}
 						type="password"
 						errorText={this.state.errPasswd}
 						onKeyDown={this.handleKey}
