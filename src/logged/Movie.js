@@ -6,6 +6,8 @@ import Modal from './Movie/Modal';
 import MovieInfo from './Movie/MovieInfo';
 import Torrents from './Movie/Torrents';
 import Disqus from './Movie/Disqus';
+import io from 'socket.io-client';
+const socket = io('http://localhost:4242');
 
 import 'whatwg-fetch';
 import './Movie.css';
@@ -50,6 +52,18 @@ class Movie extends Component {
 		})
 		.catch(err => console.log(err));
 	}
+	componentWillUnmount() {
+		if (this.state.provider && this.state.id) {
+			fetch(`/api/video/${this.state.provider}/${this.state.id}`, {
+				method: 'DELETE',
+				credentials: 'include',
+				headers: {
+					'Content-Type': 'application/json'
+				}
+			})
+			.catch(err => console.log(err));
+		}
+	}
 	handleOpen() {
 		this.setState({open: true});
 	}
@@ -75,20 +89,15 @@ class Movie extends Component {
 		window.addEventListener('beforeunload', this.unload, false);
 		this.handleOpen();
 		this.setState({provider: provider, id: id});
-		fetch(`/api/video/${provider}/${id}/${movieId}`, {
-			method: 'POST',
-			credentials: 'include',
-			headers: {
-				'Content-Type': 'application/json'
+		socket.emit('video', {provider: provider, hash: id, movie_id: movieId}, (res) => {
+			if (!res.create) {
+				
+			} else {
+				this.setState({stream: res});
 			}
-		})
-			.then(res => res.json())
-			.then(res => {
-				this.setState({stream: res.data});
-			})
-			.catch(err => console.log(err));
+		});
 	}
-	closeStream(provider, id) {
+	closeStream(provider, id, changeState = true) {
 		window.removeEventListener('beforeunload', this.unload);
 		this.handleClose();
 		fetch(`/api/video/${provider}/${id}`, {
