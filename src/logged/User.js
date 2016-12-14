@@ -25,6 +25,7 @@ const styles = {
 	img: {
 		maxWidth:'800px',
 		maxHeight:'800px',
+		width:'80%',
 		display: 'inline-block'
 	},
 	inline: {
