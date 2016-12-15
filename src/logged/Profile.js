@@ -137,6 +137,14 @@ class Profile extends Component {
 					modalMsg:messages.profile.success
 					});
 				} else { //rep serveur : res.data === array only
+					if (!res.hasOwnProperty('data'))
+					{
+							this.setState({
+								open: true, modalRep:'Image is too heavy',
+								modalMsg:messages.profile.image
+							});
+						return ;
+					}
 					res.data.forEach(msg => {
 						if (msg.path === 'pseudo')
 							{this.setState({errLogin: msg.message});}

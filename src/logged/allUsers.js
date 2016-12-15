@@ -50,9 +50,6 @@ class allUsers extends Component {
 		const users = this.state.users;
 		const {messages} = this.context;
 
-
-
-
 		return (
 			<div className='background'>
 				<GridList cellHeight={'auto'} cols={this.state.column}>
@@ -68,7 +65,7 @@ class allUsers extends Component {
 								src = {(user.provider !== 'hypertube') ?
 							user.path_img :
 							(user.path_img === null) ?
-								'http://localhost:4242/picture/default.jpg' : '/picture/' + user.path_img }
+								'/picture/default.jpg' : '/picture/' + user.path_img }
 								alt="user"
 								/>
 						</GridTile>
