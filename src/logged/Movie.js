@@ -1,13 +1,17 @@
 import '../util/styles.css';
 import React, {Component} from 'react';
 import CircularProgress from 'material-ui/CircularProgress';
+import Dialog from 'material-ui/Dialog';
 import Center from '../util/Center';
 import Modal from './Movie/Modal';
 import MovieInfo from './Movie/MovieInfo';
 import Torrents from './Movie/Torrents';
 import Disqus from './Movie/Disqus';
 import io from 'socket.io-client';
-const socket = io(`http://192.168.99.100:4242`);
+import config from '../config';
+import FlatButton from 'material-ui/FlatButton';
+
+const socket = io(`http://${config.host}:4242`);
 
 import 'whatwg-fetch';
 import './Movie.css';
@@ -24,6 +28,7 @@ class Movie extends Component {
 		this.state = {
 			movie: {},
 			open: false,
+			heavyLoad: false,
 			stream: {},
 			provider: '',
 			subtitles: [],
@@ -31,6 +36,8 @@ class Movie extends Component {
 		};
 		this.handleOpen = this.handleOpen.bind(this);
 		this.handleClose = this.handleClose.bind(this);
+		this.handleHeavyOpen = this.handleHeavyOpen.bind(this);
+		this.handleHeavyClose = this.handleHeavyClose.bind(this);
 		this.startStream = this.startStream.bind(this);
 		this.closeStream = this.closeStream.bind(this);
 		this.getSubtitles = this.getSubtitles.bind(this);
@@ -70,6 +77,12 @@ class Movie extends Component {
 	handleClose() {
 		this.setState({open: false});
 	}
+	handleHeavyOpen() {
+		this.setState({heavyLoad: true});
+	}
+	handleHeavyClose() {
+		this.setState({heavyLoad: false});
+	}
 	startStream(provider, id, movieId) {
 		var data = new FormData();
 		data.append('id', movieId);
@@ -91,7 +104,8 @@ class Movie extends Component {
 		this.setState({provider: provider, id: id});
 		socket.emit('video', {provider: provider, hash: id, movie_id: movieId}, (res) => {
 			if (!res.create) {
-				
+				this.handleClose();
+				this.handleHeavyOpen();
 			} else {
 				this.setState({stream: res});
 			}
@@ -129,9 +143,13 @@ class Movie extends Component {
 	}
 	render() {
 		const movie = this.state.movie;
+		const actions = [<FlatButton label="Cancel" primary={true} onTouchTap={this.handleHeavyClose}/>];
 
 		return (
 			<div style={{marginTop: '58px', marginBottom: '39px'}}>
+				<Dialog actions={actions} modal={false} open={this.state.heavyLoad} onRequestClose={this.handleHeavyClose}>
+					Server is under heavy load come back later!
+				</Dialog>
 				<Modal close={this.closeStream} provider={this.state.provider} subtitles={this.state.subtitles} id={this.state.id} stream={this.state.stream} open={this.state.open}/>
 				{!Object.keys(movie).length ?
 					<Center style={styles.loader}><CircularProgress size={80} thickness={5}/></Center> :
