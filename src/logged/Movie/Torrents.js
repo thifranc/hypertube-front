@@ -8,7 +8,6 @@ import Play from 'material-ui/svg-icons/av/play-arrow';
 const Torrents = (props) => {
 	const movie = props.movie;
 
-	console.log(movie);
 	return (
 		<div className="MovieSecColumn">
 			<Paper zDepth={2}>

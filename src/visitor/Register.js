@@ -78,6 +78,7 @@ class Register extends Component {
 		this.handleFillChar(e);
 	}
 	ajaxCall(e) {
+		const {messages} = this.context;
 		if (!this.state.errPasswd && !this.state.errMail &&
 			!this.state.errLogin && !this.state.errFirstname &&
 			!this.state.errName && !this.state.errLang) {
@@ -102,10 +103,18 @@ class Register extends Component {
 			})
 			.then(res => res.json())
 			.then(res => {
-				if (res.data && res.data.token) {
+				if (res.statusCode === 200) {
 					localStorage.setItem('token', res.data.token);
 					browserHistory.push('/');
 				} else {
+					if (!res.hasOwnProperty('data'))
+					{
+							this.setState({
+								open: true, modalRep:'Image is too heavy',
+								modalMsg:messages.profile.image
+							});
+						return ;
+					}
 					res.data.forEach(msg => {
 						if (msg.path === 'pseudo')
 							{this.setState({errLogin: msg.message});}
